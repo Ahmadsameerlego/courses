@@ -1,0 +1,89 @@
+/*
+{///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////}
+                                        {///////////////////////////////////////////////////////////////////////}
+                                        {//////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\}
+                                        {////////////////////////     Created By      \\\\\\\\\\\\\\\\\\\\\\\\\\}
+                                        {//////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\}
+                                        {///////////////////////     Ahmed Sammer     \\\\\\\\\\\\\\\\\\\\\\\\}
+                                        {//////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\}
+                                        {//////////////////////     AWAMMER ELSHABKA    \\\\\\\\\\\\\\\\\\\\\\\\}
+                                        {//////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\}
+                                        {///////////////////////////////////////////////////////////////////////}
+{///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////}
+*/
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800&display=swap');
+body{
+    font-weight: 300;
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+    direction: rtl;
+    text-align: start;
+    font-family: 'Cairo', sans-serif !important;
+    font-size: 13px !important;
+    overflow-x:hidden;
+    background-color: #fff;
+    color: #333132;
+}
+#app{
+    font-family: 'Cairo', sans-serif !important;
+}
+// color variables
+
+$main-color1: #C40F3D;
+$main-color2: #BF4D66   ;
+$main-color3: #285A7C;
+
+// $main-white1: #ECF6FF;
+// $main-white2: #F6F5F5;
+
+// $main-green: #7BE099;
+
+// $main-red: #E26767;
+
+// $main-gradian1: linear-gradient(to top, #28D6F8 , #21B1F8);
+// $main-gradian2: linear-gradient(to bottom, #2EBAFF , #1E88BC);
+
+
+
+.mainColor{color: $main-color1;}
+.mainColor2{color: $main-color2;}
+.whiteColor { color:#fff }
+.boxShadow{ box-shadow: 0px 5px 10px rgba(158, 158, 158, 0.322); }
+.border-0{
+    border: none;
+}
+.o-5{
+    opacity: .5;
+}
+// .opacityMainColor{color: $opacity-main-color;}
+// .opacityMainColor2{color: $opacity-main-color2;}
+
+// .bgColor{color: $bg-color;}
+// .bgColor2{color: $bg-color2;}
+
+// .opacityBgColor{color: $opacity-bg-color;}
+// .opacityBgColor2{color: $opacity-bg-color2;}
+
+
+/* scrollbar custom */
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #BF4D66;
+    border-radius: 5px;
+}
+
