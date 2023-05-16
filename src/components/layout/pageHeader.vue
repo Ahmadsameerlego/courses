@@ -226,6 +226,16 @@ export default {
         font-size: 14px !important;
         font-weight: 500 !important;
     }
+    .bordered_btn{
+            border: 1px solid #333132;
+            border-radius: 5px;
+            width: 125px;
+            text-align: center;
+            padding: 8px 0px;
+            font-weight: 500;
+            text-decoration: none;
+            color: #333132 !important;
+        }
 
     .navbar-collapse {
         flex-basis: inherit !important;

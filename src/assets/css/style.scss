@@ -56,6 +56,26 @@ $main-color3: #285A7C;
 .o-5{
     opacity: .5;
 }
+.bordered_gray{
+    border: 1px solid #ccc;
+}
+.fw-6{
+    font-weight: 600;
+}
+.fw-5{
+    font-weight: 500;
+}
+.br-5{
+    border-radius: 5px;
+}
+.normal_font{
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 11px;
+}
+.w-60{
+    width: 60%;
+}
 // .opacityMainColor{color: $opacity-main-color;}
 // .opacityMainColor2{color: $opacity-main-color2;}
 

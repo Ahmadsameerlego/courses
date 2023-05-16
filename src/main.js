@@ -27,4 +27,17 @@ axios.defaults.baseURL = '';
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');   
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.headers.lang = sessionStorage.getItem('lang');
+
+// // Vuetify
+// import 'vuetify/styles'
+// import { createVuetify } from 'vuetify'
+// import * as components from 'vuetify/components'
+// import * as directives from 'vuetify/directives'
+
+// const vuetify = createVuetify({
+//   components,
+//   directives,
+// })
+
+
 createApp(App).use(store).use(i18n).use(VueI18n).use(FontAwesomeIcon).use(router).mount('#app')
