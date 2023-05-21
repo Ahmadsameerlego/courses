@@ -183,21 +183,7 @@ export default {
                 right: -31px;
             }
         }
-        .single_slide{
-            background-color: #fff;
-            padding: 10px;
-            border: 1px solid #cccccc91;
-            margin: 0 25px;
-            .test_slide_image{
-                width:40px;
-                height:40px;
-                margin:0 10px
-            }
-            svg{
-                color:#DBDEE6;
-                margin:0 4px
-            }
-        }
+        
     }
 
     .swiper-slide-active{
@@ -214,4 +200,23 @@ export default {
     .swiper {
         padding-top: 80px;
     }
+</style>
+
+
+<style lang="scss">
+.single_slide{
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #cccccc91;
+            margin: 0 25px;
+            .test_slide_image{
+                width:40px;
+                height:40px;
+                margin:0 10px
+            }
+            svg{
+                color:#DBDEE6;
+                margin:0 4px
+            }
+        }
 </style>

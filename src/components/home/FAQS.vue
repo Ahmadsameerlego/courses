@@ -49,18 +49,7 @@ export default {
         padding-top: 65px;
         padding-bottom: 50px;
         background-color: #FAF8F6;
-        .common_head{
-            position: relative;
-            &::before{
-            position: absolute;
-            content: "";
-            width: 12px;
-            height: 12px;
-            background-color: #bf4d66;
-            right: 46%;
-            top: 2px;
-            }
-        }
+        
     }
     .accordion-item{
         border: none !important;
@@ -92,4 +81,16 @@ export default {
     .accordion-button:not(.collapsed){
         color:#333
     }
+    .common_head{
+            position: relative;
+            &::before{
+            position: absolute;
+            content: "";
+            width: 12px;
+            height: 12px;
+            background-color: #bf4d66;
+            right: 46%;
+            top: 2px;
+            }
+        }
 </style>

@@ -15,6 +15,11 @@
 
     <!-- ask advise  -->
     <askAdvise />
+
+    <!-- subscribe  -->
+    <subscribeFormVue />
+
+
   </div>
 </template>
 
@@ -30,6 +35,10 @@ import testmonilasReviewsVue from '@/components/home/testmonilasReviews.vue'
 import FAQSVue from '@/components/home/FAQS.vue'
 
 import askAdvise from '@/components/home/askAdvise.vue'
+
+import subscribeFormVue from '@/components/home/subscribeForm.vue'
+
+
 export default {
   name: 'HomeView',
   components: {
@@ -38,7 +47,8 @@ export default {
     adExpertsVue,
     testmonilasReviewsVue,
     FAQSVue,
-    askAdvise
+    askAdvise,
+    subscribeFormVue
   }
 }
 </script>

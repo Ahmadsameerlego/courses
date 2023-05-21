@@ -193,7 +193,12 @@ export default {
 
 }  
 </script>
-
+<style scoped>
+.swiper{
+            padding-top: 0px !important;
+            padding-bottom: 80px;
+        }
+</style>
 <style lang="scss">
     .slide2{
         background-image: url('@/assets/imgs/pexels-andrea-piacquadio-3978564 3 (1).png');
@@ -268,4 +273,5 @@ export default {
             height: 10px;
             border-radius: 59px;
         }
+        
 </style>

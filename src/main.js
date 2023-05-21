@@ -19,7 +19,11 @@ library.add(fas, far, fab);
 dom.watch();
 
 
+import VOtpInput from "vue3-otp-input";
 
+
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 // import axios
 import axios from 'axios';
@@ -40,4 +44,4 @@ axios.defaults.baseURL = '';
 // })
 
 
-createApp(App).use(store).use(i18n).use(VueI18n).use(FontAwesomeIcon).use(router).mount('#app')
+createApp(App).use(store).use(i18n).use(VueI18n).use(FontAwesomeIcon).use(router).component('VueDatePicker', VueDatePicker).component('v-otp-input', VOtpInput).mount('#app')

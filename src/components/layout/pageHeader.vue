@@ -46,7 +46,7 @@
             <div class="navbar-collapse" id="navbarSupportedContent">
                 <ul class="flex-row justify-content-start navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link class="nav-link" aria-current="page" to="/"> الصفحة الرئيسية </router-link>
+                        <router-link class="nav-link" aria-current="page" to="/"> {{ $t('nav.home') }} </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/"> معلومات عنا </router-link>
@@ -57,7 +57,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             خدماتنا
                         </a>
-                        <ul class="boxShadow border-0 dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="boxShadow border-0 dropdown-menu" style="padding-left:20px;padding-right:20px" aria-labelledby="navbarDropdown">
                             <li>
                                 <router-link class="d-flex dropdown-item mb-2" to="/"> 
                                     <img :src="require('@/assets/imgs/fly.png')" class="dropImage" alt="">
@@ -112,30 +112,68 @@
                 </button>
 
                 <!-- lang  -->
-                <button class="btn langBtn">
-                    EN
+                <button class="btn langBtn" @click="switchLang">
+                    <span v-if="$i18n.locale=='en'" >AR</span>
+                    <span v-else-if="$i18n.locale=='ar'" >EN</span>
                 </button>
 
-                <router-link to='/' class="bordered_btn">
+                <router-link to='/askAdvise' class="bordered_btn">
                     طلب استشارة
                 </router-link>
 
-                <button class="btn main_btn"> تسجيل الدخول </button>
+                <button class="btn main_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"> تسجيل الدخول </button>
+
+                
+
             </section>
             
         </div>
     </section>
 
     <!-- slider  -->
-    <swiper />
+    <swiper v-if="isIndexPage" />
   </section>
+
+    <signInModal />
+
 </template>
 
 <script>
 import swiper from './homeSwiper.vue'
+import signInModal from '../auth/signInModal.vue'
 export default {
+    data(){
+        return{
+            home : true
+        }
+    },
     components:{
-        swiper
+        swiper,
+        signInModal
+    },
+    methods:{
+        switchLang(){
+            let lang = 'ar';
+            if(this.$i18n.locale == 'ar'){
+                lang = 'en';
+                this.arabic = false;
+            }
+
+            if(localStorage.getItem('locale')){
+                localStorage.removeItem('locale');
+            }
+
+            localStorage.setItem('locale' ,lang);
+            this.arabic = true;
+
+            location.reload()
+        },
+    },
+    computed:{
+        isIndexPage() {
+            return this.$route.path === '/';
+        }
+
     }
 }
 </script>
@@ -154,13 +192,7 @@ export default {
                     margin: 0 10px;
                 }
             }
-            .social_media{
-                img{
-                    width: 20px;
-                    height: 20px;
-                    margin: 0 10px;
-                }
-            }
+            
         }
 
         .navbar-collapse{
@@ -185,15 +217,16 @@ export default {
         display: none !important;
     }
     .hoveredDrop{
-        position: absolute;
-        right: 106%;
-        top: -48px;
-        opacity: 0;
-        transition: 0.3s all;
-        list-style: none;
-        width: 190px;
-        height: 138px;
-        border-radius: 9px;
+            position: absolute;
+    right: 112%;
+    top: -48px;
+    opacity: 0;
+    transition: 0.3s all;
+    list-style: none;
+    width: 190px;
+    height: 138px;
+    border-radius: 9px;
+    background: #fff;
     }
     .hoveredLink:hover .hoveredDrop{
         opacity: 1;
@@ -243,4 +276,11 @@ export default {
         align-items: center;
     }
 
+.social_media{
+                img{
+                    width: 20px;
+                    height: 20px;
+                    margin: 0 10px;
+                }
+            }
 </style>
