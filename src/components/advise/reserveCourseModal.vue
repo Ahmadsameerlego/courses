@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <p class="fw-6 mb-2">اختر مدة الجلسة</p>
+                        <p class="fw-6 mb-2 mt-3">اختر مدة الجلسة</p>
 
                         <div class="d-flex">
                             <div class="single_filed position-relative">
@@ -69,7 +69,7 @@
                                 <label for="" class="singleCheck">
                                     <i class="fa-regular fa-circle circleCheck"></i>
                                     <i class="fa-solid fa-circle-check trueCheck"></i>
-                                    <span>خدمات تطوير الويب والبيانات</span>
+                                    <span>60 دقيقة <span class="fw-bold">(جنيه 400)</span></span>
                                 </label>
                             </div>
                             <div class="single_filed position-relative">
@@ -77,7 +77,7 @@
                                 <label for="" class="singleCheck">
                                     <i class="fa-regular fa-circle circleCheck"></i>
                                     <i class="fa-solid fa-circle-check trueCheck"></i>
-                                    <span>خدمات تطوير الويب والبيانات</span>
+                                    <span>60 دقيقة <span class="fw-bold">(جنيه 400)</span></span>
                                 </label>
                             </div>
 
@@ -94,6 +94,12 @@
                             </div>
                         </div>
                     </section>
+
+
+                    <div class="d-flex justify-content-between mt-4 mb-3 px-3 sub_btns">
+                        <button class="btn bordered_btn w-50 mx-3"> الغاء </button>
+                        <button class="btn main_btn w-50"> تأكيد </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,6 +132,7 @@ export default {
         top: 0;
         right: 0;
         opacity: 0;
+        z-index: 999;
     }
     .labelRadio{
         display: flex;
@@ -137,7 +144,7 @@ export default {
         &::before{
             content: "";
             position: absolute;
-            width: 117%;
+            width: 132%;
             height: 150%;
             top: -13px;
             margin: 3px;
@@ -195,12 +202,24 @@ export default {
     }
     .single_filed {
         margin: 0 7px 7px 7px;
+    }   
+    .sub_btns{
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
     }
-
 </style>
 
 <style>
     .dp__outer_menu_wrap{
         width:100% !important;
+    }
+    .dp__cell_inner {
+        background: #ccc !important;
+        border-radius: 50% !important;
+    }
+    .dp__cell_inner.dp__pointer.dp__active_date{
+        background: #c40f3d !important;
+        border: 1px solid #c40f3d !important;
+         border-radius: 50%;
     }
 </style>

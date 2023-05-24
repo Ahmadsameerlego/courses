@@ -5,6 +5,7 @@ import OurServices from '../views/OurServices.vue'
 import singleService from '../views/singleService.vue'
 import singleAdviser from '../views/singleAdviser.vue'
 import singleCourse from '../views/reserveCoruse.vue'
+import userProfile from '../views/userProfile.vue'
 const routes = [
   {
     path: '/',
@@ -35,6 +36,11 @@ const routes = [
     path : '/singleCourse/:id',
     name : 'singleCourse',
     component : singleCourse
+  },
+  {
+    path : '/userProfile',
+    name : 'userProfile',
+    component : userProfile
   }
 ]
 

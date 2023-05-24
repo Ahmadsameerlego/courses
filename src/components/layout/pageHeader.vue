@@ -111,17 +111,73 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
 
+                <!-- search  -->
+                <button class="btn searchBtn">
+                    <i class="fa-solid fa-bell mainColor"></i>
+                </button>
+                <!-- profile  -->
+                <button style="padding:6px" class="btn searchBtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img :src="require('@/assets/imgs/Background (1).png')" class="profileImage" alt="">
+                </button>
+                
+                <!-- profile dropdown  -->
+                <ul class="dropdown-menu boxShadow border-none" aria-labelledby="dropdownMenuButton1" style="width:20%">
+                    <div class="d-flex align-items-center border-bottom pt-2 mx-2">
+                        <img :src="require('@/assets/imgs/Background (1).png')" class="profileImage mx-2" alt="">
+                        <div>
+                            <h6 class="fw-6 text-end"> أحمد سمير </h6>
+                            <p class="text-muted mb-0"> ahmad@gmail.com </p>
+                        </div>
+                    </div>
+                    <li class="border-bottom mx-2 pt-2 pb-2">
+                        <router-link class="dropdown-item align-items-center d-flex" to="/userProfile">
+                            <img :src="require('@/assets/imgs/u1.png')" class="" alt="">
+                            <span class="fw-6 mx-2">حسابي</span>
+                        </router-link>
+                    </li>
+                    <li class="border-bottom mx-2 pt-2 pb-2">
+                        <router-link class="dropdown-item align-items-center d-flex" to="/">
+                            <img :src="require('@/assets/imgs/Icon22.png')" class="" alt="">
+                            <span class="fw-6 mx-2">طلباتي</span>
+                        </router-link>
+                    </li>
+                    <li class="border-bottom mx-2 pt-2 pb-2">
+                        <router-link class="dropdown-item align-items-center d-flex" to="/">
+                            <img :src="require('@/assets/imgs/text.png')" class="" alt="">
+                            <span class="fw-6 mx-2">الفواتير</span>
+                        </router-link>
+                    </li>
+                    <li class="border-bottom mx-2 pt-2 pb-2">
+                        <router-link class="dropdown-item align-items-center d-flex" to="/">
+                            <img :src="require('@/assets/imgs/block.png')" class="" alt="">
+                            <span class="fw-6 mx-2">تغيير كلمة المرور</span>
+                        </router-link>
+                    </li>
+                    <li class="border-bottom mx-2 pt-2 pb-2">
+                        <router-link class="dropdown-item align-items-center d-flex" to="/">
+                            <img :src="require('@/assets/imgs/v1.png')" class="" alt="">
+                            <span class="fw-6 mx-2">اختيار اللغة</span>
+                        </router-link>
+                    </li>
+                    <li class="mx-2 pt-2 pb-2">
+                        <router-link class="dropdown-item align-items-center d-flex" to="/">
+                            <img :src="require('@/assets/imgs/logout.png')" class="" alt="">
+                            <span class="fw-6 mx-2">تسجيل الخروج</span>
+                        </router-link>
+                    </li>
+                </ul>
+
                 <!-- lang  -->
-                <button class="btn langBtn" @click="switchLang">
+                <!-- <button class="btn langBtn" @click="switchLang">
                     <span v-if="$i18n.locale=='en'" >AR</span>
                     <span v-else-if="$i18n.locale=='ar'" >EN</span>
-                </button>
+                </button> -->
 
                 <router-link to='/askAdvise' class="bordered_btn">
                     طلب استشارة
                 </router-link>
 
-                <button class="btn main_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"> تسجيل الدخول </button>
+                <!-- <button class="btn main_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"> تسجيل الدخول </button> -->
 
                 
 
@@ -179,6 +235,12 @@ export default {
 </script>
 
 <style lang="scss">
+.border-bottom{
+    border-bottom: 1px solid #ccc;
+}
+.border-none{
+    border: none !important;
+}
     #header{
         .header_top{
             background-color: #333132;
@@ -283,4 +345,8 @@ export default {
                     margin: 0 10px;
                 }
             }
+.profileImage{ 
+    width: 35px;
+    height:35px;
+}            
 </style>
