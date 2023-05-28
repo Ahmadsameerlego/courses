@@ -27,10 +27,16 @@ import '@vuepic/vue-datepicker/dist/main.css'
 
 // import axios
 import axios from 'axios';
-axios.defaults.baseURL = '';
+axios.defaults.baseURL = 'https://admin.advisersgate.com/api/';
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');   
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers.lang = sessionStorage.getItem('lang');
+axios.defaults.headers.lang = sessionStorage.getItem('locale');
+
+
+// import sweat alert 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 
 // // Vuetify
 // import 'vuetify/styles'
@@ -44,4 +50,4 @@ axios.defaults.baseURL = '';
 // })
 
 
-createApp(App).use(store).use(i18n).use(VueI18n).use(FontAwesomeIcon).use(router).component('VueDatePicker', VueDatePicker).component('v-otp-input', VOtpInput).mount('#app')
+createApp(App).use(store).use(i18n).use(VueI18n).use(VueSweetalert2).use(FontAwesomeIcon).use(router).component('VueDatePicker', VueDatePicker).component('v-otp-input', VOtpInput).mount('#app')

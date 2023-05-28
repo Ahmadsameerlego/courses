@@ -6,6 +6,7 @@
       tabindex="-1"
       aria-labelledby="signUpLabel"
       aria-hidden="true"
+      
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -22,46 +23,15 @@
                     <div class="interstFields">
                         <!-- single check  -->
 
-                        <div class="single_filed position-relative">
-                            <input type="checkbox" name="" id="" class="checkIntrest">
+                        <div class="single_filed position-relative" v-for="cat in categories" :key="cat.id">
+                            <input type="checkbox" name="category_ids[]" :value="cat.id" v-model="categoriesSelected" id="" class="checkIntrest">
                             <label for="" class="singleCheck">
                                 <i class="fa-regular fa-circle circleCheck"></i>
                                 <i class="fa-solid fa-circle-check trueCheck"></i>
-                                <span>تصميم الجرافيك</span>
+                                <span> {{ cat.name }} </span>
                             </label>
                         </div>
-                        <div class="single_filed position-relative">
-                            <input type="checkbox" name="" id="" class="checkIntrest">
-                            <label for="" class="singleCheck">
-                                <i class="fa-regular fa-circle circleCheck"></i>
-                                <i class="fa-solid fa-circle-check trueCheck"></i>
-                                <span>تصميم الجرافيك</span>
-                            </label>
-                        </div>
-                        <div class="single_filed position-relative">
-                            <input type="checkbox" name="" id="" class="checkIntrest">
-                            <label for="" class="singleCheck">
-                                <i class="fa-regular fa-circle circleCheck"></i>
-                                <i class="fa-solid fa-circle-check trueCheck"></i>
-                                <span>خدمات تطوير الويب والبيانات</span>
-                            </label>
-                        </div>
-                        <div class="single_filed position-relative">
-                            <input type="checkbox" name="" id="" class="checkIntrest">
-                            <label for="" class="singleCheck">
-                                <i class="fa-regular fa-circle circleCheck"></i>
-                                <i class="fa-solid fa-circle-check trueCheck"></i>
-                                <span>خدمات تطوير الويب والبيانات</span>
-                            </label>
-                        </div>
-                        <div class="single_filed position-relative">
-                            <input type="checkbox" name="" id="" class="checkIntrest">
-                            <label for="" class="singleCheck">
-                                <i class="fa-regular fa-circle circleCheck"></i>
-                                <i class="fa-solid fa-circle-check trueCheck"></i>
-                                <span>تصميم الجرافيك</span>
-                            </label>
-                        </div>
+                        
                     </div>
 
                     <div class="d-flex justify-content-center mt-2 mb-3">
@@ -69,7 +39,7 @@
                             في وقت لاحق 
                         </button>
 
-                        <button class="btn main_btn w-50" @click.prevent="AddInters"> أضف </button>
+                        <button class="btn main_btn w-50" @click.prevent="AddInters" :disabled="disabled"> أضف </button>
 
                     </div>
                 </form>
@@ -84,23 +54,89 @@
 </template>
 
 <script>
-import sendOtpModalVue from './sendOtpModal.vue'
+import sendOtpModalVue from './sendOtpModal.vue';
+import axios from 'axios';
 
 export default {
+    data(){
+        return{
+            categories : [],
+            categoriesSelected : [],
+            disabled : true 
+        }
+    },
+
+    watch:{
+        categoriesSelected(){
+            console.log(this.categoriesSelected)
+
+            if( this.categoriesSelected.length == 0 ){
+                this.disabled = true ; 
+            }else{
+                this.disabled = false ; 
+            }
+        }
+    },
     methods:{
-        AddInters(){
-            document.querySelector('#intersts').style.display = 'none'
-            document.querySelector('#otp').style.display = 'block'
-            document.querySelector('#otp').classList.add('show')
+        async AddInters(){
+            
+            this.disabled = true ;
+            const fd = new FormData();
+            for( let i = 0 ; i < this.categoriesSelected.length ; i++ ){
+                fd.append('category_ids[]', this.categoriesSelected[i] );
+            }
+            await axios.post('add-to-interests', fd , {
+                headers : {
+                    Authorization:  `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then( (res)=>{
+                if( res.data.key == 'success' ){
+                    this.$swal({
+                        icon: 'success',
+                        title: res.data.msg,
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+
+                    setTimeout(() => {
+                        document.querySelector('#intersts').style.display = 'none';
+                        location.reload()
+                    }, 2000);
+                }else{
+                    this.$swal({
+                    icon: 'error',
+                    title: res.data.msg,
+                    timer: 2000,
+                    showConfirmButton: false,
+                    });
+                }
+
+                this.disabled = false ;
+            } )
+
         },
         anotherTime(){
             document.querySelector('#intersts').style.display = 'none';
-            document.querySelector('#otp').style.display = 'block'
-            document.querySelector('#otp').classList.add('show')
-        }
+        },
+
+
+        // get categories 
+        async getCategories(){
+            await axios.get('categories')
+            .then( (res)=>{
+                this.categories = res.data.data
+            } )
+        },
+
+
+
     },
     components:{
         sendOtpModalVue
+    },
+    mounted(){
+        this.getCategories()
     }
 }
 </script>

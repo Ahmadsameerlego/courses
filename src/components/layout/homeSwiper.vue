@@ -4,8 +4,6 @@
             <swiper
                 :modules="modules"
                 :slides-per-view="1"
-                @swiper="onSwiper"
-                @slideChange="onSlideChange"
                 :pagination="{ clickable: true }"
                 effect="fade"
                 :autoplay="{
@@ -177,15 +175,8 @@ export default {
         SwiperSlide,
     },
     setup() {
-      const onSwiper = (swiper) => {
-        console.log(swiper);
-      };
-      const onSlideChange = () => {
-        console.log('slide change');
-      };
+      
       return {
-        onSwiper,
-        onSlideChange,
         modules: [Pagination, A11y, Autoplay ],
 
       };

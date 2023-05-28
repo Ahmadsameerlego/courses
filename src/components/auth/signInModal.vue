@@ -37,22 +37,27 @@
                     توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل
                   </p>
 
-                  <form class="loginForm">
+                  <form class="loginForm" ref="login" @submit.prevent="login">
                     <div class="form-group position-relative">
-                      <select
-                        class="form-select mb-3"
-                        aria-label="Default select example"
-                      >
-                        <option selected hidden disabled>نوع الدخول</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                      </select>
-                      <i class="fa-solid fa-chevron-down"></i>
-                    </div>
+                        <select
+                          class="form-select mb-3"
+                          aria-label="Default select example"
+                          name="type"
+                          v-model="type"
+                        >
+                          <option selected hidden disabled value="">
+                            نوع الدخول
+                          </option>
+                          <option value="0"> عميل </option>
+                          <option value="1"> استشاري </option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down"></i>
+                      </div>
 
                     <input
                       type="email"
-                      name=""
+                      name="email"
+                      v-model="email"
                       class="form-control mb-3"
                       placeholder="البريد الإلكتروني"
                     />
@@ -60,7 +65,8 @@
                     <div class="form-group position-relative">
                       <input
                         :type="passwordType"
-                        name=""
+                        name="password"
+                        v-model="password"
                         class="form-control mb-3"
                         placeholder="كلمة السر"
                       />
@@ -105,7 +111,7 @@
                       </div>
                     </div>
 
-                    <button class="main_btn w-100 btn pt-2 pb-2 mt-3">
+                    <button class="main_btn w-100 btn pt-2 pb-2 mt-3" :disabled="disabled">
                       تسجيل الدخول
                     </button>
                   </form>
@@ -151,11 +157,16 @@
 <script>
 import forgetPasswordVue from './forgetPassword.vue';
 import signUpModalVue from './signUpModal.vue';
+import axios from 'axios'
 export default {
   data() {
     return {
       passwordType: "password",
       eyeToggle: false,
+      disabled : false,
+      type : '',
+      email : '',
+      password : ''
     };
   },
   methods: {
@@ -167,6 +178,49 @@ export default {
       } else {
         this.passwordType = "password";
       }
+    },
+
+
+    // sign up 
+    async login(){
+      this.disabled = true;
+      const fd = new FormData(this.$refs.login);
+      await axios.post('sign-in', fd)
+      .then( (res)=>{
+        if( res.data.key == 'success' ){
+
+          this.$swal({
+              icon: 'success',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+          });
+
+
+          localStorage.setItem('token', res.data.data.token)
+
+          setTimeout(() => {
+                document.querySelector('#exampleModal').style.display = 'none';
+                location.reload()
+                
+                if( this.type == '0' ){
+                  localStorage.setItem('userType', 'client')
+                }else if(this.type == '1'){
+                  localStorage.setItem('userType', 'adviser')
+                }
+          }, 2000);
+        }else{
+          this.$swal({
+              icon: 'error',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+
+          });
+        }
+
+        this.disabled = false;
+      } )
     },
   },
   components: {

@@ -46,44 +46,68 @@
                     </div>
                     <h4 class="fw-bold">مرحبآ بك, تسجيل حساب جديد؟</h4>
 
-                    <form class="loginForm" @submit.prevent="signUp">
+                    <form class="loginForm" ref="registerForm" @submit.prevent="signUp">
                       <div class="form-group position-relative">
                         <select
                           class="form-select mb-3"
                           aria-label="Default select example"
+                          name="type"
+                          v-model="type"
                         >
-                          <option selected hidden disabled>
+                          <option selected hidden disabled value="">
                             نوع الدخول
                           </option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
+                          <option value="0"> عميل </option>
+                          <option value="1"> استشاري </option>
                         </select>
                         <i class="fa-solid fa-chevron-down"></i>
                       </div>
 
                       <input
                         type="text"
-                        name=""
+                        name="name"
+                        v-model="name"
                         class="form-control mb-3"
                         placeholder="الأسم كامل"
+                      
                       />
                       <input
                         type="email"
-                        name=""
+                        name="email"
+                        v-model="email"
                         class="form-control mb-3"
                         placeholder="البريد الإلكتروني"
+                        
                       />
-                      <input
+
+                      <section class="position-relative">
+                        <input
                         type="tel"
-                        name=""
+                        name="phone"
+                        v-model="phone"
                         class="form-control mb-3"
                         placeholder="رقم الجوال"
                       />
-
+                      <div class="form-group countries">
+                        <select
+                          class="form-select mb-3"
+                          aria-label="Default select example"
+                          name="country_code"
+                          v-model="country_code"
+                        >
+                          <option selected hidden disabled>
+                            كود الدولة
+                          </option>
+                          <option v-for="country in countries" :key="country.id" :value="country.key"> {{ country.key }}{{ country.name }} </option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down"></i>
+                      </div>
+                      </section>
                       <div class="form-group position-relative">
                         <input
                           :type="passwordType"
-                          name=""
+                          name="password"
+                          v-model="password"
                           class="form-control mb-3"
                           placeholder="كلمة السر"
                         />
@@ -113,7 +137,7 @@
                           <input
                             class="form-check-input"
                             type="checkbox"
-                            value=""
+                            v-model="termsCondition"
                             id="flexCheckDefault"
                           />
                         </div>
@@ -121,8 +145,8 @@
                         
                       </div>
 
-                      <button class="main_btn w-100 btn pt-2 pb-2 mt-3">
-                        تسجيل الدخول
+                      <button class="main_btn w-100 btn pt-2 pb-2 mt-3" :disabled="disabled">
+                        تسجيل حساب
                       </button>
                     </form>
 
@@ -163,20 +187,95 @@
     </div>
 
     <interstsModalVue />
+        <!-- otp modal  -->
+    <sendOtpModalVue />
+
 
 </template>
 
 <script>
 import interstsModalVue from './interstsModal.vue';
+import sendOtpModalVue from './sendOtpModal.vue'
 
+import axios from 'axios';
 export default {
   data() {
     return {
       passwordType: "password",
       eyeToggle: false,
+      termsCondition : false,
+      disabled : true,
+      name : '',
+      phone : '',
+      email : '',
+      password : '',
+      type : '',
+      country_code : '',
+      countries : []
     };
   },
+
+  watch:{
+    termsCondition(){
+      if( this.termsCondition == true ){
+        this.disabled = false ;
+      }else{
+        this.disabled = true ;
+      }
+    }
+  },
   methods: {
+    // sign up 
+    async signUp(){
+      this.disabled = true;
+      const fd = new FormData(this.$refs.registerForm);
+      await axios.post('sign-up', fd)
+      .then( (res)=>{
+        if( res.data.key == 'success' ){
+
+          this.$swal({
+              icon: 'success',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+          });
+
+
+          localStorage.setItem('email', this.email);
+          localStorage.setItem('token', res.data.data.user.token)
+
+          setTimeout(() => {
+                document.querySelector('#signUp').style.display = 'none';
+                document.querySelector('#otp').style.display = 'block'
+                document.querySelector('#otp').classList.add('show');
+                
+                if( this.type == '0' ){
+                  localStorage.setItem('userType', 'client')
+                }else if(this.type == '1'){
+                  localStorage.setItem('userType', 'adviser')
+                }
+          }, 2000);
+        }else{
+          this.$swal({
+              icon: 'error',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+
+          });
+        }
+
+        this.disabled = false;
+      } )
+    },
+
+    // get countries 
+    async getCountries(){
+      await axios.get('countries')
+      .then( (res)=>{
+        this.countries = res.data.data
+      } )
+    },
     switchVisibility() {
       this.eyeToggle = !this.eyeToggle;
 
@@ -186,14 +285,14 @@ export default {
         this.passwordType = "password";
       }
     },
-    signUp(){
-       document.querySelector('#signUp').style.display = 'none';
-       document.querySelector('#intersts').style.display = 'block';
-       document.querySelector('#intersts').classList.add('show');
-    }
+
   },
   components:{
-    interstsModalVue
+    interstsModalVue,
+    sendOtpModalVue
+  },
+  mounted(){
+    this.getCountries();
   }
 };
 </script>
@@ -287,6 +386,10 @@ export default {
   bottom: 30px;
   right: 30px;
 }
+.main_btn:disabled{
+  opacity: .4 !important;
+  cursor: not-allowed !important;
+}
 </style>
 
 <style lang="scss" scoped>
@@ -296,5 +399,13 @@ export default {
     object-fit: cover;
     height: 733px;
   }
+}
+
+.countries{
+  position: absolute;
+  left:0;
+  top: 0;
+  width:120px;
+  height:100%;
 }
 </style>

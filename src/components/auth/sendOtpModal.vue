@@ -32,16 +32,17 @@
                   </div>
                   <h5 class="fw-6">التحقق من الرمز</h5>
                   <p class="fs-15 o-5">
-                        أدخل الرمز الذي أرسلناه إلى بريدك الإلكتروني Mohxxx@gmail.com                  
+                        أدخل الرمز الذي أرسلناه إلى بريدك الإلكتروني {{ email }}                 
                         </p>
 
-                  <form class="loginForm" @submit.prevent="sendCode" style="border-bottom:none;">
+                  <form class="loginForm" ref="sendCode" @submit.prevent="sendCode" style="border-bottom:none;">
                     
 
                     <div style="display: flex; flex-direction: row;justify-content:space-evenly">
                         <v-otp-input
                             ref="otpInput"
-                            v-model:value="bindModal"
+                            v-model:value="code"
+                            name="code"
                             input-classes="otp-input"
                             separator=""
                             :num-inputs="4"
@@ -56,7 +57,7 @@
 
                    
 
-                    <button class="main_btn w-100 btn pt-2 pb-2 mt-3">
+                    <button class="main_btn w-100 btn pt-2 pb-2 mt-3" :disabled="disabled">
                       إرسال الرمز
                     </button>
                   </form>
@@ -83,22 +84,84 @@
 
   <!-- new password  -->
   <newPasswordVue />
+
+  <interstsModalVue />
 </template>
 
 <script>
-import newPasswordVue from './newPassword.vue'
+import newPasswordVue from './newPassword.vue';
+import interstsModalVue from './interstsModal.vue';
+import axios from 'axios';
 
 export default {
-    methods:{
-        sendCode(){
-
-            document.querySelector('#forgetPassword').style.display = 'none';
-            document.querySelector('#newPassword').style.display = 'block';
-            document.querySelector('#newPassword').classList.add('show');
+    data(){
+      return{
+        email : '',
+        disabled : true,
+        code : ''
+      }
+    },
+    watch:{
+      code(){
+        if( this.code == '' ){
+          this.disabled = true;
+        }else{
+          this.disabled = false ;
         }
+      }
+    },
+    methods:{
+
+        async sendCode(){
+          this.disabled = true;
+          const fd = new FormData();
+          fd.append('email', localStorage.getItem('email'));
+          fd.append('code', this.code);
+          await axios.post('activate?_method=patch', fd)
+          .then( (res)=>{
+            if( res.data.key == 'success' ){
+
+              this.$swal({
+                  icon: 'success',
+                  title: res.data.msg,
+                  timer: 2000,
+                  showConfirmButton: false,
+              });
+
+              localStorage.setItem('token', res.data.data.user.token)
+              setTimeout(() => {
+            
+
+                    if( localStorage.getItem('userType') == 'client' ){
+                      document.querySelector('#intersts').style.display = 'block';
+                      document.querySelector('#intersts').classList.add('show');
+                      document.querySelector('#otp').style.display = 'none';
+                    }else if(localStorage.getItem('userType') == 'adviser'){
+                      document.querySelector('#otp').style.display = 'none';
+                    }
+              }, 2000);
+            }else{
+              this.$swal({
+                  icon: 'error',
+                  title: res.data.msg,
+                  timer: 2000,
+                  showConfirmButton: false,
+
+              });
+            }
+
+            this.disabled = false;
+          } )
+        },
+    },
+    updated(){
+      if( localStorage.getItem('email') ){
+        this.email = localStorage.getItem('email');
+      }
     },
     components:{
-        newPasswordVue
+        newPasswordVue,
+        interstsModalVue
     }
 }
 </script>

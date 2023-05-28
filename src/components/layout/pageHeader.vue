@@ -112,13 +112,13 @@
                 </button>
 
                 <!-- search  -->
-                <button class="btn searchBtn">
+                <!-- <button class="btn searchBtn">
                     <i class="fa-solid fa-bell mainColor"></i>
-                </button>
+                </button> -->
                 <!-- profile  -->
-                <button style="padding:6px" class="btn searchBtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- <button style="padding:6px" class="btn searchBtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img :src="require('@/assets/imgs/Background (1).png')" class="profileImage" alt="">
-                </button>
+                </button> -->
                 
                 <!-- profile dropdown  -->
                 <ul class="dropdown-menu boxShadow border-none" aria-labelledby="dropdownMenuButton1" style="width:20%">
@@ -168,16 +168,16 @@
                 </ul>
 
                 <!-- lang  -->
-                <!-- <button class="btn langBtn" @click="switchLang">
+                <button class="btn langBtn" @click="switchLang">
                     <span v-if="$i18n.locale=='en'" >AR</span>
                     <span v-else-if="$i18n.locale=='ar'" >EN</span>
-                </button> -->
+                </button>
 
                 <router-link to='/askAdvise' class="bordered_btn">
                     طلب استشارة
                 </router-link>
 
-                <!-- <button class="btn main_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"> تسجيل الدخول </button> -->
+                <button class="btn main_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"> تسجيل الدخول </button>
 
                 
 
