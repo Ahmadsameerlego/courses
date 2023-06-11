@@ -8,10 +8,10 @@
                 </div>
 
                 <div class="col-md-6">
-                    <form >
+                    <form @submit.prevent="subscribe()" ref="subscribe">
                         <div class="d-flex justify-content-end  ">
-                            <input type="email" class="form-control w-50" placeholder="البريد الاكتروني">
-                            <button class="btn main_btn mx-3"> اشتراك </button>
+                            <input type="email" name="email" v-model="email" class="form-control w-50" placeholder="البريد الاكتروني">
+                            <button class="btn main_btn mx-3" :disabled="disabled"> اشتراك </button>
                         </div>
                     </form>
                 </div>
@@ -23,8 +23,53 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-
+    data(){
+        return{
+            disabled : true,
+            email : ''
+        }
+    },
+    watch:{
+        email(){
+            if( this.email !== '' ){
+                this.disabled = false
+            }else{
+                this.disabled = true
+            }
+        }
+    },
+    methods:{
+        async subscribe(){
+            this.disabled = true ;
+            const fd = new FormData(this.$refs.subscribe)
+            await axios.post('add-to-newsletters', fd , {
+                headers : {
+                    Authorization:  `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then( (res)=>{
+                if( res.data.key == 'success' ){
+                    this.$swal({
+                        icon: 'success',
+                        title: res.data.msg,
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    this.email = ''
+                }else{
+                    this.$swal({
+                    icon: 'error',
+                    title: res.data.msg,
+                    timer: 2000,
+                    showConfirmButton: false,
+                    });
+                }
+                this.disabled = false ;
+            } )
+        }
+    }
 }
 </script>
 

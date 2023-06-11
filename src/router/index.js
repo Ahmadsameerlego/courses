@@ -6,6 +6,10 @@ import singleService from '../views/singleService.vue'
 import singleAdviser from '../views/singleAdviser.vue'
 import singleCourse from '../views/reserveCoruse.vue'
 import userProfile from '../views/userProfile.vue'
+import AboutUs from '../views/AboutUs.vue';
+import subscribes from '../views/subscribesTypes.vue';
+import contactUs from '../views/ContactUS.vue';
+import advisorProfile from '../views/advisorProfile.vue'
 const routes = [
   {
     path: '/',
@@ -18,7 +22,7 @@ const routes = [
     component : askAdvise
   },
   {
-    path: '/OurServices',
+    path: '/OurServices/:id',
     name : 'OurServices',
     component : OurServices
   },
@@ -41,6 +45,26 @@ const routes = [
     path : '/userProfile',
     name : 'userProfile',
     component : userProfile
+  },
+  {
+    path: '/AboutUs',
+    name : 'AboutUs',
+    component : AboutUs
+  },
+  {
+    path : '/subscribes',
+    name : 'subscribes',
+    component : subscribes
+  },
+  {
+    path : '/contactUs',
+    name : 'contactUs',
+    component : contactUs
+  },
+  {
+    path: '/advisorProfile',
+    name : 'advisorProfile',
+    component : advisorProfile
   }
 ]
 

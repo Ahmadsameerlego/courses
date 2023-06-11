@@ -19,7 +19,7 @@
             </div>
 
             <div class="abs_bar_top">
-              <img :src="require('@/assets/imgs/Vector (3).png')" alt="" />
+              
             </div>
             <div class="abs_bar_bottom">
               <img :src="require('@/assets/imgs/Vector@2x.png')" alt="" />
@@ -115,7 +115,13 @@
                       تسجيل الدخول
                     </button>
                   </form>
-
+                  <div class="loginWith mt-2">
+                          <p class="text-center">قم بالتسجيل من خلال</p>
+                          <div class="d-flex justify-content-center">
+                            <i class="fa-brands fa-facebook mainColor" style="font-size:16px; margin:0 15px"></i>
+                            <i class="fa-brands fa-google mainColor" style="font-size:16px"></i>
+                          </div>
+                        </div>
                   <div class="haveNoAcc d-flex justify-content-center mt-3">
                     <p class="fs-15 fw-6">
                       لا تمتلك حساب ؟
@@ -169,6 +175,22 @@ export default {
       password : ''
     };
   },
+  watch:{
+    // password(){
+    //   if( this.password == '' || this.email == '' || this.type == '' ){
+    //     this.disabled = true ;
+    //   }else{
+    //     this.disabled = false ;
+    //   }
+    // },
+    // email(){
+    //   if( this.password == '' || this.email == '' || this.type == '' ){
+    //     this.disabled = true ;
+    //   }else{
+    //     this.disabled = false ;
+    //   }
+    // }
+  },
   methods: {
     switchVisibility() {
       this.eyeToggle = !this.eyeToggle;
@@ -198,6 +220,9 @@ export default {
 
 
           localStorage.setItem('token', res.data.data.token)
+          let user = res.data.data
+          localStorage.setItem('user', JSON.stringify(user))
+
 
           setTimeout(() => {
                 document.querySelector('#exampleModal').style.display = 'none';
@@ -300,7 +325,7 @@ export default {
   img {
     width: 100%;
     object-fit: cover;
-    height: 660px;
+    height: auto;
   }
 }
 .modal-body {

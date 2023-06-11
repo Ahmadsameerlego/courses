@@ -7,18 +7,18 @@
                         <!-- adviser main info  -->
                         <div class="mainInfo d-flex">
                             <div class="infoImage">
-                                <img :src="require('@/assets/imgs/pexels-andrea-piacquadio-3978564 3 (2).png')" alt="">
+                                <img :src="consultant.image" alt="">
                             </div>
                             <div class="details">
-                                <h5 class="fw-bold"> أحمد سمير </h5>
-                                <p class="text-muted fs-15"> تصميم جرافيك </p>
+                                <h5 class="fw-bold"> {{ consultant.name }} </h5>
+                                <p class="text-muted fs-15"> {{ category.name }} </p>
                                 <div class="rate">
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <span> 5.0 </span>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:consultant.rate==1||consultant.rate==2||consultant.rate==3||consultant.rate==4||consultant.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:consultant.rate==2||consultant.rate==3||consultant.rate==4||consultant.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:consultant.rate==3||consultant.rate==4||consultant.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:consultant.rate==4||consultant.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:consultant.rate==5}"></i>
+                                    <span> {{ consultant.rate }} </span>
                                 </div>
                             </div>
 
@@ -32,9 +32,10 @@
                             <h6 class="mb-3 fw-bold befored_title mainColor">
                                 الخبرات
                             </h6>
-                            <p class="o-5">
-                                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل 
+                            <p class="o-5" v-if="consultant.bio!==null">
+                                {{ consultant.bio }}
                             </p>
+                            <p v-else> لم يقم الاستشاري بإضافة سيرة ذاتية </p>
                         </div>
                     </div>
 
@@ -46,7 +47,7 @@
                                     <img :src="require('@/assets/imgs/Vector.png')" alt="">
                                     <span class="whiteColor">المشاهدات</span>
                                 </div>
-                                <span class="whiteColor fw-bold">1000</span>
+                                <span class="whiteColor fw-bold"> {{ consultant.num_views }} </span>
                             </div>
                             <!-- single statistics  -->
                             <div class="d-flex justify-content-between mb-2">
@@ -54,7 +55,7 @@
                                     <img :src="require('@/assets/imgs/briefcase.png')" alt="">
                                     <span class="whiteColor">الاستشارات</span>
                                 </div>
-                                <span class="whiteColor fw-bold">1000</span>
+                                <span class="whiteColor fw-bold">{{ consultant.num_consultations }}</span>
                             </div>
                             <!-- single statistics  -->
                             <div class="d-flex justify-content-between mb-2">
@@ -62,7 +63,7 @@
                                     <img :src="require('@/assets/imgs/personalcard.png')" alt="">
                                     <span class="whiteColor">متلقي الاستشارات</span>
                                 </div>
-                                <span class="whiteColor fw-bold">1000</span>
+                                <span class="whiteColor fw-bold">{{ consultant.num_consultations_persons }}</span>
                             </div>
                             <!-- single statistics  -->
                             <div class="d-flex justify-content-between mb-2">
@@ -70,7 +71,7 @@
                                     <img :src="require('@/assets/imgs/teacher_white.png')" alt="">
                                     <span class="whiteColor">الدورات التدريبية</span>
                                 </div>
-                                <span class="whiteColor fw-bold">1000</span>
+                                <span class="whiteColor fw-bold">{{ consultant.num_courses }}</span>
                             </div>
 
                             
@@ -92,10 +93,14 @@
                 <h6 class="mb-3 fw-bold befored_title mainColor">
                      أوقات العمل
                 </h6>
+                <section v-if="times.length>0">
+                    <p class="fw-6" v-for="time in times" :key="time.id"> {{ time.day }} من {{ time.from_time }} الى {{ time.to_time }} </p>
+                </section>
 
-                <p class="fw-6">الاثنين 9:00 ص إلى 9:00 م</p>
-                <p class="fw-6">الاثنين 9:00 ص إلى 9:00 م</p>
-                <p class="fw-6">الاثنين 9:00 ص إلى 9:00 م</p>
+                <section v-else class="notFound mt-2 mb-2 text-center">
+                    لا توجد أوقات عمل مضافة
+                </section>
+                
             </div>
             <!-- الدورات التدريبية  -->
             <div class="top_part mt-4 mb-3">
@@ -103,42 +108,45 @@
                      الدورات التدريبية
                 </h6>
 
-                <div class="row">
-                    <div class="col-md-4 mb-2">
+                <div class="row" v-if="courses.length>0">
+                    <div class="col-md-4 mb-2" v-for="course in courses" :key="course.id">
                         <!-- single course  -->
                         <div class="single_course boxShadow">
                             <!-- course image  -->
                             <div class="course_image">
-                                <img :src="require('@/assets/imgs/Rectangle 2186.png')" alt="">
+                                <img :src="course.image" alt="">
                             </div>
                             <!-- course details  -->
                             <div class="course_details mx-3">
-                                <h6 class="fw-bold mt-2">تعلم كيفية  استخدام الرسم التوضيحي الرقمي</h6>
+                                <h6 class="fw-bold mt-2"> {{ course.title }} </h6>
 
                                 <div class="d-flex">
-                                    <p class="fw-6">أحمد سمير</p>
+                                    <p class="fw-6"> {{ course.user.name }} </p>
                                     <div class="course_time">
-                                        <span class="fw-6 mainColor"> 40 دقيقة </span>
+                                        <span class="fw-6 mainColor"> {{ course.period }} </span>
                                     </div>
-                                    <p class="fw-6 text-muted"> 120 طالب </p>
+                                    <p class="fw-6 text-muted"> {{ course.num_students }} طالب </p>
                                 </div>
                             </div>
 
                             <!-- reserve course  -->
                             <div class="mx-3 d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h6 class="fw-6 mainColor mb-2">200 جنية</h6>
-                                    <p class="fw-6 mainColor">600 جنية</p>
+                                    <h6 class="fw-6bold mainColor mb-2"> {{ course.offer_price }} </h6>
+                                    <p class="fw-6 mainColor"> {{ course.price }} </p>
                                 </div>
 
                                 <div>
-                                    <router-link to="/singleCourse/1" class="pt-2 pb-2 btn main_btn">
+                                    <router-link :to="'/singleCourse/'+course.id" class="pt-2 pb-2 btn main_btn">
                                         احجز الان
                                     </router-link>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="notFound text-center mt-2 mb-2" v-else>
+                    لا توجد كورسات الى الان
                 </div>
             </div>
             <!-- التقييمات  -->
@@ -147,7 +155,7 @@
                      التقييمات
                 </h6>
 
-                           <!-- start slider  -->
+                <!-- start slider  -->
                 <swiper
                     :modules="modules"
                     :slides-per-view="3"
@@ -162,9 +170,10 @@
                     
                     :loop="true"
                     class="testSlide mt-5"
+                    v-if="reviews.length>0"
                 >
                     <!-- slide 1  -->
-                    <swiper-slide>
+                    <swiper-slide v-for="slide in reviews" :key="slide.id">
                         <!-- single slide  -->
                         <div class="single_slide boxShadow">
                             <div class="d-flex align-items-center">
@@ -188,80 +197,11 @@
                         </div>
                     </swiper-slide>
 
-                    <!-- slide 2  -->
-                    <swiper-slide>
-                        <!-- single slide  -->
-                        <div class="single_slide boxShadow">
-                            <div class="d-flex align-items-center">
-                                <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
-
-                                <div>
-                                    <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
-
-                                    <div class="d-flex">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-2">
-                                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
-                            </p>
-                        </div>
-                    </swiper-slide>
-
-                    <!-- slide  -->
-                    <swiper-slide>
-                    <!-- single slide  -->
-                    <div class="single_slide boxShadow">
-                        <div class="d-flex align-items-center">
-                            <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
-
-                            <div>
-                                <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
-
-                                <div class="d-flex">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="mt-2">
-                            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
-                        </p>
-                    </div>
-                    </swiper-slide>
-                    <!-- slide  -->
-                    <swiper-slide>
-                        <!-- single slide  -->
-                        <div class="single_slide boxShadow">
-                            <div class="d-flex align-items-center">
-                                <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
-
-                                <div>
-                                    <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
-
-                                    <div class="d-flex">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-2">
-                                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
-                            </p>
-                        </div>
-                    </swiper-slide>
+                    
                 </swiper>
+                <div class="notFound mt-2 mb-2 text-center" v-else>
+                    لا توجد تقييمات الى الان
+                </div>
             </div>
         </div>
     </section>
@@ -277,11 +217,19 @@
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
+import axios from 'axios';
 
 export default {
  data(){
         return{
-            rating : 5
+            rating : 5,
+            consultant : {},
+            category : {},
+            courses : [],
+            times : [],
+            user : {},
+            advisor_name : '',
+            reviews : []
         }
     },
     components:{
@@ -301,6 +249,25 @@ export default {
         modules: [ A11y, Autoplay ],
 
       };
+    },
+    methods:{
+        async getSingleAdviser(){
+            await axios.get(`consultant-profile/${this.$route.params.id}`)
+            .then( (res)=>{
+                this.consultant = res.data.data;
+                this.advisor_name = res.data.data.name;
+                if( res.data.data.category !== null ){
+                    this.category = res.data.data.category;
+                }
+                this.courses = res.data.data.courses;
+                this.reviews = res.data.data.reviews;
+                this.times = res.data.data.times;
+                this.$emit('loadAdviser', this.advisor_name)
+            } )
+        }
+    },
+    mounted(){
+        this.getSingleAdviser()
     },
 }
 </script>

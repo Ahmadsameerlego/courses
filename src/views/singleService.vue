@@ -1,6 +1,6 @@
 <template>
     <!-- shared header  -->
-    <singleCategoryHead />
+    <singleCategoryHead title="خدماتنا" desc="ابق على تواصل معنا" />
 
     <!-- filter operation  -->
     <advisersFilterVue />

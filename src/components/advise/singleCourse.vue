@@ -7,18 +7,18 @@
                         <!-- adviser main info  -->
                         <div class="mainInfo d-flex">
                             <div class="infoImage">
-                                <img :src="require('@/assets/imgs/pexels-andrea-piacquadio-3978564 3 (2).png')" alt="">
+                                <img :src="user.image" alt="">
                             </div>
                             <div class="details">
-                                <h5 class="fw-bold"> أحمد سمير </h5>
-                                <p class="text-muted fs-15"> تصميم جرافيك </p>
+                                <h5 class="fw-bold"> {{ user.name }} </h5>
+                                <p class="text-muted fs-15"> {{ course.title }} </p>
                                 <div class="rate">
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <i class="fa-solid fa-star gold text-muted"></i>
-                                    <span> 5.0 </span>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:user.rate==1||user.rate==2||user.rate==3||user.rate==4||user.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:user.rate==2||user.rate==3||user.rate==4||user.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:user.rate==3||user.rate==4||user.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:user.rate==4}||user.rate==5"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:user.rate==5}"></i>
+                                    <span> {{ user.rate }}</span>
                                 </div>
                             </div>
 
@@ -33,7 +33,7 @@
                                 ستتعلم في هذه الدورة التدريبية
                             </h6>
                             <p class="o-5">
-                                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل 
+                                {{ course.description }}
                             </p>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                     <img :src="require('@/assets/imgs/timer.png')" alt="">
                                     <span class="whiteColor">المدة</span>
                                 </div>
-                                <span class="whiteColor fw-bold">2 ساعة 39 دقيقة</span>
+                                <span class="whiteColor fw-bold"> {{ course.period }} </span>
                             </div>
                             <!-- single statistics  -->
                             <div class="d-flex justify-content-between mb-2">
@@ -54,7 +54,7 @@
                                     <img :src="require('@/assets/imgs/language-square.png')" alt="">
                                     <span class="whiteColor">لغة الدورة </span>
                                 </div>
-                                <span class="whiteColor fw-bold">العربية</span>
+                                <span class="whiteColor fw-bold"> {{ course.lang }} </span>
                             </div>
                             <!-- single statistics  -->
                             <div class="d-flex justify-content-between mb-2">
@@ -62,7 +62,7 @@
                                     <img :src="require('@/assets/imgs/moneys.png')" alt="">
                                     <span class="whiteColor">تكلفة الدورة</span>
                                 </div>
-                                <span class="whiteColor fw-bold">200 جنية</span>
+                                <span class="whiteColor fw-bold"> {{ course.price }} جنية  </span>
                             </div>
                             
 
@@ -86,38 +86,23 @@
                      محتوى الدورة التدريبية
                 </h6>
                 <!-- single course  -->
-                <div class="d-flex justify-content-between mb-2">
+                <div class="d-flex justify-content-between mb-2" v-for="lesson in lessons" :key="lesson.id">
                     <p class="fw-6">
-                        المحاضرة 1:مقدمة الدورة التدريبية
+                        المحاضرة {{ lesson.id }} : {{ lesson.title }}
                     </p>
                     <p class="fw-6">
-                        15 ديسمبر 2022 -الساعه 12 صباحا
+                        {{ lesson.date }}  - {{ lesson.time }}
                     </p>
                     <p class="fw-6">
-                        55  دقيقة
-                    </p>
-
-                    <router-link to="/" class="text-muted fw-6 joinCourseLink">
-                        <span>انضم للمحاضرة</span>
-                        <i class="fa-regular fa-eye"></i>
-                    </router-link>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <p class="fw-6">
-                        المحاضرة 1:مقدمة الدورة التدريبية
-                    </p>
-                    <p class="fw-6">
-                        15 ديسمبر 2022 -الساعه 12 صباحا
-                    </p>
-                    <p class="fw-6">
-                        55  دقيقة
+                        {{ lesson.period }}
                     </p>
 
-                    <router-link to="/" class="text-muted fw-6 joinCourseLink">
+                    <a target="_blank" :href="lesson.url" class="text-muted fw-6 joinCourseLink">
                         <span>انضم للمحاضرة</span>
                         <i class="fa-regular fa-eye"></i>
-                    </router-link>
+                    </a>
                 </div>
+
             </div>
             
         </div>
@@ -125,14 +110,33 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
  data(){
         return{
+            course : {},
+            user : {},
+            lessons : [],
+            title : ''
         }
     },
     components:{
     },
+    methods:{
+        async getSingleCourse(){
+            await axios.get(`course-details/${this.$route.params.id}`)
+            .then( (res)=>{
+                this.course = res.data.data;
+                this.title = res.data.data.title;
+                this.user = res.data.data.user;
+                this.lessons = res.data.data.lessons;
+                this.$emit('loadCourse', this.title)
+            } )
+        }
+    },
+    mounted(){
+        this.getSingleCourse()
+    }
 
 }
 </script>

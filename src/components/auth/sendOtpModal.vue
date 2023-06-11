@@ -18,7 +18,7 @@
             </div>
 
             <div class="abs_bar_top">
-              <img :src="require('@/assets/imgs/Vector (3).png')" alt="" />
+              
             </div>
             <div class="abs_bar_bottom">
               <img :src="require('@/assets/imgs/Vector@2x.png')" alt="" />
@@ -138,6 +138,7 @@ export default {
                       document.querySelector('#otp').style.display = 'none';
                     }else if(localStorage.getItem('userType') == 'adviser'){
                       document.querySelector('#otp').style.display = 'none';
+                      location.reload()
                     }
               }, 2000);
             }else{

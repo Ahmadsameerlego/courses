@@ -37,6 +37,9 @@ axios.defaults.headers.lang = sessionStorage.getItem('locale');
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+// import pagination
+import Paginate from "vuejs-paginate-next";
+
 
 // // Vuetify
 // import 'vuetify/styles'
@@ -50,4 +53,4 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 // })
 
 
-createApp(App).use(store).use(i18n).use(VueI18n).use(VueSweetalert2).use(FontAwesomeIcon).use(router).component('VueDatePicker', VueDatePicker).component('v-otp-input', VOtpInput).mount('#app')
+createApp(App).use(store).use(i18n).use(VueI18n).use(VueSweetalert2).use(FontAwesomeIcon).use(Paginate).use(router).component('VueDatePicker', VueDatePicker).component('v-otp-input', VOtpInput).mount('#app')

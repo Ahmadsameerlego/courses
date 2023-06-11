@@ -3,7 +3,7 @@
     <sharedHeaderVue :title="passedCourseType" />
 
     <!-- single course  -->
-    <singleCourseVue />
+    <singleCourseVue @loadCourse="loadCourse" />
 </template>
 
 <script>
@@ -13,12 +13,17 @@ import singleCourseVue from '@/components/advise/singleCourse.vue'
 export default {
     data(){
         return{
-            passedCourseType : 'تصوير وصنع أفلام الستوب موشن - المستوى 1'
+            passedCourseType : ''
         }
     },
     components:{
         sharedHeaderVue,
         singleCourseVue
+    },
+    methods:{
+        loadCourse(name){
+            this.passedCourseType = name
+        }
     }
 }
 </script>

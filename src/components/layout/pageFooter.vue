@@ -21,10 +21,10 @@
                             <div class="footer_links d-flex flex-column">
                                 <h6 class="fw-6 whiteColor mb-4"> خريطة الموقع </h6>
                                 <router-link to="/" class="whiteColor"> الصفحة الرئيسية </router-link>
-                                <router-link to="/" class="whiteColor"> معلومات عنا </router-link>
-                                <router-link to="/" class="whiteColor"> خدماتنا </router-link>
+                                <router-link to="/AboutUs" class="whiteColor"> معلومات عنا </router-link>
+                                <router-link to="/OurServices/1" class="whiteColor"> خدماتنا </router-link>
                                 <router-link to="/" class="whiteColor"> الباقات </router-link>
-                                <router-link to="/" class="whiteColor"> تواصل معنا </router-link>
+                                <router-link to="/contactUs" class="whiteColor"> تواصل معنا </router-link>
                             </div>
                         </div>
                     </section>
@@ -50,38 +50,27 @@
                 </div>
             </div>
 
-            <div class="footer_bottom d-flex justify-content-between align-items-baseline pt-4 ">
+            <div class="footer_bottom  pt-4 ">
                 <div class="d-flex ">
                     <div class="d-flex align-items-center">
                         <span class="whiteColor">+201288008898</span>
                         <img class="footer_icon" :src="require('@/assets/imgs/call.png')" alt="">
                     </div>
                     <div class="margin_bottom d-flex align-items-center">
-                        <span class="whiteColor">contact@aidaree.com</span>
+                        <span class="whiteColor">contactus@advisersgate.com</span>
                         <img class="footer_icon" :src="require('@/assets/imgs/direct.png')" alt="">
                     </div>
                 </div>
                 <p class="whiteColor">
-                    © 2023 جميع الحقوق محفوظة لشركة ايداري
+                    © 2023 جميع الحقوق محفوظة لشركة Adviser Gates
                 </p>
 
                 <!-- left side  -->
                 <div class="social_media">
-                    <a href="#">
-                        <img :src="require('@/assets/imgs/youtube-svgrepo-com.png')" alt="">
+                    <a v-for="social in socials" :key="social.id" :href="social.link" target="_blank">
+                        <img :src="social.icon" alt="">
                     </a>
-                    <a href="#">
-                        <img :src="require('@/assets/imgs/Vector (1).png')" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="require('@/assets/imgs/Group (1).png')" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="require('@/assets/imgs/Group (2).png')" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="require('@/assets/imgs/Vector (2).png')" alt="">
-                    </a>
+                    
                 </div>
 
             </div>
@@ -90,8 +79,25 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-
+    data(){
+        return{
+            socials : []
+        }
+    },
+    methods:{
+        // get socials
+        async getSocials(){
+            await axios.get('socials')
+            .then( (res)=>{
+                this.socials = res.data.data ;
+            } )
+        } ,
+    },
+    mounted(){
+        this.getSocials()
+    }
 }
 </script>
 

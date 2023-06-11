@@ -4,43 +4,41 @@
         <h5 class="text-center fw-bold mb-4"> كيف يعمل أداري </h5>
 
         <div class="row">
-            <div class="col-md-4 mb-2">
+            <div class="col-md-4 mb-2" v-for="work in works" :key="work.id">
                 <div class="how_item d-flex flex-column align-items-center justify-content-center">
                     <!-- how image  -->
                     <div class="how_image">
-                        <img :src="require('@/assets/imgs/Payment Information-pana.png')" alt="">
+                        <img :src="work.image" width="100" height="100" alt="">
                     </div>
                     <!-- how desc  -->
-                    <p class="fw-6">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف .</p>
+                    <p class="fw-6"> {{ work.description }}  </p>
                 </div>
             </div>
-            <div class="col-md-4 mb-2">
-                <div class="how_item d-flex flex-column align-items-center justify-content-center">
-                    <!-- how image  -->
-                    <div class="how_image">
-                        <img :src="require('@/assets/imgs/Completed-pana.png')" alt="">
-                    </div>
-                    <!-- how desc  -->
-                    <p class="fw-6">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف .</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-2">
-                <div class="how_item d-flex flex-column align-items-center justify-content-center">
-                    <!-- how image  -->
-                    <div class="how_image">
-                        <img :src="require('@/assets/imgs/Webinar-pana.png')" alt="">
-                    </div>
-                    <!-- how desc  -->
-                    <p class="fw-6">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف .</p>
-                </div>
-            </div>
+            
         </div>
     </div>
   </section>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    data(){
+        return{
+            works : []
+        }
+    },
+    methods:{
+        async getWorks(){
+            await axios.get('how-work')
+            .then( (res)=>{
+                this.works = res.data.data
+            } )
+        }
+    },
+    mounted(){
+        this.getWorks()
+    }
 
 }
 </script>

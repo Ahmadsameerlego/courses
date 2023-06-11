@@ -63,14 +63,9 @@
                             <div class="col-md-6">
                                 <div class="slide_right">
                                     <h4 class="">
-                                        دلوقتي مع تطبيق الخاص ب اداردي
+                                        {{ slider0.title }}
                                     </h4>
-                                    <p class="slide_p_2">
-                                        كل اللي ممكن تحتاجه من خدمات اداردي بقى حرفياً بين ايديك!
-                                            ابدأ التعلم من أول وأكبر مكتبة للمتعلمين العرب ، مع
-                                            أكثر من 750 دورة. الحصول على قدر هائل من المعرفة و
-                                            المهارات التي يقدمها لك القادة والخبراء في العالم العربي ، تتراوح
-                                            من الدورات المهنية إلى الدورات الترفيهية عبر مستويات مختلفة (عام ، متخصص ، خبير).
+                                    <p class="slide_p_2" v-html="slider0.description">
                                     </p>
                                     
                                     <div class="d-flex align-items-center mt-3">
@@ -85,7 +80,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="slider_image position-relative">
-                                    <img :src="require('@/assets/imgs/image 72.png')" alt="">
+                                    <img :src="slider0.image" alt="">
 
                                     
                                 </div>                            
@@ -105,9 +100,9 @@
                             <div class="row d-flex align-items-center">
                                 <div class="col-md-6">
                                     <div class="slide_right">
-                                        <p class="slide_p_1 o-5">انضم لاداري و قم بمساهمتك الآن</p>
+                                        <p class="slide_p_1 o-5"> {{ slider1.title }} </p>
                                         <h4 class="">
-                                            الآن يمكنك التواصل مع الآلاف من المستشارين من جميع أنحاء العالم بشكل خاص
+                                            {{ slider1.description }}
                                         </h4>
                                         <p class="slide_p_2 mt-4">
                                             <ul>
@@ -131,8 +126,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="slider_image position-relative">
-                                        <img :src="require('@/assets/imgs/pexels-andrea-piacquadio-3978564 3 (2).png')" alt="">
-
+                                        <img :src="slider1.image">
                                         <div class="abs_img d-flex align-items-center px-2 pt-2 pb-2">
                                             <div>
                                                 <h5 class="fw-bold text-start">100%</h5>
@@ -151,7 +145,6 @@
             </swiper>
 
         <div class="absolute_img">
-            <img :src="require('@/assets/imgs/Vector (3).png')" alt="">
         </div>
     </section>
 </template>
@@ -167,9 +160,15 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
-
+import axios from 'axios';
 
 export default {
+    data(){
+        return{
+            slider0 : {},
+            slider1 : {}
+        }
+    },
     components:{
         Swiper,
         SwiperSlide,
@@ -181,6 +180,18 @@ export default {
 
       };
     },
+    methods:{
+        async getIntros(){
+            await axios.get('intros')
+            .then( (res)=>{
+                this.slider0 = res.data.data[0];
+                this.slider1 = res.data.data[1];
+            } )
+        }
+    },
+    mounted(){
+        this.getIntros()
+    }
 
 }  
 </script>

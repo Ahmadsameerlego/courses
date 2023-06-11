@@ -23,10 +23,7 @@
               </div>
 
               <div class="abs_bar_top">
-                <img
-                  :src="require('@/assets/imgs/Vector (3).png')"
-                  alt=""
-                />
+                
               </div>
               <div class="abs_bar_bottom">
                 <img
@@ -148,6 +145,16 @@
                       <button class="main_btn w-100 btn pt-2 pb-2 mt-3" :disabled="disabled">
                         تسجيل حساب
                       </button>
+
+
+                       <div class="loginWith mt-2">
+                          <p class="text-center">قم بالتسجيل من خلال</p>
+                          <div class="d-flex justify-content-center">
+                            <i class="fa-brands fa-facebook mainColor" style="font-size:16px; margin:0 15px"></i>
+                            <i class="fa-brands fa-google mainColor" style="font-size:16px"></i>
+                          </div>
+                        </div>
+                        
                     </form>
 
                     <div
@@ -167,14 +174,17 @@
                         </button>
                       </p>
                     </div>
+
+
+                   
                   </section>
                 </div>
 
                 <div class="col-md-6">
-                  <div class="loginSideImage">
+                  <div class="loginSideImage h-100">
                     <img
                       :src="require('@/assets/imgs/Left Section (1).png')"
-                      class=""
+                      class="h-100"
                       alt=""
                     />
                   </div>
@@ -243,6 +253,7 @@ export default {
 
           localStorage.setItem('email', this.email);
           localStorage.setItem('token', res.data.data.user.token)
+          localStorage.setItem('user', JSON.stringify(res.data.data.user))
 
           setTimeout(() => {
                 document.querySelector('#signUp').style.display = 'none';
@@ -397,7 +408,7 @@ export default {
   img {
     width: 100%;
     object-fit: cover;
-    height: 733px;
+    height: auto;
   }
 }
 

@@ -18,7 +18,7 @@
             </div>
 
             <div class="abs_bar_top">
-              <img :src="require('@/assets/imgs/Vector (3).png')" alt="" />
+              
             </div>
             <div class="abs_bar_bottom">
               <img :src="require('@/assets/imgs/Vector@2x.png')" alt="" />
@@ -35,16 +35,36 @@
                         قم بإنشاء كلمة مرور جديدة لتسجيل الدخول                  
                         </p>
 
-                  <form class="loginForm" @submit.prevent="sendCode" style="border-bottom:none;">
+                  <form class="loginForm" @submit.prevent="updatePassword" ref="updatePass" style="border-bottom:none;">
                     
+                    <!-- active code  -->
+                    <div class="mb-3" style="display: flex; flex-direction: row;justify-content:space-evenly">
+                        <v-otp-input
+                            ref="otpInput"
+                            v-model:value="code"
+                            name="code"
+                            input-classes="otp-input"
+                            separator=""
+                            :num-inputs="4"
+                            :should-auto-focus="true"
+                            input-type="letter-numeric"
+                            :conditionalClass="['one', 'two', 'three', 'four']"
+                            :placeholder="['_', '_', '_', '_']"
+                            @on-change="handleOnChange"
+                            @on-complete="handleOnComplete"
+                        />
+                    </div>
 
                     <div class="form-group position-relative">
                       <input
                         :type="passwordType"
-                        name=""
+                        name="password"
                         v-model="password"
                         class="form-control mb-3"
                         placeholder="كلمة السر"
+                        minlength="6"
+                        required
+
                       />
                       <div v-if="!eyeToggle">
                         <span @click="switchVisibility()">
@@ -65,6 +85,8 @@
                         v-model="confirmPassword"
                         class="form-control mb-3"
                         placeholder="تأكيد كلمة السر"
+                        minlength="6"
+                        required
                       />
                       <div v-if="!eyeToggle2">
                         <span @click="switchVisibility2()">
@@ -78,14 +100,16 @@
                       </div>
                     </div>
 
-                    <p v-if="passwordMatch" class="passwordConfirmed d-flex align-items-center">
+                    <div v-if="showValid">
+                      <p v-if="passwordMatch" class="passwordConfirmed d-flex align-items-center">
                         <i class="fa-regular fa-circle-check"></i>
                         <span>كلمة السر متطابقة</span>
-                    </p>
-                    <p v-else class="passwordWrong d-flex align-items-center">
-                        <i class="fa-regular fa-circle-xmark"></i>
-                        <span>كلمة السر غير متطابقة</span>
-                    </p>
+                      </p>
+                      <p v-else class="passwordWrong d-flex align-items-center">
+                          <i class="fa-regular fa-circle-xmark"></i>
+                          <span>كلمة السر غير متطابقة</span>
+                      </p>
+                    </div>
 
                    
 
@@ -113,9 +137,13 @@
       </div>
     </div>
   </div>
+
+  <signInModalVue />
 </template>
 
 <script>
+import axios from 'axios' ;
+import signInModalVue from './signInModal.vue'
 export default {
     data(){
         return{
@@ -125,8 +153,12 @@ export default {
             eyeToggle2: false,
             password : '',
             confirmPassword : '',
-            disabled : true
+            disabled : true,
+            showValid : false
         }
+    },
+    components:{
+      signInModalVue
     },
     watch:{
         password(){
@@ -135,6 +167,7 @@ export default {
             }else{
                 this.disabled = true;
             }
+            this.showValid = true ;
         },
         confirmPassword(){
             if( this.passwordMatch == true ){
@@ -142,6 +175,7 @@ export default {
             }else{
                 this.disabled = true;
             }
+            this.showValid = true ;
         }
     },
     computed:{
@@ -150,29 +184,66 @@ export default {
         }
     },
     methods:{
-         switchVisibility() {
-            this.eyeToggle = !this.eyeToggle;
+      // update password 
+      async updatePassword(){
+        this.disabled = true ;
+        const fd = new FormData(this.$refs.updatePass)
+        fd.append('email', localStorage.getItem('forgetEmail'));
+        fd.append('code', this.code);
 
-            if (this.passwordType == "password") {
-                this.passwordType = "text";
-            } else {
-                this.passwordType = "password";
-            }
-        },
-         switchVisibility2() {
-            this.eyeToggle2 = !this.eyeToggle2;
+        await axios.post('reset-password', fd )
+        .then( (res)=>{
+          if( res.data.key == 'success' ){
+            this.$swal({
+              icon: 'success',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+            });
+            setTimeout(() => {
+              document.querySelector('#newPassword').style.display = 'none';
+              document.querySelector('#exampleModal').style.display = 'block';
+              document.querySelector('#exampleModal').classList.add('show');
+            }, 2000);
+          }else{
+            this.$swal({
+              icon: 'error',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+            });
+          }
+          this.disabled = true ;
+        } )
+      },
+      switchVisibility() {
+          this.eyeToggle = !this.eyeToggle;
 
-            if (this.passwordType2 == "password") {
-                this.passwordType2 = "text";
-            } else {
-                this.passwordType2 = "password";
-            }
-        },
+          if (this.passwordType == "password") {
+              this.passwordType = "text";
+          } else {
+              this.passwordType = "password";
+          }
+      },
+      switchVisibility2() {
+          this.eyeToggle2 = !this.eyeToggle2;
+
+          if (this.passwordType2 == "password") {
+              this.passwordType2 = "text";
+          } else {
+              this.passwordType2 = "password";
+          }
+      },
+    },
+    mounted(){
+              // document.querySelector('#newPassword').style.display = 'block';
+              // document.querySelector('#newPassword').classList.add('show');
+
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
     .passwordConfirmed{
         width:100%;
         border-radius: 3px;
@@ -201,5 +272,11 @@ export default {
     }
     .main_btn:disabled{
         cursor: not-allowed;
+    }
+
+
+    .otp-input {
+    width: 92px !important;
+    height: 50px !important;
     }
 </style>

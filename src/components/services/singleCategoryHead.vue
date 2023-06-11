@@ -2,15 +2,18 @@
     <div class="singleHead position-relative">
         <img :src="require('@/assets/imgs/Background (5).png')" alt="">
         <div class="rightSide">
-            <p class="common_head whiteColor fw-bold"> خدماتنا </p>
-            <h6 class="fw-bold whiteColor">ابق على تواصل معنا</h6>
+            <p class="common_head whiteColor fw-bold"> {{ title }} </p>
+            <h6 class="fw-bold whiteColor"> {{ desc }} </h6>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-
+    props:{
+        desc : String,
+        title : String
+    }
 }
 </script>
 

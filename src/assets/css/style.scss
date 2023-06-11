@@ -109,4 +109,38 @@ $main-color3: #285A7C;
     background: #BF4D66;
     border-radius: 5px;
 }
+.footer_bottom{
+    display: flex;
+    justify-content: space-between ;
+    align-items:baseline;
+}
+.singleHead img{
+    width: 100%;
+}
+@media(max-width:768px){
+    .footer_right_hand{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #footer .logo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #footer .footer_right_hand{
+        border-left: none !important;
+    }
+    .footer_bottom{
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .swiper-slide .row{
+        flex-direction: column !important;
+    }
 
+    #land_slider .slider_image img{
+        width: 100% !important;
+    }
+}

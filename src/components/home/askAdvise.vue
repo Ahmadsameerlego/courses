@@ -40,11 +40,12 @@
               هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل 
             </p>
 
-            <form>
-              <input type="text" class="form-control mb-3" placeholder="الاسم">
-              <input type="tel" class="form-control mb-3" placeholder="رقم الهاتف">  
-              <input type="email" class="form-control mb-4" placeholder="البريد الاكتروني">  
-              <button class="main_btn ask_btn w-100 pt-3 pb-3 btn"> طلب استشارة </button>
+            <form @submit.prevent="contactUS" ref="contactForm">
+              <input type="text" name="user_name" v-model="user_name" class="form-control mb-3" placeholder="الاسم">
+              <input type="tel" name="phone" v-model="phone" class="form-control mb-3" placeholder="رقم الهاتف">  
+              <input type="email" name="email" v-model="email" class="form-control mb-4" placeholder="البريد الاكتروني">
+              <textarea name="complaint" v-model="complaint" placeholder="الاستشارة" class="form-control mb-2" style="height:70px" id="" cols="30" rows="10"></textarea>  
+              <button class="main_btn ask_btn w-100 pt-3 pb-3 btn" :disabled="disabled"> طلب استشارة </button>
             </form>
           </div>
         </div>
@@ -53,14 +54,86 @@
 
     <!-- absolute bar  -->
     <div class="abs_bar">
-      <img :src="require('@/assets/imgs/Vector (3).png')" alt="">
     </div>
   </section>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+  data(){
+    return{
+      email : '',
+      complaint : '',
+      phone : '',
+      user_name : '',
+      disabled : true 
 
+    }
+  },
+    watch:{
+    complaint(){
+      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+        this.disabled = false
+      }else{
+        this.disabled = true
+      }
+    },
+    phone(){
+      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+        this.disabled = false
+      }else{
+        this.disabled = true
+      }
+    },
+    email(){
+      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+        this.disabled = false
+      }else{
+        this.disabled = true
+      }
+    },
+    user_name(){
+      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+        this.disabled = false
+      }else{
+        this.disabled = true
+      }
+    }
+  },
+  methods:{
+        async contactUS(){
+      this.disabled = true ;
+      const fd = new FormData(this.$refs.contactForm)
+      await axios.post('new-complaint', fd , {
+        headers : {
+            Authorization:  `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then( (res)=>{
+        if( res.data.key == 'success' ){
+              this.$swal({
+              icon: 'success',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+              });
+              this.user_name = '';
+              this.phone = '';
+              this.email = '';
+              this.complaint = '';
+          }else{
+              this.$swal({
+                  icon: 'error',
+                  title: res.data.msg,
+                  timer: 2000,
+                  showConfirmButton: false,
+              });
+          }
+          this.disabled = false ;
+      } )
+    }
+  }
 }
 </script>
 

@@ -20,102 +20,30 @@
                 
                 :loop="true"
                 class="testSlide mt-5"
+                 :breakpoints="swiperOptions.breakpoints"
             >
                 <!-- slide 1  -->
-                <swiper-slide>
+                <swiper-slide v-for="review in reviews" :key="review.id">
                     <!-- single slide  -->
                     <div class="single_slide boxShadow">
                         <div class="d-flex align-items-center">
-                            <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
+                            <img :src="review.image" alt="" class="test_slide_image">
 
                             <div>
-                                <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
+                                <h6 class="fw-bold"> {{ review.name }} </h6>
 
                                 <div class="d-flex">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:review.rate==1||review.rate==2||review.rate==3||review.rate==4||review.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:review.rate==2||review.rate==3||review.rate==4||review.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:review.rate==3||review.rate==4||review.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:review.rate==4||review.rate==5}"></i>
+                                    <i class="fa-solid fa-star text-muted" :class="{gold:review.rate==5}"></i>
+
                                 </div>
                             </div>
                         </div>
                         <p class="mt-2">
-                            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
-                        </p>
-                    </div>
-                </swiper-slide>
-
-                <!-- slide 2  -->
-                <swiper-slide>
-                    <!-- single slide  -->
-                    <div class="single_slide boxShadow">
-                        <div class="d-flex align-items-center">
-                            <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
-
-                            <div>
-                                <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
-
-                                <div class="d-flex">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="mt-2">
-                            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
-                        </p>
-                    </div>
-                </swiper-slide>
-
-                <!-- slide  -->
-                <swiper-slide>
-                    <!-- single slide  -->
-                    <div class="single_slide boxShadow">
-                        <div class="d-flex align-items-center">
-                            <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
-
-                            <div>
-                                <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
-
-                                <div class="d-flex">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="mt-2">
-                            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
-                        </p>
-                    </div>
-                </swiper-slide>
-                <!-- slide  -->
-                <swiper-slide>
-                    <!-- single slide  -->
-                    <div class="single_slide boxShadow">
-                        <div class="d-flex align-items-center">
-                            <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
-
-                            <div>
-                                <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
-
-                                <div class="d-flex">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="mt-2">
-                            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
+                            {{ review.description }}
                         </p>
                     </div>
                 </swiper-slide>
@@ -134,10 +62,28 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
 
+import axios from 'axios';
+
 export default {
     data(){
         return{
-            rating : 5
+            rating : 5,
+            reviews : [],
+            swiperOptions: {
+          breakpoints: {       
+      320: {       
+         slidesPerView: 1,
+         spaceBetween: 10     
+      },          
+      770: {       
+         slidesPerView: 2,       
+         spaceBetween: 50     
+      },   
+  
+      771: {       
+         slidesPerView: 4,       
+         spaceBetween: 30     
+      } }},
         }
     },
     components:{
@@ -158,6 +104,17 @@ export default {
 
       };
     },
+    methods:{
+        async getWorks(){
+            await axios.get('reviews')
+            .then( (res)=>{
+                this.reviews = res.data.data
+            } )
+        }
+    },
+    mounted(){
+        this.getWorks()
+    }
 
 }
 </script>
