@@ -1,8 +1,8 @@
 <template>
     <section id="test">
         <div class="circled_section">
-            <h6 class="fw-bold mb-2"> 100 عميل ومازال العدد في ازديار </h6>
-            <h5 class="mainColor fw-bold">  النتائج التي تتحدث عن نفسها </h5>
+            <h6 class="fw-bold mb-2"> {{ $t('home.clients') }} </h6>
+            <h5 class="mainColor fw-bold">  {{ $t('home.clientDesc') }} </h5>
         </div>
 
             <!-- start slider  -->

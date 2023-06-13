@@ -1,6 +1,6 @@
 <template>
     <!-- shared header  -->
-    <sharedHeaderVue title="حسابي" />
+    <sharedHeaderVue :title="$t('nav.profile')" />
 
     <adviserProfileVue />
 </template>

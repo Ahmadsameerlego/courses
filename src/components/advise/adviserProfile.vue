@@ -30,12 +30,12 @@
                         <!-- experts  -->
                         <div class="experts mt-3">
                             <h6 class="mb-3 fw-bold befored_title mainColor">
-                                الخبرات
+                                {{ $t('common.experts') }}
                             </h6>
                             <p class="o-5" v-if="consultant.bio!==null">
                                 {{ consultant.bio }}
                             </p>
-                            <p v-else> لم يقم الاستشاري بإضافة سيرة ذاتية </p>
+                            <p v-else> {{ $t('common.noExpert') }} </p>
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="d-flex align-items-center">
                                     <img :src="require('@/assets/imgs/Vector.png')" alt="">
-                                    <span class="whiteColor">المشاهدات</span>
+                                    <span class="whiteColor"> {{ $t('common.views') }} </span>
                                 </div>
                                 <span class="whiteColor fw-bold"> {{ consultant.num_views }} </span>
                             </div>
@@ -53,7 +53,7 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="d-flex align-items-center">
                                     <img :src="require('@/assets/imgs/briefcase.png')" alt="">
-                                    <span class="whiteColor">الاستشارات</span>
+                                    <span class="whiteColor"> {{ $t('common.consults') }} </span>
                                 </div>
                                 <span class="whiteColor fw-bold">{{ consultant.num_consultations }}</span>
                             </div>
@@ -61,7 +61,7 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="d-flex align-items-center">
                                     <img :src="require('@/assets/imgs/personalcard.png')" alt="">
-                                    <span class="whiteColor">متلقي الاستشارات</span>
+                                    <span class="whiteColor"> {{ $t('common.consUsers') }} </span>
                                 </div>
                                 <span class="whiteColor fw-bold">{{ consultant.num_consultations_persons }}</span>
                             </div>
@@ -69,7 +69,7 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="d-flex align-items-center">
                                     <img :src="require('@/assets/imgs/teacher_white.png')" alt="">
-                                    <span class="whiteColor">الدورات التدريبية</span>
+                                    <span class="whiteColor"> {{ $t('common.num_courses') }} </span>
                                 </div>
                                 <span class="whiteColor fw-bold">{{ consultant.num_courses }}</span>
                             </div>
@@ -80,7 +80,7 @@
 
                         <div>
                                 <router-link to="/" class="btn main_btn w-100 pt-2 pb-2 mt-3">
-                                    حجز استشارة
+                                    {{ $t('common.reserve') }}
                                 </router-link>
                             </div>
 
@@ -91,21 +91,21 @@
             <!-- أوقات العمل  -->
             <div class="top_part mt-4 mb-3">
                 <h6 class="mb-3 fw-bold befored_title mainColor">
-                     أوقات العمل
+                     {{ $t('common.workTime') }}
                 </h6>
                 <section v-if="times.length>0">
-                    <p class="fw-6" v-for="time in times" :key="time.id"> {{ time.day }} من {{ time.from_time }} الى {{ time.to_time }} </p>
+                    <p class="fw-6" v-for="time in times" :key="time.id"> {{ time.day }} {{ $t('common.from') }} {{ time.from_time }} {{ $t('common.to') }} {{ time.to_time }} </p>
                 </section>
 
                 <section v-else class="notFound mt-2 mb-2 text-center">
-                    لا توجد أوقات عمل مضافة
+                    {{ $t('common.noTimes') }}
                 </section>
                 
             </div>
             <!-- الدورات التدريبية  -->
             <div class="top_part mt-4 mb-3">
                 <h6 class="mb-3 fw-bold befored_title mainColor">
-                     الدورات التدريبية
+                     {{ $t('common.num_courses') }}
                 </h6>
 
                 <div class="row" v-if="courses.length>0">
@@ -125,7 +125,7 @@
                                     <div class="course_time">
                                         <span class="fw-6 mainColor"> {{ course.period }} </span>
                                     </div>
-                                    <p class="fw-6 text-muted"> {{ course.num_students }} طالب </p>
+                                    <p class="fw-6 text-muted"> {{ course.num_students }} {{ $t('common.student') }} </p>
                                 </div>
                             </div>
 
@@ -138,7 +138,7 @@
 
                                 <div>
                                     <router-link :to="'/singleCourse/'+course.id" class="pt-2 pb-2 btn main_btn">
-                                        احجز الان
+                                        {{ $t('common.reserveNow') }}
                                     </router-link>
                                 </div>
                             </div>
@@ -146,13 +146,13 @@
                     </div>
                 </div>
                 <div class="notFound text-center mt-2 mb-2" v-else>
-                    لا توجد كورسات الى الان
+                    {{ $t('common.noCourses') }}
                 </div>
             </div>
             <!-- التقييمات  -->
             <div class="top_part mt-4 mb-3">
                 <h6 class="mb-3 fw-bold befored_title mainColor">
-                     التقييمات
+                     {{ $t('common.rate2') }}
                 </h6>
 
                 <!-- start slider  -->
@@ -177,22 +177,22 @@
                         <!-- single slide  -->
                         <div class="single_slide boxShadow">
                             <div class="d-flex align-items-center">
-                                <img :src="require('@/assets/imgs/Background (1).png')" alt="" class="test_slide_image">
+                                <img :src="slide.user.image" alt="" class="test_slide_image">
 
                                 <div>
-                                    <h6 class="fw-bold"> شركة صناعة الأجهزة المنزلية </h6>
+                                    <h6 class="fw-bold"> {{ slide.user.name }} </h6>
 
                                     <div class="d-flex">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star text-muted" :class="{gold:slide.rate==1||slide.rate==2||slide.rate==3||slide.rate==4||slide.rate==5}"></i>
+                                        <i class="fa-solid fa-star text-muted" :class="{gold:slide.rate==2||slide.rate==3||slide.rate==4||slide.rate==5}"></i>
+                                        <i class="fa-solid fa-star text-muted" :class="{gold:slide.rate==3||slide.rate==4||slide.rate==5}"></i>
+                                        <i class="fa-solid fa-star text-muted" :class="{gold:slide.rate==4||slide.rate==5}"></i>
+                                        <i class="fa-solid fa-star text-muted" :class="{gold:slide.rate==5}"></i>
                                     </div>
                                 </div>
                             </div>
                             <p class="mt-2">
-                                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص هو مثال  
+                                {{ slide.comment }}
                             </p>
                         </div>
                     </swiper-slide>
@@ -200,7 +200,7 @@
                     
                 </swiper>
                 <div class="notFound mt-2 mb-2 text-center" v-else>
-                    لا توجد تقييمات الى الان
+                    {{ $t('common.noRates') }}
                 </div>
             </div>
         </div>

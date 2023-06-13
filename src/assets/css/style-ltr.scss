@@ -4,4 +4,86 @@ body.ltr{
     #app{
         direction: ltr;
     }
+    .swiper {
+        direction: rtl;
+    }
+    #footer .footer_right_hand {
+        border-right: 1px solid #fff;
+        border-left: none;
+    }
+    #ask .ask_details .free_circle {
+        left: -7%;
+        right: auto;
+    }
+    #ask .ask_details .title_head {
+        margin-right: 40px;
+        margin-left: auto;
+    }
+    .common_head::before {
+        right: 57%;
+    }
+    #test .circled_section::before {
+        left: -31px;
+        right: auto;
+    }
+    .common_head::before {
+        left: 0%;
+        right: auto;
+    }
+    .common_head {
+        padding-left: 17px;
+        padding-right: 0;
+    }
+    .rightSide {
+        margin-left: 20px;
+        margin-right: 0;
+    }
+    .steps .single_step::before {
+        left: 93%;
+        right: 0;
+    }
+    .steps .single_step .step_content::before {
+        right: -38px;
+        left: auto;
+    }
+    .steps .single_step .step_content svg {
+        right: -7px;
+        left: auto;
+        transform: rotate(180deg);
+    }
+    .singleHead::before {
+        left: 0;
+        right: auto;
+    }
+    .singleHead .rightSide {
+        left: 8%;
+        right: auto;
+    }
+    .form-group svg {
+        right: 13px;
+        left: auto;
+    }
+    .accordion-button::after, .accordion-button:not(.collapsed)::after {
+        right: 8px !important;
+        left: auto !important;
+    }
+    .absSign {
+        right: 10px;
+        left: auto;
+    }
+    .single_statistics .statis1 , .single_statistics .statis2 {
+        margin-right: 12px;
+        margin-left: 0px;
+    }
+
+    .single_plan .abs_price {
+        left: auto;
+        right: 10px;
+    }
+
+    .detectTime[data-v-60b727f6] {
+        right: 0;
+        left: auto;
+    }
+
 }

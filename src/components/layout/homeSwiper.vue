@@ -7,7 +7,7 @@
                 :pagination="{ clickable: true }"
                 effect="fade"
                 :autoplay="{
-                delay: 3500,
+                delay: 4500,
                 disableOnInteraction: false,
             }"
             :loop="true"
@@ -15,122 +15,53 @@
 
             >
                 <!-- slide 1  -->
-                <swiper-slide>
+                <swiper-slide v-for="slide in sliders" :key="slide.id">
                     <div class="container">
                         <section class="">
                             
                             <div class="row d-flex align-items-center">
                                 <div class="col-md-6">
                                     <div class="slide_right">
-                                        <p class="slide_p_1 o-5">تلعب الإدارة الحكيمة، من خلال الربط بين الموارد البشرية والاستراتيجيات التنظيمية</p>
+                                        <p class="slide_p_1 o-5" v-if="slide.id==1"> {{ $t('home.slider1') }} </p>
                                         <h4 class="">
-                                            الاستشارات الإدارية في مجال الاستثمار والأعمال التجارية
+                                            {{ slide.title }}
                                         </h4>
                                         <p class="slide_p_2">
-                                            وهنا يتركز هدفنا الأساس على بناء نظام عمليات على أسس مالية سليمة من شأنه تسهيل مسار الحركة المالية بحيث تكون قابلة لإدراجها في تقارير محاسبية ورفعها إلى الإدارة العليا
+                                                {{ slide.description }}                                        
                                         </p>
-                                        <button class="btn main_btn w-100 pt-2 pb-2">
-                                            لنعمل معا
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="slider_image position-relative">
-                                        <img :src="require('@/assets/imgs/image1.png')" alt="">
+                                        <router-link v-if="slide.id==1" to="/AboutUs" class="btn main_btn w-100 pt-2 pb-2">
+                                            {{ $t('home.workTogether') }}
+                                        </router-link>
 
-                                        <div class="abs_img d-flex align-items-center px-2 pt-2 pb-2">
-                                            <div>
-                                                <h5 class="fw-bold text-start">100%</h5>
-                                                <p class="text-start">معدل نجاح هذا العام</p>
-                                            </div>
-                                            <div class="left_img">
-                                                <img :src="require('@/assets/imgs/Group (3).png')" alt="">
-                                            </div>
-                                        </div>
-                                    </div>                            
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                </swiper-slide>
-
-                <!-- slide 2  -->
-                <swiper-slide>
-                    <section class="slide2 position-relative">
-                        
-                        <div class="row d-flex align-items-center" style="width:80%;margin:auto ">
-                            <div class="col-md-6">
-                                <div class="slide_right">
-                                    <h4 class="">
-                                        {{ slider0.title }}
-                                    </h4>
-                                    <p class="slide_p_2" v-html="slider0.description">
-                                    </p>
-                                    
-                                    <div class="d-flex align-items-center mt-3">
-                                        <a href="#">
-                                            <img class="download_app" :src="require('@/assets/imgs/google-play-badge 1.png')" alt="">
-                                        </a>
-                                        <a href="#">
-                                            <img class="download_app" :src="require('@/assets/imgs/Group (4).png')" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="slider_image position-relative">
-                                    <img :src="slider0.image" alt="">
-
-                                    
-                                </div>                            
-                            </div>
-                        </div>
-
-
-                    </section>
-                </swiper-slide>
-
-                <!-- slide  -->
-                <swiper-slide>
-                    <div class="container">
-
-                        <section class="">
-                            
-                            <div class="row d-flex align-items-center">
-                                <div class="col-md-6">
-                                    <div class="slide_right">
-                                        <p class="slide_p_1 o-5"> {{ slider1.title }} </p>
-                                        <h4 class="">
-                                            {{ slider1.description }}
-                                        </h4>
-                                        <p class="slide_p_2 mt-4">
-                                            <ul>
-                                                <li>العمل من أي مكان , توفير الوقت والجهد والتكلفة</li>
-                                                <li>
-التواصل مع <span class="fw-bold">المستشارين</span> هيكون من أسهل ما يمكن وبيتم بطرق كتير، زي الشات ومكالمات الفيديو.</li>
-                                            </ul>
-                                        </p>
-
-                                        <p class="mainColor fw-bold"> انضم الينا الان </p>
-                                        <div class="d-flex align-items-center">
-                                            <button class="bordered_btn w-50 pt-3 pb-3">
-                                            انضم كعميل
+                                        <p class="mainColor fw-bold" v-if="isLoggedIn==false&&slide.id==2"> {{ $t('home.joinNow') }} </p>
+                                        <div class="d-flex align-items-center" v-if="isLoggedIn==false&&slide.id==2">
+                                            <button class="bordered_btn w-50 pt-3 pb-3"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
+                                            {{ $t('home.joinClient') }}
                                             </button>
                                             <span class="mainColor fw-bold px-3">أو</span>
-                                            <button class="btn main_btn w-50 pt-3 pb-3">
-                                                انضم كمستشار
+                                            <button class="btn main_btn w-50 pt-3 pb-3"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
+                                                {{ $t('home.joinAdviser') }}
                                             </button>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mt-3" v-if="slide.id==3">
+                                            <a href="#">
+                                                <img class="download_app" :src="require('@/assets/imgs/google-play-badge 1.png')" alt="">
+                                            </a>
+                                            <a href="#">
+                                                <img class="download_app" :src="require('@/assets/imgs/Group (4).png')" alt="">
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="slider_image position-relative">
-                                        <img :src="slider1.image">
+                                        <img :src="slide.image" alt="">
+
                                         <div class="abs_img d-flex align-items-center px-2 pt-2 pb-2">
                                             <div>
                                                 <h5 class="fw-bold text-start">100%</h5>
-                                                <p class="text-start">معدل نجاح هذا العام</p>
+                                                <p class="text-start"> {{ $t('home.yearly') }}  </p>
                                             </div>
                                             <div class="left_img">
                                                 <img :src="require('@/assets/imgs/Group (3).png')" alt="">
@@ -141,7 +72,10 @@
                             </div>
                         </section>
                     </div>
+
                 </swiper-slide>
+
+
             </swiper>
 
         <div class="absolute_img">
@@ -166,7 +100,9 @@ export default {
     data(){
         return{
             slider0 : {},
-            slider1 : {}
+            slider1 : {},
+            isLoggedIn : null,
+            sliders : []
         }
     },
     components:{
@@ -184,13 +120,18 @@ export default {
         async getIntros(){
             await axios.get('intros')
             .then( (res)=>{
-                this.slider0 = res.data.data[0];
-                this.slider1 = res.data.data[1];
+                this.sliders = res.data.data;
+                
             } )
         }
     },
     mounted(){
-        this.getIntros()
+        this.getIntros();
+        if( localStorage.getItem('token') ){
+            this.isLoggedIn = true ;
+        }else{
+            this.isLoggedIn = false
+        }
     }
 
 }  

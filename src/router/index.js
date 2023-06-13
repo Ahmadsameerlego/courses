@@ -10,21 +10,31 @@ import AboutUs from '../views/AboutUs.vue';
 import subscribes from '../views/subscribesTypes.vue';
 import contactUs from '../views/ContactUS.vue';
 import advisorProfile from '../views/advisorProfile.vue'
+import addCourse from '../views/adviserAddCourse.vue'
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta:{
+      title : 'الرئيسية'
+    }
   },
   {
     path : '/askAdvise',
     name : 'askAdvise',
-    component : askAdvise
+    component : askAdvise,
+    meta:{
+      title : 'طلب استشارة'
+    }
   },
   {
     path: '/OurServices/:id',
     name : 'OurServices',
-    component : OurServices
+    component : OurServices,
+    meta:{
+      title : 'خدماتنا'
+    }
   },
   {
     path : '/singleService/:id',
@@ -44,33 +54,64 @@ const routes = [
   {
     path : '/userProfile',
     name : 'userProfile',
-    component : userProfile
+    component : userProfile,
+    meta:{
+      title : 'حسابي'
+    }
   },
   {
     path: '/AboutUs',
     name : 'AboutUs',
-    component : AboutUs
+    component : AboutUs,
+    meta:{
+      title : 'معلومات عنا'
+    }
   },
   {
     path : '/subscribes',
     name : 'subscribes',
-    component : subscribes
+    component : subscribes,
+    meta:{
+      title : 'الباقات'
+    }
   },
   {
     path : '/contactUs',
     name : 'contactUs',
-    component : contactUs
+    component : contactUs,
+    meta:{
+      title : 'تواصل معنا'
+    }
   },
   {
     path: '/advisorProfile',
     name : 'advisorProfile',
-    component : advisorProfile
+    component : advisorProfile,
+    meta:{
+      title : 'صفحة الاستشاري'
+    }
+  },
+  {
+    path : '/addCourse',
+    name : 'addCourse',
+    component : addCourse,
+    meta:{
+      title : 'اضافة دورة'
+    }
   }
 ]
+
+
+
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
 
+const DEFAULT_TITLE = 'Adviser Website';
+router.afterEach((to) => {
+        document.title = to.meta.title || DEFAULT_TITLE;
+});
 export default router

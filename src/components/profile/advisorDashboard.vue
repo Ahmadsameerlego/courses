@@ -48,19 +48,20 @@
                         </div>
 
                         <!-- reservation items  -->
-                        <section class="reservation_items mt-2" v-if="next_orders.length>0">
+                        <section class="reservation_items mt-2" v-if="finished_orders.length>0">
 
                             <!-- single reserve item  -->
                             <div v-for="order in finished_orders" :key="order.id" class="single_reserve_item mb-2 d-flex justify-content-between align-items-center">
                                 <!-- right side  -->
                                 <div class="d-flex align-items-center">
                                     <!-- image  -->
-                                    <div class="res_image">
-                                        <img :src="require('@/assets/imgs/teacher.png')" alt="">
+                                    <div class="">
+                                        <img :src="order.user.image" width="30" height="30" class="mx-2" alt="">
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="fw-6"> احمد سمير </h6>
-                                        <span class="o-5"> الحجز يوم 27 نوفمبر 2020 </span>
+                                        <h6 class="fw-6"> {{ order.user.name }} </h6>
+                                        <span class="o-5"> الحجز يوم {{ order.date }}  </span>
+                                        <span class="o-5">  {{ order.time }}  </span>
                                     </div>
                                 </div>
 
@@ -92,16 +93,15 @@
                                 <!-- right side  -->
                                 <div class="d-flex align-items-center">
                                     <!-- image  -->
-                                    <div class="res_image">
-                                        <img :src="require('@/assets/imgs/teacher.png')" alt="">
+                                    <div class="">
+                                        <img :src="order.user.image" width="30" height="30" class="mx-2" alt="">
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="fw-6"> احمد سمير </h6>
-                                        <span class="o-5"> الحجز يوم 27 نوفمبر 2020 </span>
+                                        <h6 class="fw-6"> {{ order.user.name }} </h6>
+                                        <span class="o-5"> الحجز يوم {{ order.date }}  </span>
+                                        <span class="o-5">  {{ order.time }}  </span>
                                     </div>
                                 </div>
-
-                                
                             </div>
                             
                         </section>
@@ -122,30 +122,30 @@
                     <div class="single_course boxShadow">
                         <!-- image  -->
                         <div>
-                            <img :src="require('@/assets/imgs/Background (5).png')" class="course_image" alt="">
+                            <img :src="course.image" class="course_image" alt="">
                         </div>
                         <div class="course_details mx-3">
                             <h6 class="fw-bold mt-2">
-                                تعلم كيفية استخدام الرسم التوضيحي
+                                {{course.title }}
                             </h6>
                             <div class="d-flex">
-                                <p class="fw-6">أحمد سمير</p>
+                                <p class="fw-6"> {{ course.user.name }} </p>
                                 <div class="course_time">
-                                    <span class="fw-6 mainColor"> 40 دقيقة </span>
+                                    <span class="fw-6 mainColor"> {{ course.period }}  </span>
                                 </div>
-                                <p class="fw-6 text-muted"> 120 طالب </p>
+                                <p class="fw-6 text-muted"> {{ course.num_students }} طالب </p>
                             </div>
 
                             <!-- reserve course  -->
                             <div class="mx-3 d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h6 class="fw-bold mainColor mb-2">200 جنية</h6>
-                                    <p class="fw-6 mainColor">600 جنية</p>
+                                    <h6 class="fw-bold mainColor mb-2">{{ course.offer_price }} جنية</h6>
+                                    <p class="fw-6 mainColor">{{ course.price }} جنية</p>
                                 </div>
 
                                 <div>
-                                    <router-link to="/singleCourse/1" class="pt-2 pb-2 btn main_btn">
-                                        احجز الان
+                                    <router-link :to="'/singleCourse/'+course.id" class="pt-2 pb-2 btn main_btn">
+                                        مشاهدة
                                     </router-link>
                                 </div>
                             </div>

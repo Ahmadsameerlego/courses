@@ -1,7 +1,7 @@
 <template>
     <section class="filterOperation mt-4">
         <div class="container">
-            <p class="common_head  fw-bold"> المستشارين ({{consultant_num}}) </p>
+            <p class="common_head  fw-bold"> {{ $t('common.advisors') }} ({{consultant_num}}) </p>
 
             <!-- search & select  -->
             <div class="row">
@@ -9,7 +9,7 @@
                 <div class="col-md-8 mb-2" >
                     <form >
                         <div class="form-group position-relative">
-                            <input type="text" class="form-control searchInput" placeholder="ابحث عن ...">
+                            <input type="text" class="form-control searchInput" :placeholder="$t('common.searchFor')">
                             <i class="fa-solid fa-magnifying-glass searchSvg"></i>
                         </div>
                     </form>
@@ -24,10 +24,10 @@
                         aria-label="Default select example"
                         v-model="sort_by"
                       >
-                        <option selected hidden value="" disabled>ترتيب</option>
-                        <option value="name">الاسم</option>
-                        <option value="rating">التقييم</option>
-                        <option value="latest">الاحدث</option>
+                        <option selected hidden value="" disabled> {{ $t('common.order') }} </option>
+                        <option value="name"> {{ $t('common.name') }} </option>
+                        <option value="rating"> {{ $t('common.rate') }} </option>
+                        <option value="latest"> {{ $t('common.near') }} </option>
                       </select>
                       <i class="fa-solid fa-chevron-down"></i>
                     </div>
@@ -42,14 +42,14 @@
                     <!-- start filter operation  -->
                     <div class="col-md-4 mb-3">
                         <div class="filtersHead">
-                            التصنيفات
+                            {{ $t('common.categorization') }}
                         </div>
                         <div class="accordion" id="accordionExample">
                             <!-- filter one  -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    التواجد
+                                    {{ $t('common.exist') }}
                                 </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -57,15 +57,15 @@
                                         <form >
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" class="checkboxFilter">
-                                                <label for="" class="filterLabel"> اليوم </label>
+                                                <label for="" class="filterLabel"> {{ $t('common.day') }} </label>
                                             </div>
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" class="checkboxFilter">
-                                                <label for="" class="filterLabel"> هذا الاسبوع </label>
+                                                <label for="" class="filterLabel"> {{ $t('common.weak') }} </label>
                                             </div>
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" class="checkboxFilter">
-                                                <label for="" class="filterLabel"> هذا الشهر </label>
+                                                <label for="" class="filterLabel"> {{ $t('common.month') }} </label>
                                             </div>
                                         </form>
                                     </div>
@@ -76,20 +76,20 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                    التخصصات
+                                    {{ $t('common.special') }}
                                 </button>
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form class="selectedCats">
                                             <div class="form-group position-relative mb-2">
-                                                <input type="text" class="form-control searchInput" placeholder="ابحث عن ...">
+                                                <input type="text" class="form-control searchInput" :placeholder="$t('common.searchFor')">
                                                 <i class="fa-solid fa-magnifying-glass searchSvg"></i>
                                             </div>
 
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" class="checkboxFilter"  v-model="selectAll" @click="toggleAllCheckboxes">
-                                                <label for="" class="filterLabel" > الكل </label>
+                                                <label for="" class="filterLabel" > {{ $t('common.all') }} </label>
                                             </div>
 
                                             <div class="form-group mb-2" v-for="cat in categories" :key="cat.id">
@@ -106,7 +106,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                    المدة
+                                    {{ $t('common.duration') }}
                                 </button>
                                 </h2>
                                 <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
@@ -114,15 +114,15 @@
                                         <form >
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" name="minutes" value="15" :checked="isSelected2(15)"  @change="toggleTime(15)"  class="checkboxFilter">
-                                                <label for="" class="filterLabel"> 15 دقيقة </label>
+                                                <label for="" class="filterLabel"> {{ $t('common.15h') }} </label>
                                             </div>
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" name="minutes" value="30" :checked="isSelected2(30)"  @change="toggleTime(30)" class="checkboxFilter">
-                                                <label for="" class="filterLabel"> 30 دقيقة </label>
+                                                <label for="" class="filterLabel"> {{ $t('common.30h') }} </label>
                                             </div>
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" name="minutes" value="60" :checked="isSelected2(60)" @change="toggleTime(60)" class="checkboxFilter">
-                                                <label for="" class="filterLabel"> 60 دقيقة </label>
+                                                <label for="" class="filterLabel"> {{ $t('common.60h') }} </label>
                                             </div>
                                         </form>
                                     </div>
@@ -132,7 +132,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingFour">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                    التكلفة
+                                    {{ $t('common.price') }}
                                 </button>
                                 </h2>
                                 <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
@@ -141,7 +141,7 @@
                                             <div class="form-group mb-2">
                                                  <input type="range" v-model="range" min="0" max="5000"  class="slider" id="myRange" style="accent-color: #c40f3d;">
                                                 <!-- <label for="" class="filterLabel"> 15 دقيقة </label> -->
-                                                  <p> <span id="demo"></span>: جنية</p>
+                                                  <p> <span id="demo"></span>: {{ $t('common.pound') }}</p>
                                             </div>
                                             
                                         </form>
@@ -152,7 +152,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingFive">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-                                    التقييمات
+                                    {{ $t('common.rate2') }}
                                 </button>
                                 </h2>
                                 <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
@@ -181,10 +181,10 @@
 
                             <div class="filterAction d-flex">
                                 <button  class="bordered_btn" @click.prevent="removeSelected">
-                                    مسح التصنيفات
+                                    {{ $t('common.removeCat') }}
                                 </button>
 
-                                <button class="btn main_btn" @click.prevent="getConsultant" > تطبيق     </button>
+                                <button class="btn main_btn" @click.prevent="getConsultant" > {{ $t('common.apply') }}     </button>
 
                             </div>
                             
@@ -235,14 +235,14 @@
                                         <img :src="require('@/assets/imgs/Vector232.png')" class="singImage" alt="">
                                         <p class="fw-bold">
 
-                                            <span v-for="price in consultant.prices" :key="price.id"><span class="mainColor"> {{ price.price }} جنية</span> / {{ price.minutes }} دقيقة </span> &nbsp;&nbsp;
+                                            <span v-for="price in consultant.prices" :key="price.id"><span class="mainColor"> {{ price.price }} {{ $t('common.pound') }}</span> / {{ price.minutes }} دقيقة </span> &nbsp;&nbsp;
                                         
                                         </p>
                                     </div>
                                     <div class="d-flex">
                                         <img :src="require('@/assets/imgs/teacher.png')" class="singImage" alt="">
                                         <p class="fw-bold">
-                                            <span class="mainColor"> {{ consultant.num_courses }} </span> دورة تدريبية
+                                            <span class="mainColor"> {{ consultant.num_courses }} </span> {{ $t('common.courses') }}
                                         </p>
                                     </div>
 
@@ -250,12 +250,12 @@
 
 
                                         <router-link  :to="'/singleAdviser/'+consultant.id" class="bordered_btn fw-bold">
-                                            عرض الملف الشخصي
+                                            {{ $t('common.showProfile') }}
                                         </router-link> 
 
                                         
 
-                                        <button class="btn main_btn fw-bold" type="button" data-bs-toggle="modal" :data-bs-target="'#reserveAdviser'+consultant.id"> احجز الان     </button>
+                                        <button class="btn main_btn fw-bold" type="button" data-bs-toggle="modal" :data-bs-target="'#reserveAdviser'+consultant.id"> {{ $t('common.reserveNow') }}     </button>
                                         
                                         <!-- Modal -->
                                         <reserveCourseModalVue :consultant_id="consultant.id" :consultant="consultant" />
@@ -283,7 +283,7 @@
                         </paginate>
 
 
-                        <div v-else class="notFound text-center"> لا يوجد مستشارين متاحين لهذه الخدمة </div>
+                        <div v-else class="notFound text-center"> {{ $t('common.noAdivsors') }} </div>
                     </div>
 
 

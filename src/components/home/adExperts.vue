@@ -1,8 +1,8 @@
 <template>
     <section id="experts">
         <div class="container">
-            <h5 class="fw-bold whiteColor text-center">خبراء اداري</h5>
-            <p class="text-center whiteColor w-50 o-5 mx-auto">خبراؤنا متخصصون و مؤهلون لتقديم العلم والمعرفة المكتسبة من تجارب فريدة والتي من شأنها أن تساعدك في تحقيق أهدافك في العمل والحياة</p>
+            <h5 class="fw-bold whiteColor text-center"> {{ $t('home.adviseExperts') }} </h5>
+            <p class="text-center whiteColor w-50 o-5 mx-auto"> {{  $t('home.expDesc') }} </p>
 
             <!-- all experts  -->
             <div class="experts mt-5 d-flex align-items-center justify-content-between">

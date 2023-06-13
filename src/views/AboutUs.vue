@@ -1,6 +1,6 @@
 <template>
     <!-- shared header  -->
-    <singleCategoryHead title="معلومات عنا" desc="نحن شركة شابة ومبدعة ونقدم لك أفكارًا تجارية جديدة." />
+    <singleCategoryHead :title="$t('header.about1')" :desc="$t('header.about2')" />
 
     <!-- about vision  -->
     <aboutVisionVue />

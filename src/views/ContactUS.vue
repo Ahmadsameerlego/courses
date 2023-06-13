@@ -1,6 +1,6 @@
 <template>
       <!-- shared header  -->
-    <sharedHeaderVue title="تواصل معنا" />
+    <sharedHeaderVue :title="$t('nav.contact')" />
 
     <!-- contact form  -->
     <contactFormVue />

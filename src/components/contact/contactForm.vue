@@ -5,10 +5,10 @@
     </div>
 
     <div class="container">
-            <p class="common_head  fw-6 text-center">  لنتحدث </p>
-            <h5 class="fw-bold text-center"> ابق على تواصل معنا </h5>
+            <p class="common_head  fw-6 text-center">  {{ $t('header.letTalk') }} </p>
+            <h5 class="fw-bold text-center"> {{ $t('header.keepContact') }} </h5>
             <p class="fw-6 o-5 text-center w-50 mx-auto mt-3">
-              هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل 
+              {{ $t('home.lorem') }}
             </p>
 
             <div class="row">
@@ -20,10 +20,10 @@
                       <img :src="require('@/assets/imgs/call-incoming.png')" alt="">
                     </div>
 
-                    <p class="o-5 fw-6">هل لديك اي سؤال؟</p>
+                    <p class="o-5 fw-6"> {{ $t('header.contact1') }} </p>
 
                     <p class="fw-bold contact_link">
-                      <a href="tel:+201288008898" > +201288008898 </a>
+                      <a :href="'tel:'+data.phone" > {{ data.phone }} </a>
                     </p>
                   </div>
                 </div>
@@ -35,10 +35,10 @@
                       <img :src="require('@/assets/imgs/box.png')" alt="">
                     </div>
 
-                    <p class="o-5 fw-6">اكتب بريدا الكترونيا</p>
+                    <p class="o-5 fw-6"> {{ $t('header.writeEmail') }} </p>
 
                     <p class="fw-bold contact_link">
-                      <a href="tel:+201288008898" > contactus@advisersgate.com </a>
+                      <a :href="'mailto:'+data.email" > {{ data.email }} </a>
                     </p>
                   </div>
                 </div>
@@ -51,10 +51,10 @@
                       <img :src="require('@/assets/imgs/location-tick.png')" alt="">
                     </div>
 
-                    <p class="o-5 fw-6">قم بالزيارة في أي وقت</p>
+                    <p class="o-5 fw-6"> {{ $t('header.visitAnyTime') }} </p>
 
                     <p class="fw-bold contact_link">
-                      <a href="tel:+201288008898" > شارع التسعين الشمالي ، القاهرة الجديدة ، التجمع الخامس ، القاهرة ، مصر </a>
+                      <a href="tel:+201288008898" > {{ data.address }} </a>
                     </p>
                   </div>
                 </div>
@@ -62,48 +62,37 @@
 
 
             <section class="mt-4">
-                <p class="common_head  fw-6 text-center">  اتصل بنا </p>
+                <p class="common_head  fw-6 text-center">  {{ $t('header.callUs') }} </p>
                 <!-- left side  -->
                 <div class="social_media mb-3 d-flex justify-content-center">
-                    <a href="#">
-                        <i class="fa-brands fa-youtube"></i>
+                    <a :href="social.link" v-for="social in socials" :key="social.id">
+                        <img :src="social.icon" alt="">
                     </a>
-                    <a href="#">
-                        <i class="fa-brands fa-twitter"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
+                    
                 </div>
-                <h5 class="fw-bold text-center"> قدم طلبك وسوف نرد عليك في اسرع وقت </h5>
+                <h5 class="fw-bold text-center"> {{ $t('header.applyOrder') }} </h5>
 
                 <form class="mt-4 mb-4" ref="contactForm" @submit.prevent="contactUS">
                   <div class="row">
                     <div class="col-12 mb-3">
-                      <input type="text" class="form-control" placeholder="الاسم" name="user_name" v-model="user_name">
+                      <input type="text" class="form-control" :placeholder="$t('home.name')" name="user_name" v-model="user_name">
                     </div>
 
                     <div class="col-md-6 mb-3">
-                      <input type="number" class="form-control" placeholder="رقم الهاتف" name="phone" v-model="phone">
+                      <input type="number" class="form-control" :placeholder="$t('home.phone')" name="phone" v-model="phone">
                     </div>
 
                     <div class="col-md-6 mb-3">
-                      <input type="email" required class="form-control" name="email" v-model="email" placeholder="البريد الالكتروني">
+                      <input type="email" required class="form-control" name="email" v-model="email" :placeholder="$t('home.email')">
                     </div>
 
                     <div class="col-md-12 mb-3">
-                      <textarea name="complaint" v-model="complaint" class="form-control" id="" placeholder="رسالتك..." cols="30" rows="10"></textarea>
+                      <textarea name="complaint" v-model="complaint" class="form-control" id="" :placeholder="$t('header.yourMessage')" cols="30" rows="10"></textarea>
                     </div>
 
 
                     <div class="d-flex justify-content-end">
-                      <button class="main_btn btn w-25" :disabled="disabled"> ارسال </button>
+                      <button class="main_btn btn w-25" :disabled="disabled"> {{ $t('header.send') }} </button>
                     </div>
                     
                   </div>
@@ -112,10 +101,14 @@
 
     </div>
   </section>
+
+  <loader v-if="loader" />
 </template>
 
 <script>
 import axios from 'axios';
+import loader from '@/components/layout/pageLoader.vue'
+
 export default {
   data(){
     return{
@@ -123,7 +116,10 @@ export default {
       complaint : '',
       phone : '',
       user_name : '',
-      disabled : true 
+      disabled : true ,
+      data : {},
+      socials : [],
+      loader : true
     }
   },
   watch:{
@@ -187,7 +183,28 @@ export default {
           }
           this.disabled = false ;
       } )
-    }
+    },
+    async getSiteInfo(){
+      await axios.get('settings')
+      .then( (res)=>{
+        this.data = res.data.data;
+        this.loader = false
+      } )
+    },
+    // get socials
+        async getSocials(){
+            await axios.get('socials')
+            .then( (res)=>{
+                this.socials = res.data.data ;
+            } )
+        } ,
+  },
+  mounted(){
+    this.getSiteInfo()
+    this.getSocials()
+  },
+  components:{
+    loader
   }
 }
 </script>

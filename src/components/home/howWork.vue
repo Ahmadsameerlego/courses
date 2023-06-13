@@ -1,7 +1,7 @@
 <template>
   <section id="howWork" class="">
     <div class="container">
-        <h5 class="text-center fw-bold mb-4"> كيف يعمل أداري </h5>
+        <h5 class="text-center fw-bold mb-4"> {{ $t('home.howWork') }} </h5>
 
         <div class="row">
             <div class="col-md-4 mb-2" v-for="work in works" :key="work.id">
@@ -18,23 +18,31 @@
         </div>
     </div>
   </section>
+
+  <loader v-if="loader"/>
 </template>
 
 <script>
 import axios from 'axios';
+import loader from '@/components/layout/pageLoader.vue'
 export default {
     data(){
         return{
-            works : []
+            works : [],
+            loader : true
         }
     },
     methods:{
         async getWorks(){
             await axios.get('how-work')
             .then( (res)=>{
-                this.works = res.data.data
+                this.works = res.data.data;
+                this.loader = false
             } )
         }
+    },
+    components:{
+        loader
     },
     mounted(){
         this.getWorks()

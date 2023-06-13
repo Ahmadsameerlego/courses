@@ -1,7 +1,7 @@
 <template>
   <section id="FAQS">
-    <p class="common_head text-center fw-6"> أسئلة مكررة </p>
-    <h4 class="fw-bold text-center">تحقق من الأسئلة الشائعة للحصول على إجابات</h4>
+    <p class="common_head text-center fw-6"> {{ $t('home.faqs') }} </p>
+    <h4 class="fw-bold text-center"> {{ $t('home.desc') }} </h4>
 
     <div class="container">
         <div class="accordion" id="accordionExample">

@@ -5,10 +5,10 @@
         <div class="col-md-6">
           <section class="ask_details position-relative">
             <!-- free  absolute -->
-            <div class="free_circle whiteColor"> مجانية </div>
+            <div class="free_circle whiteColor"> {{ $t('home.free') }} </div>
             <!-- title  -->
             <div class="d-flex justify-content-end pt-5">
-              <h5 class="fw-bold title_head whiteColor">نقوم بتحويل المعلومات إلى رؤى قابلة للتنفيذ</h5>
+              <h5 class="fw-bold title_head whiteColor"> {{ $t('home.free_desc') }} </h5>
             </div>
             <!-- image  -->
             <div class="free_image">
@@ -18,8 +18,8 @@
             <!-- work together  -->
             <div class="work_together d-flex align-items-center">
               <div class="px-3">
-                <p class="fw-6 mb-0 whiteColor text-start"> لنعمل معا </p>
-                <p class="fw-6 o-5 whiteColor"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،  </p>
+                <p class="fw-6 mb-0 whiteColor text-start"> {{ $t('home.workTogether') }} </p>
+                <p class="fw-6 o-5 whiteColor"> {{ $t('home.lorem') }}  </p>
               </div>
 
               <div class="work_image">
@@ -34,18 +34,18 @@
         <div class="col-md-6">
           <div class="ask_form">
             <h5 class="ask_form_head fw-bold mb-3">
-              يتمتع فريقنا الاستشاري بخبرة طويلة في تشخيص المشكلات ووضع الخطط والبرامج التنفيذية والاشراف عليها
+              {{ $t('home.formTitle') }}
             </h5>
             <p class="o-5 mb-3 ask_form_desc">
-              هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل 
+              {{ $t('home.lorem') }}
             </p>
 
             <form @submit.prevent="contactUS" ref="contactForm">
-              <input type="text" name="user_name" v-model="user_name" class="form-control mb-3" placeholder="الاسم">
-              <input type="tel" name="phone" v-model="phone" class="form-control mb-3" placeholder="رقم الهاتف">  
-              <input type="email" name="email" v-model="email" class="form-control mb-4" placeholder="البريد الاكتروني">
-              <textarea name="complaint" v-model="complaint" placeholder="الاستشارة" class="form-control mb-2" style="height:70px" id="" cols="30" rows="10"></textarea>  
-              <button class="main_btn ask_btn w-100 pt-3 pb-3 btn" :disabled="disabled"> طلب استشارة </button>
+              <input type="text" name="user_name" v-model="user_name" class="form-control mb-3" :placeholder="$t('home.name')">
+              <input type="tel" name="phone" v-model="phone" class="form-control mb-3" :placeholder="$t('home.phone')">  
+              <input type="email" name="email" v-model="email" class="form-control mb-4" :placeholder="$t('home.email')">
+              <textarea name="complaint" v-model="complaint" :placeholder="$t('home.advise')" class="form-control mb-2" style="height:70px" id="" cols="30" rows="10"></textarea>  
+              <button class="main_btn ask_btn w-100 pt-3 pb-3 btn" :disabled="disabled"> {{ $t('home.askAdvise') }} </button>
             </form>
           </div>
         </div>

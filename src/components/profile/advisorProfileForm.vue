@@ -10,38 +10,44 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">
                                     <i class="fa-solid fa-table-cells mx-2"></i>
-                                    اللوحة الرئيسية
+                                    {{ $t('nav.dashboard') }}
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false">
                                     <i class="fa-solid fa-user mx-2"></i>
-                                    البيانات الشخصية
+                                    {{ $t('nav.personalInfo') }}
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
                                     <i class="fa-solid fa-clipboard-list mx-2"></i>
-                                    طلباتي
+                                    {{ $t('nav.orders') }}
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab" aria-controls="courses" aria-selected="false">
+                                    <i class="fa-solid fa-book-open mx-2"></i>
+                                    {{ $t('nav.my_courses') }}
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="Pills-tab" data-bs-toggle="tab" data-bs-target="#Pills" type="button" role="tab" aria-controls="Pills" aria-selected="false">
                                     <i class="fa-solid fa-file-circle-check mx-2"></i>
-                                    الباقات والفواتير
+                                    {{ $t('nav.pills2') }}
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="Hours-tab" data-bs-toggle="tab" data-bs-target="#Hours" type="button" role="tab" aria-controls="Hours" aria-selected="false">
                                     
                                     <i class="fa-solid fa-calendar-check mx-2"></i>
-                                    ساعات العمل
+                                    {{ $t('nav.hours') }}
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">
                                     <i class="fa-solid fa-lock mx-2"></i>
-                                    تغيير كلمة المرور
+                                    {{ $t('nav.changePass') }}
                                 </button>
                             </li>
                         </ul>
@@ -59,19 +65,19 @@
                             <!-- profile form  -->
                             <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <section id="profile_form">
-                                    <h6 class="common_head  fw-bold"> معلومات شخصية </h6>
+                                    <h6 class="common_head  fw-bold"> {{ $t('nav.personalInfo') }} </h6>
 
                                     <form ref="adviserProfile" @submit.prevent="updateProfile">
                                         <section class="d-flex mt-3  justify-content-between">
                                             <div class="d-flex">
                                                 <img :src="user.image" ref="userProfileImage" class="profile_image" alt="">
                                                 <div class="d-flex flex-column mx-3">
-                                                    <span class="text-muted mb-1"> اضغط على الصورة لتغيرها </span>
-                                                    <span class="text-muted mb-1"> ملحوظة اختر فقط صورة PNG, JPG </span>
-                                                    <span class="text-muted mb-3"> ولا يزيد حجمها عن 5MB </span>
+                                                    <span class="text-muted mb-1"> {{ $t('profile.clickImage') }} </span>
+                                                    <span class="text-muted mb-1"> {{ $t('profile.imageType') }} </span>
+                                                    <span class="text-muted mb-3"> {{ $t('profile.imageSize') }} </span>
 
                                                     <button type="button" class="btn main_btn w-100 pt-2 pb-2 fw-6 position-relative">
-                                                         تعديل الصورة الشخصية 
+                                                         {{ $t('profile.changeImage') }} 
                                                          <input type="file" name="image" accept="image/png, image/jpg" class="profileImage2" @change="uploadImage">
                                                     </button>
                                                 </div>
@@ -79,7 +85,7 @@
 
                                             <div>
                                                 <button type="button" class="btn mainColor fw-bold" @click="removeDisabled">
-                                                    تعديل الملف الشخصي
+                                                    {{ $t('profile.editProfile') }}
                                                     <i class="fa-solid fa-edit"></i>
                                                 </button>
                                             </div>
@@ -94,7 +100,7 @@
                                                         name="name"
                                                         :value="user.name"
                                                         class="form-control mb-3"
-                                                        placeholder="الاسم "
+                                                        :placeholder="$t('home.name')"
                                                         :disabled="disabled"
                                                     />
                                                 </div>
@@ -116,7 +122,7 @@
                                                             :value="user.gender"
                                                             name="gender"
                                                         >
-                                                            <option selected hidden value="" disabled>نوع الجنس</option>
+                                                            <option selected hidden value="" disabled>{{ $t('profile.gender') }}</option>
                                                             <option value="male">male</option>
                                                             <option value="female">female</option>
                                                         </select>
@@ -129,7 +135,7 @@
                                                             type="text"
                                                             name=""
                                                             class="form-control mb-3"
-                                                            placeholder="تاريخ الميلاد"
+                                                            :placeholder="$t('profile.date')"
                                                             
                                                             
                                                         />
@@ -174,7 +180,7 @@
                                                             type="text"
                                                             v-model="regionQuery"
                                                             name="city_id"
-                                                            placeholder="اختر المدينة"
+                                                            :placeholder="$t('profile.chooseCity')"
                                                             class="inp-spe-tele form-control mb-2"
                                                             @input="getCities()"
                                                             @focus="showList"
@@ -215,7 +221,7 @@
                                                         </ul>
                                                         <ul class="list-group" v-else>
                                                             <li class="list-group-item">
-                                                            لا توجد مدينة
+                                                            {{ $t('profile.noCity') }}
                                                             </li>
                                                         </ul>
                                                         </div>
@@ -229,7 +235,7 @@
                                                             name="phone"
                                                             :value="user.phone"
                                                             class="form-control mb-3"
-                                                            placeholder="رقم الجوال"
+                                                            :placeholder="$t('profile.phone')"
                                                             :disabled="disabled"
                                                         />
                                                         <div class="form-group countries">
@@ -255,7 +261,7 @@
                                                         name="email"
                                                         :value="user.email"
                                                         class="form-control mb-3"
-                                                        placeholder="البريد الالكتروني"
+                                                        :placeholder="$t('home.email')"
                                                         :disabled="disabled"
                                                     />
                                                 </div>
@@ -268,7 +274,7 @@
                                                             :value="university_id"
                                                             name="university_id"
                                                         >
-                                                            <option selected hidden disabled value=""> الجامعة </option>
+                                                            <option selected hidden disabled value=""> {{ $t('profile.university') }} </option>
                                                             <option value="1" > القاهرة </option>
                                                             
                                                         </select>
@@ -292,14 +298,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <textarea name="bio" id="" cols="30" class="form-control" v-model="bio" :disabled="disabled" placeholder="نبذه شخصية" rows="15" style="height:70px"></textarea>
+                                                    <textarea name="bio" id="" cols="30" class="form-control" v-model="bio" :disabled="disabled" :placeholder="$t('profile.bio')" rows="15" style="height:70px"></textarea>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- معدل الاسعار  -->
-                                        <h6 class="common_head mt-4 fw-bold"> معدل الاسعار </h6>
-                                        <p>الرجاء تحديد السعر الخاص بكم من خلال المدد المتاحة لمدة الاستشارة</p>
+                                        <h6 class="common_head mt-4 fw-bold"> {{ $t('profile.priceRate') }} </h6>
+                                        <p> {{ $t('profile.pricePlaceHolder') }} </p>
                                         <div class="row mt-2">
 
                                             <!-- <div class="col-md-4" v-for="price in prices" :key="price.id">
@@ -319,7 +325,7 @@
                                                     name="prices[15]"
                                                     v-model="price1"
                                                     class="form-control mb-3"
-                                                    placeholder="15 دقيقة"
+                                                    :placeholder="$t('common.15h')"
                                                     :disabled="disabled"
                                                 />
                                             </div>
@@ -330,7 +336,7 @@
                                                     name="prices[30]"
                                                     v-model="price2"
                                                     class="form-control mb-3"
-                                                    placeholder="30 دقيقة"
+                                                    :placeholder="$t('common.30h')"
                                                     :disabled="disabled"
                                                 />
                                             </div>
@@ -341,7 +347,7 @@
                                                     name="prices[60]"
                                                     v-model="price3"
                                                     class="form-control mb-3"
-                                                    placeholder="60 دقيقة"
+                                                    :placeholder="$t('common.60h')"
                                                     :disabled="disabled"
                                                 />
                                             </div>
@@ -350,7 +356,7 @@
                                         </div>
 
 
-                                        <h6 class="common_head mt-4 fw-bold"> التواجد على الشبكة </h6>
+                                        <h6 class="common_head mt-4 fw-bold"> {{ $t('profile.networkExist') }} </h6>
                                         
                                         <div class="row mt-2">
                                             <!-- <div class="col-md-6" v-for="social in socials" :key="social">
@@ -420,7 +426,7 @@
                                         </div> -->
 
 
-                                        <button class="btn main_btn w-100 mt-3" :disabled="disabledButton" > حفظ التغييرات </button>
+                                        <button class="btn main_btn w-100 mt-3" :disabled="disabledButton" > {{ $t('profile.saveChanges') }} </button>
                                     </form>
 
                                 </section>
@@ -432,6 +438,13 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <myOrdersTabs />
                             </div>
+
+                            <!-- my courses  -->
+                            <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                                <advisorCourses  />
+                            </div>
+
+
                             <!-- my Pills  -->
                             <div class="tab-pane fade" id="Pills" role="tabpanel" aria-labelledby="Pills-tab">
                                 <adviserPillsVue />
@@ -452,6 +465,9 @@
             </div>
         </div>
     </section>
+
+      <loader v-if="loader"/>
+
 </template>
 
 <script>
@@ -459,7 +475,11 @@ import forgetPasswordProfile from '@/components/auth/forgetPasswordProfile.vue';
 import myOrdersTabs from '@/components/profile/myOrdersTabs.vue';
 import advisorDashboard from '@/components/profile/advisorDashboard.vue';
 import adviserPillsVue from '@/components/profile/adviserPills.vue';
-import adviserHouresVue from './adviserHoures.vue'
+import adviserHouresVue from './adviserHoures.vue';
+import advisorCourses  from './advisorCourses.vue';
+
+import loader from '@/components/layout/pageLoader.vue'
+
 import axios from 'axios';
 export default {
     data(){
@@ -493,7 +513,8 @@ export default {
             linkedIn : '',
             GitHub : '',
             facebook : '',
-            Behance: ''
+            Behance: '',
+            loader : true
 
         }
     },
@@ -595,6 +616,8 @@ export default {
                     // }
                     // this.myInters = res.data.data.interests
 
+                    this.loader  = false ;
+
                     
                 }
             } )
@@ -670,7 +693,9 @@ export default {
         myOrdersTabs,
         advisorDashboard,
         adviserPillsVue,
-        adviserHouresVue
+        adviserHouresVue,
+        advisorCourses,
+        loader
     },
     mounted(){
         this.user_id = JSON.parse(localStorage.getItem('user')).id

@@ -1,6 +1,6 @@
 <template>
     <!-- shared header  -->
-  <sharedHeaderVue title="خدماتنا" />
+  <sharedHeaderVue :title="$t('nav.services')" />
 
   <!-- categories  -->
   <servicesCategoriesVue />

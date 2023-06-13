@@ -1,6 +1,6 @@
 <template>
     <!-- shared header  -->
-    <singleCategoryHead title="خدماتنا" desc="ابق على تواصل معنا" />
+    <singleCategoryHead :title="$t('nav.services')" :desc="$t('header.keepContact')" />
 
     <!-- filter operation  -->
     <advisersFilterVue />

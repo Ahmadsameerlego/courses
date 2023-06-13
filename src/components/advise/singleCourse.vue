@@ -71,7 +71,7 @@
 
 
                         <div>
-                                <router-link to="/" class="btn main_btn w-100 pt-2 pb-2 mt-3">
+                                <router-link to="/" v-if="client" class="btn main_btn w-100 pt-2 pb-2 mt-3">
                                     اشترك الان
                                 </router-link>
                             </div>
@@ -82,31 +82,107 @@
 
             <!-- محتوى الدورة التدريبية  -->
             <div class="top_part mt-4 mb-3">
-                <h6 class="mb-3 fw-bold befored_title mainColor">
-                     محتوى الدورة التدريبية
-                </h6>
-                <!-- single course  -->
-                <div class="d-flex justify-content-between mb-2" v-for="lesson in lessons" :key="lesson.id">
-                    <p class="fw-6">
-                        المحاضرة {{ lesson.id }} : {{ lesson.title }}
-                    </p>
-                    <p class="fw-6">
-                        {{ lesson.date }}  - {{ lesson.time }}
-                    </p>
-                    <p class="fw-6">
-                        {{ lesson.period }}
-                    </p>
+                <div class="d-flex justify-content-between mb-3">
+                    <h6 class="mb-3 fw-bold befored_title mainColor">
+                        محتوى الدورة التدريبية
+                    </h6>
+                    <button v-if="advisor" class="main_btn btn" data-bs-toggle="modal" data-bs-target="#addLecture" type="button" > اضافة محاضرة </button>
+                </div>
 
-                    <a target="_blank" :href="lesson.url" class="text-muted fw-6 joinCourseLink">
-                        <span>انضم للمحاضرة</span>
-                        <i class="fa-regular fa-eye"></i>
-                    </a>
+                <div v-if="lessons.length>0">
+                    <!-- single course  -->
+                    <div class="d-flex justify-content-between mb-2" v-for="lesson in lessons" :key="lesson.id">
+                        <p class="fw-6">
+                            المحاضرة {{ lesson.id }} : {{ lesson.title }}
+                        </p>
+                        <p class="fw-6">
+                            {{ lesson.date }}  - {{ lesson.time }}
+                        </p>
+                        <p class="fw-6">
+                            {{ lesson.period }}
+                        </p>
+
+                        <a target="_blank" :href="lesson.url" class="text-muted fw-6 joinCourseLink">
+                            <span>انضم للمحاضرة</span>
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="notFound mt-2 mb-2 text-center" v-else>
+                    لا توجد محاضرات الى الان
                 </div>
 
             </div>
             
         </div>
     </section>
+
+    <!-- add lecture modal  -->
+    <div
+        class="modal fade"
+        id="addLecture"
+        tabindex="-1"
+        aria-labelledby="changePlanLabel"
+        aria-hidden="true"
+        >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-head border-bottom pt-3 pb-3 px-4">
+                        <h5 class="fw-bold"> اضافة محاضرة </h5>
+                    </div> 
+                    <form class="mx-4" @submit.prevent="storeCourse" ref="storeCourseForm">
+                        <div class="row mt-4">
+                            <div class="col-md-12 mb-3">
+                                <input type="text" class="form-control" required placeholder="اسم المحاضرة" name="title[ar]" id="">
+                            </div>
+
+                            
+
+
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group position-relative">
+
+                                    <input type="date" class="form-control" required  name="date" >
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group position-relative">
+
+                                    <input type="time" class="form-control" required  name="time" >
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group position-relative">
+
+                                    <input type="text" class="form-control" required  name="period" placeholder="مدة المحاضرة" >
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-md-6 mb-3">
+                                <div class="form-group position-relative">
+                                <div  class="d-flex justify-content-between align-items-center">
+                                        <input type="time" class="form-control" name="from_time">
+                                        <span class="fw-6 mx-2">الى</span>
+                                        <input type="time" class="form-control" name="to_time">
+                                    </div>
+                                </div>
+                            </div>  -->
+
+                            <div class="col-md-12">
+                                <textarea name="url" class="form-control" required style="height:80px"  placeholder="اضافة رابط زووم"  id="" cols="30" rows="10"></textarea>
+                            </div> 
+
+                            <div class="d-flex justify-content-center mt-4 mb-3">
+                                <button class="main_btn btn w-50 pt-2 pb-2" :disabled="disabled"> حفظ المحاضرة </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -117,7 +193,10 @@ export default {
             course : {},
             user : {},
             lessons : [],
-            title : ''
+            title : '',
+            client : null,
+            advisor : null,
+            disabled : false
         }
     },
     components:{
@@ -132,10 +211,52 @@ export default {
                 this.lessons = res.data.data.lessons;
                 this.$emit('loadCourse', this.title)
             } )
+        },
+        uploadFile(e){              
+            this.$refs.actualInput.value = e.target.files[0].name
+        },
+
+        // store course 
+        async storeCourse(){
+            this.disabled = true ;
+            const fd  = new FormData(this.$refs.storeCourseForm)
+            await axios.post(`store-course-lesson/${this.$route.params.id}`, fd ,{
+                headers : {
+                    Authorization:  `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then( (res)=>{
+                if( res.data.key == 'success' ){
+                    this.$swal({
+                        icon: 'success',
+                        title: res.data.msg,
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    setTimeout(() => {
+                        location.reload()
+                    }, 2000);
+                }else{
+                    this.$swal({
+                        icon: 'error',
+                        title: res.data.msg,
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                }
+                this.disabled = false ;
+            } )
         }
     },
     mounted(){
         this.getSingleCourse()
+        if( localStorage.getItem('userType') == 'client' ){
+            this.client = true ;
+            this.advisor = false ;
+        }else if( localStorage.getItem('userType') == 'adviser' ){
+            this.client = false ;
+            this.advisor = true ;
+        }
     }
 
 }

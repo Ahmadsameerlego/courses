@@ -12,19 +12,19 @@
                             </div>
                             <div>
                                 <p class="footer_desc whiteColor">
-                                    نجلب السنوات والخبرة العالمية والقدرة على التحمل لتوجيه عملائنا من خلال الحقائق الجديدة والمضطربة في كثير من الأحيان.
+                                    {{ $t('home.footerDesc') }}
                                 </p>
                             </div>
                         </div>
 
                         <div>
                             <div class="footer_links d-flex flex-column">
-                                <h6 class="fw-6 whiteColor mb-4"> خريطة الموقع </h6>
-                                <router-link to="/" class="whiteColor"> الصفحة الرئيسية </router-link>
-                                <router-link to="/AboutUs" class="whiteColor"> معلومات عنا </router-link>
-                                <router-link to="/OurServices/1" class="whiteColor"> خدماتنا </router-link>
-                                <router-link to="/" class="whiteColor"> الباقات </router-link>
-                                <router-link to="/contactUs" class="whiteColor"> تواصل معنا </router-link>
+                                <h6 class="fw-6 whiteColor mb-4"> {{ $t('home.sitePlan') }} </h6>
+                                <router-link to="/" class="whiteColor"> {{ $t('nav.home') }} </router-link>
+                                <router-link to="/AboutUs" class="whiteColor"> {{ $t('nav.about') }} </router-link>
+                                <router-link to="/OurServices/1" class="whiteColor"> {{ $t('nav.services') }} </router-link>
+                                <router-link to="/" class="whiteColor"> {{ $t('nav.plans') }} </router-link>
+                                <router-link to="/contactUs" class="whiteColor"> {{ $t('nav.contact') }} </router-link>
                             </div>
                         </div>
                     </section>
@@ -32,18 +32,18 @@
 
                 <div class="col-md-6 mb-2">
                     <section class="footer_left_hand">
-                        <h6 class="fw-6 whiteColor mb-3"> إنضم إلينا الان  </h6>
+                        <h6 class="fw-6 whiteColor mb-3"> {{ $t('home.joinNow') }}  </h6>
                         <p class="whiteColor">
-                            الآن يمكنك التواصل مع الآلاف من العملاء من جميع أنحاء العالم بشكل خاص
+                            {{ $t('home.footerJoinDesc') }}
                         </p>
 
                         <div class="d-flex align-items-center">
                             <button class="bordered_btn whiteColor w-50 pt-3 pb-3">
-                            انضم كعميل
+                            {{ $t('home.joinClient') }}
                             </button>
                             <span class="mainColor whiteColor fw-bold px-3">أو</span>
                             <button class=" bordered_btn w-50 whiteColor pt-3 pb-3">
-                                انضم كمستشار
+                                {{ $t('home.joinAdviser') }}
                             </button>
                         </div>
                     </section>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <p class="whiteColor">
-                    © 2023 جميع الحقوق محفوظة لشركة Adviser Gates
+                    {{ $t('home.copy') }}
                 </p>
 
                 <!-- left side  -->

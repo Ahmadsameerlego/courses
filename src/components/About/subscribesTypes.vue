@@ -55,10 +55,13 @@
             </section>
         </div>
     </section>
+
+    <loader v-if="loader" />
 </template>
 
 <script>
 import axios from 'axios'
+import loader from '@/components/layout/pageLoader.vue'
 
 export default {
     data(){
@@ -66,7 +69,8 @@ export default {
             monthly : {},
             yearly : {},
             monthlyFeatures : [],
-            yearlyFeatures :[]
+            yearlyFeatures :[],
+            loader : true
         }
     },
     methods:{
@@ -77,11 +81,15 @@ export default {
                 this.monthlyFeatures = res.data.data[0].features;
                 this.yearlyFeatures = res.data.data[1].features;
                 this.yearly = res.data.data[1];
+                this.loader = false
             } )
         }
     },
     mounted(){
         this.getPlans()
+    },
+    components:{
+        loader
     }
 }
 </script>

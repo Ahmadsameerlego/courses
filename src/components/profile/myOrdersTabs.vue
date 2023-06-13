@@ -46,7 +46,7 @@
             </div>
 
             <div class="mt-3">
-                <button class="add_rate btn"  > اضف تقييم </button>
+                <button class="add_rate btn" v-if="client" > اضف تقييم </button>
 
               </div>
           </div>
@@ -95,7 +95,7 @@
             </div>
 
             <div class="mt-3">
-                <button class="add_rate btn" data-bs-toggle="modal" data-bs-target="#rate" type="button"> اضف تقييم </button>
+                <button class="add_rate btn" v-if="client" data-bs-toggle="modal" data-bs-target="#rate" type="button"> اضف تقييم </button>
               </div>
                   <!-- rate modal  -->
                   <div
@@ -172,27 +172,49 @@ export default {
       consultant : {},
       comment : '',
       rate : null,
-      disabled : false
+      disabled : false,
+      client : null,
+      advisor : null,
+      endpoint : ''
     }
   },
   methods:{
     async getOrders(){
-      await axios.get('client-orders',{
-        headers : {
-            Authorization:  `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      .then((res)=>{
-        if( res.data.key == 'success' ){
-          this.next_orders = res.data.data.next_orders;
-        this.finished_orders = res.data.data.finished_orders ;
-        }
-      })
+      
+      if( this.client == true && this.advisor == false ){
+        await axios.get('client-orders',{
+          headers : {
+              Authorization:  `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        .then((res)=>{
+          if( res.data.key == 'success' ){
+            this.next_orders = res.data.data.next_orders;
+          this.finished_orders = res.data.data.finished_orders ;
+          }
+        })
+      }else if( this.advisor == true&& this.client == false ){
+          await axios.get('consultant-orders',{
+            headers : {
+                Authorization:  `Bearer ${localStorage.getItem('token')}`
+            }
+          })
+          .then((res)=>{
+            if( res.data.key == 'success' ){
+              this.next_orders = res.data.data.next_orders;
+            this.finished_orders = res.data.data.finished_orders ;
+            }
+          })
+          console.log('asdfgj[lkjsdfghjkl]')
+      }
+      
+      
     },
     // rate order 
     async rateOrder(id){
       this.disabled = true ;
-      await axios.patch(`rating-order/${id}?rate=${this.rate}&comment=${this.comment}`, {
+      const fd = new FormData()
+      await axios.patch(`rating-order/${id}?rate=${this.rate}&comment=${this.comment}`, fd ,{
         headers : {
             Authorization:  `Bearer ${localStorage.getItem('token')}`
         }
@@ -220,8 +242,18 @@ export default {
       } )
     }
   },
+  beforeMount(){
+    if( localStorage.getItem('userType') == 'client' ){
+        this.client = true ;
+        this.advisor = false ;
+    }else if( localStorage.getItem('userType') == 'adviser' ){
+        this.client = false ;
+        this.advisor = true ;
+    }
+  },
   mounted(){
-    this.getOrders()
+    this.getOrders();
+    
   }
 }
 </script>

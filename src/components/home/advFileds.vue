@@ -1,8 +1,8 @@
 <template>
     <section id="fields">
         <div class="container">
-            <h5 class="text-center fw-bold"> نقوم بتوصيلك مع أفضل المستشارين </h5>
-            <p class="text-center o-5"> حدد التخصص الذي يناسب إحتياجاتك </p>
+            <h5 class="text-center fw-bold"> {{ $t('home.advise1') }} </h5>
+            <p class="text-center o-5"> {{ $t('home.chooseCat') }} </p>
 
             <div class="row mt-4">
                 <div class="col-md-4 mb-4" v-for="cat in categories" :key="cat.id">

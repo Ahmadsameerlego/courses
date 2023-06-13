@@ -8,7 +8,7 @@
             <div class="top_dir d-flex justify-content-between align-items-center">
                 <!-- right side  -->
                 <div class="email d-flex">
-                    <span class="whiteColor"> contactus@advisersgate.com </span>
+                    <span class="whiteColor"> {{ data.email }} </span>
                     <img :src="require('@/assets/imgs/direct.png')" alt="">
                 </div>
 
@@ -28,7 +28,7 @@
         <div class="container  d-flex justify-content-between align-items-center" ref="headerContainer">
             <!-- logo  -->
             <div class="logo">
-                <img :src="require('@/assets/imgs/image 74.png')" alt="">
+                <img :src="data.logo" width="100" height="50" alt="">
             </div>
 
             <!-- navbar  -->
@@ -38,13 +38,13 @@
                         <router-link class="nav-link" aria-current="page" to="/"> {{ $t('nav.home') }} </router-link>
                     </li>
                     <li class="nav-item" v-if="client||advisor">
-                        <router-link class="nav-link" to="/AboutUs"> معلومات عنا </router-link>
+                        <router-link class="nav-link" to="/AboutUs"> {{ $t('nav.about') }} </router-link>
                     </li>
 
                     <!-- dropdown  -->
                     <li class="nav-item dropdown" v-if="client">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            خدماتنا
+                            {{ $t('nav.services') }}
                         </a>
                         <ul class="boxShadow border-0 dropdown-menu" style="" aria-labelledby="navbarDropdown">
                             <!-- <li>
@@ -67,7 +67,7 @@
                                         <router-link class="dropdown-item text-end mb-2 mt-2" :to="'/singleService/'+cat.id" v-for="item in cat.childs" :key="item.id">{{ item.name}} </router-link>
                                     </li>
                                     <li v-else>
-                                        <span class="text-center"> لا توجد خدمة فرعية </span>
+                                        <span class="text-center"> {{ $t('nav.noSubSer') }} </span>
                                     </li>
                                 </ul>
                             </li>
@@ -77,10 +77,10 @@
                     </li>
 
                     <li class="nav-item" v-if="advisor">
-                        <router-link class="nav-link" to="/subscribes"> الباقات </router-link>
+                        <router-link class="nav-link" to="/subscribes"> {{ $t('nav.plans') }} </router-link>
                     </li>
                     <li class="nav-item" v-if="client||advisor">
-                        <router-link class="nav-link" to="/contactUs"> تواصل معنا </router-link>
+                        <router-link class="nav-link" to="/contactUs"> {{ $t('nav.contact') }} </router-link>
                     </li>
                 </ul>
             </div>
@@ -93,15 +93,16 @@
                 </button>
 
                 <!-- notification  -->
-                <button class="btn searchBtn" v-if="isLoggedIn==true" type="button" id="notifications" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn searchBtn position-relative" v-if="isLoggedIn==true" type="button" id="notifications" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-bell mainColor"></i>
+                    <span class="count"> {{ countNotification }} </span>
                 </button>
 
 
                 <!-- notification dropdown  -->
                 <ul v-if="isLoggedIn==true" class="dropdown-menu boxShadow border-none" aria-labelledby="notifications" style="width:30%">
                     <div class="d-flex align-items-baseline justify-content-between border-bottom pt-3 pb-3 mx-3">
-                        <h6 class="fw-bold"> التنبيهات </h6>
+                        <h6 class="fw-bold"> {{ $t('nav.notes') }} </h6>
                         <i class="fa-solid fa-gear fw-bold"></i>
                     </div>
                     <!-- single notification  -->
@@ -119,7 +120,7 @@
                                     </p>
                                 </div>
                                 <!-- created at  -->
-                                <div class="created_at">
+                                <div class="created_at" style="position:absolute;left:0px">
                                     <p class="text-muted"> {{ notification.created_at }} </p>
                                 </div>
                             </router-link>
@@ -127,7 +128,7 @@
                     </div>
 
                     <div class="text-center" v-else>
-                        لا توجد اشعارات حتى الان
+                        {{ $t('nav.noAlert') }}
                     </div>
                     
                 </ul>
@@ -151,25 +152,25 @@
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/userProfile">
                             <img :src="require('@/assets/imgs/u1.png')" class="" alt="">
-                            <span class="fw-6 mx-2">حسابي</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.profile') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/userProfile">
                             <img :src="require('@/assets/imgs/Icon22.png')" class="" alt="">
-                            <span class="fw-6 mx-2">طلباتي</span>
+                            <span class="fw-6 mx-2">{{ $t('nav.orders') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/userProfile">
                             <img :src="require('@/assets/imgs/text.png')" class="" alt="">
-                            <span class="fw-6 mx-2">الفواتير</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.pills') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/userProfile">
                             <img :src="require('@/assets/imgs/block.png')" class="" alt="">
-                            <span class="fw-6 mx-2">تغيير كلمة المرور</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.changePass') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
@@ -181,7 +182,7 @@
                     <li class="mx-2 pt-2 pb-2">
                         <button @click.prevent="signOut()" class="dropdown-item align-items-center d-flex" to="/">
                             <img :src="require('@/assets/imgs/logout.png')" class="" alt="">
-                            <span class="fw-6 mx-2">تسجيل الخروج</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.logOut') }} </span>
                         </button>
                     </li>
                 </ul>
@@ -202,31 +203,31 @@
                     <li class="border-bottom mx-2 pt-2 pb-2" v-if="advisor">
                         <router-link class="dropdown-item align-items-center d-flex" to="/advisorProfile">
                             <img :src="require('@/assets/imgs/grid-1.png')" class="" alt="">
-                            <span class="fw-6 mx-2"> اللوحة الرئيسية </span>
+                            <span class="fw-6 mx-2"> {{$t('nav.dashboard')  }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/advisorProfile">
                             <img :src="require('@/assets/imgs/u1.png')" class="" alt="">
-                            <span class="fw-6 mx-2">حسابي</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.profile') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/advisorProfile">
                             <img :src="require('@/assets/imgs/Icon22.png')" class="" alt="">
-                            <span class="fw-6 mx-2">طلباتي</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.orders') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/advisorProfile">
                             <img :src="require('@/assets/imgs/text.png')" class="" alt="">
-                            <span class="fw-6 mx-2">الفواتير</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.pills') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/advisorProfile">
                             <img :src="require('@/assets/imgs/block.png')" class="" alt="">
-                            <span class="fw-6 mx-2">تغيير كلمة المرور</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.changePass') }} </span>
                         </router-link>
                     </li>
                     <li class="border-bottom mx-2 pt-2 pb-2">
@@ -238,22 +239,22 @@
                     <li class="mx-2 pt-2 pb-2">
                         <button @click.prevent="signOut()" class="dropdown-item align-items-center d-flex" to="/">
                             <img :src="require('@/assets/imgs/logout.png')" class="" alt="">
-                            <span class="fw-6 mx-2">تسجيل الخروج</span>
+                            <span class="fw-6 mx-2"> {{ $t('nav.logOut') }} </span>
                         </button>
                     </li>
                 </ul>
 
                 <!-- lang  -->
-                <button class="btn langBtn" @click="switchLang" v-if="isLoggedIn==false" >
+                <button class="btn langBtn" @click="switchLang"  >
                     <span v-if="$i18n.locale=='en'" >AR</span>
                     <span v-else-if="$i18n.locale=='ar'" >EN</span>
                 </button>
 
-                <router-link to='/askAdvise' class="bordered_btn" v-if="client">
-                    طلب استشارة
+                <router-link to='/askAdvise' class="bordered_btn" v-if="client&&isLoggedIn">
+                    {{ $t('home.askAdvise') }}
                 </router-link>
 
-                <button class="btn main_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" v-if="isLoggedIn==false"> تسجيل الدخول </button>
+                <button class="btn main_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" v-if="isLoggedIn==false"> {{ $t('nav.login') }} </button>
 
                 <span @click="toggleBar" class="toggleBar" ref="bar">
                     <i class="fa-solid fa-bars mainColor"></i>
@@ -287,7 +288,9 @@ export default {
             user_name : '',
             email : '',
             socials : [],
-            notifications : []
+            notifications : [],
+            data : {},
+            countNotification : ''
         }
     },
     components:{
@@ -330,6 +333,24 @@ export default {
                     
             } )
         },
+        // get count notifications 
+        async getCountNot(){
+            await axios.get('count-notifications', {
+                headers : {
+                    Authorization:  `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then( (res)=>{
+                    if( res.data.key == 'success' ){
+                        if( this.isLoggedIn == true  ){
+                            this.countNotification = res.data.data.count;
+                        }
+                    }else{
+                        this.countNotification = ''
+                    }
+                    
+            } )
+        },
         // get socials
         async getSocials(){
             await axios.get('socials')
@@ -337,6 +358,12 @@ export default {
                 this.socials = res.data.data ;
             } )
         } ,
+        async getSiteInfo(){
+            await axios.get('settings')
+            .then( (res)=>{
+                this.data = res.data.data
+            } )
+        },
         // logout 
         async signOut(){
             await axios.delete('sign-out', {
@@ -352,11 +379,10 @@ export default {
                         timer: 2000,
                         showConfirmButton: false,
                     });
-
+                    this.$router.push('/')
                     setTimeout(() => {
                         localStorage.removeItem('token');
                         location.reload();
-                        this.$router.push('/')
                     }, 2000);
 
                 }else{
@@ -393,7 +419,9 @@ export default {
     mounted(){
 
         this.getSocials();
-        this.getNotifications()
+        this.getNotifications();
+        this.getSiteInfo();
+        this.getCountNot()
 
         if( localStorage.getItem('token') ){
             this.isLoggedIn = true ;
@@ -419,6 +447,20 @@ export default {
 </script>
 
 <style lang="scss">
+.count{
+    position: absolute;
+    width: 18px;
+    height:18px;
+    background-color: #C40F3D;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#fff;
+    font-size: 12px;
+    top: -9px;
+    left: -4px;
+}
 .notificationsList{
     max-height: 300px;
     overflow-y: auto;

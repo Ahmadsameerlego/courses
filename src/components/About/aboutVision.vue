@@ -47,11 +47,27 @@
             </div>
         </div>
     </section>
+      <loader v-if="loader"/>
+
 </template>
 
 <script>
-export default {
+import loader from '@/components/layout/pageLoader.vue'
 
+export default {
+    data(){
+        return{
+            loader : true
+        }
+    },
+    mounted(){
+        setTimeout(() => {
+            this.loader = false
+        }, 1000);
+    },
+    components:{
+        loader
+    }
 }
 </script>
 

@@ -1,8 +1,8 @@
 <template>
     <section id="categories" class="mt-4">
         <div class="container">
-            <p class="common_head  fw-6"> خدماتنا </p>
-            <h6 class="fw-bold">تحتاج خدمتنا؟ احجز استشارتك المجانية الآن وسوف نرد عليك في اسرع وقت</h6>
+            <p class="common_head  fw-6"> {{ $t('nav.services') }} </p>
+            <h6 class="fw-bold"> {{ $t('home.serv1') }} </h6>
 
             <div class="services grid-container" v-if="filteredCats.length>0">
                 <router-link :to="'/singleService/'+cat.id" class="item single_service mb-2" v-for="cat in filteredCats" :key="cat.id">
@@ -14,16 +14,22 @@
             <div class="notFound mb-3 text-center" v-else> لا توجد خدمات متاحة </div>
         </div>
     </section>
+
+      <loader v-if="loader" />
+
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import loader from '@/components/layout/pageLoader.vue'
+
 export default {
     data(){
         return{
             categories : [],
             filteredCats : [],
-            allchilds : []
+            allchilds : [],
+            loader : true
         }
     },
     methods:{
@@ -40,7 +46,7 @@ export default {
                 // filter child that have same parent id in the route 
                 this.filteredCats = this.allchilds.filter( item => item.parent_id == this.$route.params.id );
 
-
+                this.loader = false
         } )
         },
     },
@@ -73,6 +79,10 @@ export default {
       }
     }
   },
+
+  components:{
+    loader
+  }
 
 }
 </script>

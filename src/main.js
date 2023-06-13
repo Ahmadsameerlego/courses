@@ -30,7 +30,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://admin.advisersgate.com/api/';
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');   
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-axios.defaults.headers.lang = sessionStorage.getItem('locale');
+axios.defaults.headers.lang = localStorage.getItem('locale');
 
 
 // import sweat alert 

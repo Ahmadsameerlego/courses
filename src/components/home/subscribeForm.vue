@@ -3,15 +3,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <h4 class="fw-bold">تلقي إخطارات عندما أنشر مقالات جديدة</h4>
-                    <p class="sub_text o-5">ابق على اطلاع بأحدث الأخبار والإعلانات والمقالات.</p>
+                    <h4 class="fw-bold"> {{ $t('home.subTitle') }} </h4>
+                    <p class="sub_text o-5"> {{ $t('home.subDesc') }} </p>
                 </div>
 
                 <div class="col-md-6">
                     <form @submit.prevent="subscribe()" ref="subscribe">
                         <div class="d-flex justify-content-end  ">
-                            <input type="email" name="email" v-model="email" class="form-control w-50" placeholder="البريد الاكتروني">
-                            <button class="btn main_btn mx-3" :disabled="disabled"> اشتراك </button>
+                            <input type="email" name="email" v-model="email" class="form-control w-50" :placeholder="$t('home.email')">
+                            <button class="btn main_btn mx-3" :disabled="disabled"> {{ $t('home.subscribe') }} </button>
                         </div>
                     </form>
                 </div>

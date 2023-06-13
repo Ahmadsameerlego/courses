@@ -1,6 +1,6 @@
 <template>
     <!-- shared header  -->
-    <sharedHeaderVue title="الباقات" />
+    <sharedHeaderVue :title="$t('nav.plans')" />
 
     <!-- types  -->
     <subscribesTypesVue />
