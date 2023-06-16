@@ -350,7 +350,8 @@ export default {
             price_sold_consultations : '',
             price_next_consultations : '',
             invoices : [],
-            disabled2 : false
+            disabled2 : false,
+            url : ' '
         }
     },
     methods:{
@@ -364,31 +365,17 @@ export default {
         // subscribe plan 
         async subscribePlan(){
             this.disabled = true ;
+
             await axios.get(`subscribe-plan/${this.planId}`, {
                 headers : {
                     Authorization:  `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then( (res)=>{
-                if( res.data.key == 'success' ){
-                    this.$swal({
-                        icon: 'success',
-                        title: res.data.msg,
-                        timer: 2000,
-                        showConfirmButton: false,
-                    });
-                    setTimeout(() => {
-                        location.reload()
-                    }, 2000);
-                }else{
-                    this.$swal({
-                        icon: 'error',
-                        title: res.data.msg,
-                        timer: 4000,
-                        showConfirmButton: false,
-                    });
-                }
+               this.url = res.data.data.url ;
                 this.disabled = false ;
+                  window.open(this.url, '_blank');
+
             } )
         },
         // get plan details 
@@ -490,6 +477,12 @@ export default {
     }
     .modal-dialog{
         max-width:40% !important;
+    }
+    @media( max-width:768px){
+        .modal-dialog {
+            max-width: 95% !important;
+            margin: auto !important;
+        }
     }
     .pills_table{
         width: 100%;

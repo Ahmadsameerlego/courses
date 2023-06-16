@@ -28,7 +28,7 @@
                 <section class="form_side">
                   <!-- logo  -->
                   <div class="authLogo">
-                    <img :src="require('@/assets/imgs/Logo-B 1.png')" alt="" />
+                    <img :src="require('@/assets/imgs/image 74.png')" alt="" />
                   </div>
                   <h5 class="fw-6">هل نسيت كلمة المرور؟</h5>
                   <p class="fs-15 o-5">

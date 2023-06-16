@@ -44,7 +44,20 @@
               <input type="text" name="user_name" v-model="user_name" class="form-control mb-3" :placeholder="$t('home.name')">
               <input type="tel" name="phone" v-model="phone" class="form-control mb-3" :placeholder="$t('home.phone')">  
               <input type="email" name="email" v-model="email" class="form-control mb-4" :placeholder="$t('home.email')">
-              <textarea name="complaint" v-model="complaint" :placeholder="$t('home.advise')" class="form-control mb-2" style="height:70px" id="" cols="30" rows="10"></textarea>  
+               <div class="form-group position-relative">
+                  <select
+                      class="form-select mb-3"
+                      aria-label="Default select example"                      
+                      name="category_id"
+                      ref="category"
+                  >
+                      <option selected hidden disabled value=""> التخصص </option>
+                      <option :value="cat.id" v-for="cat in categories" :key="cat.id"> {{ cat.name }}  </option>
+                      
+                  </select>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
+              <textarea name="message" v-model="message" :placeholder="$t('home.advise')" class="form-control mb-2" style="height:70px" id="" cols="30" rows="10"></textarea>  
               <button class="main_btn ask_btn w-100 pt-3 pb-3 btn" :disabled="disabled"> {{ $t('home.askAdvise') }} </button>
             </form>
           </div>
@@ -64,37 +77,37 @@ export default {
   data(){
     return{
       email : '',
-      complaint : '',
+      message : '',
       phone : '',
       user_name : '',
-      disabled : true 
-
+      disabled : true ,
+      categories : []
     }
   },
     watch:{
-    complaint(){
-      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+    message(){
+      if( this.email !== '' && this.user_name !== '' && this.message !== ''  && this.phone !== ''){
         this.disabled = false
       }else{
         this.disabled = true
       }
     },
     phone(){
-      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+      if( this.email !== '' && this.user_name !== '' && this.message !== ''  && this.phone !== ''){
         this.disabled = false
       }else{
         this.disabled = true
       }
     },
     email(){
-      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+      if( this.email !== '' && this.user_name !== '' && this.message !== ''  && this.phone !== ''){
         this.disabled = false
       }else{
         this.disabled = true
       }
     },
     user_name(){
-      if( this.email !== '' && this.user_name !== '' && this.complaint !== ''  && this.phone !== ''){
+      if( this.email !== '' && this.user_name !== '' && this.message !== ''  && this.phone !== ''){
         this.disabled = false
       }else{
         this.disabled = true
@@ -105,7 +118,7 @@ export default {
         async contactUS(){
       this.disabled = true ;
       const fd = new FormData(this.$refs.contactForm)
-      await axios.post('new-complaint', fd , {
+      await axios.post('new-consultation', fd , {
         headers : {
             Authorization:  `Bearer ${localStorage.getItem('token')}`
         }
@@ -121,7 +134,8 @@ export default {
               this.user_name = '';
               this.phone = '';
               this.email = '';
-              this.complaint = '';
+              this.message = '';
+              this.$refs.category.value = ''
           }else{
               this.$swal({
                   icon: 'error',
@@ -132,7 +146,17 @@ export default {
           }
           this.disabled = false ;
       } )
-    }
+    },
+    // get all intersts 
+        async getCategories(){
+            await axios.get('categories')
+            .then( (res)=>{
+                this.categories = res.data.data
+            } )
+        },
+  },
+  mounted(){
+    this.getCategories()
   }
 }
 </script>

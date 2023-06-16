@@ -37,7 +37,7 @@
                     <!-- logo  -->
                     <div class="authLogo">
                       <img
-                        :src="require('@/assets/imgs/Logo-B 1.png')"
+                        :src="require('@/assets/imgs/image 74.png')"
                         alt=""
                       />
                     </div>
@@ -90,10 +90,9 @@
                           class="form-select mb-3"
                           aria-label="Default select example"
                           name="country_code"
-                          v-model="country_code"
                         >
-                          <option selected hidden disabled>
-                            كود الدولة
+                          <option selected value="" hidden disabled>
+                            20+
                           </option>
                           <option v-for="country in countries" :key="country.id" :value="country.key"> {{ country.key }}{{ country.name }} </option>
                         </select>
@@ -220,7 +219,7 @@ export default {
       email : '',
       password : '',
       type : '',
-      country_code : '',
+      country_code : '20+',
       countries : []
     };
   },
@@ -309,6 +308,11 @@ export default {
 </script>
 
 <style lang="scss">
+@media(max-width:768px){
+  .form-check-label{
+    font-size: 11px;
+  }
+}
 #loginModal,
 #signUpModal {
   position: relative;
@@ -333,6 +337,12 @@ export default {
   max-width: 75% !important;
   margin: auto !important;
 }
+@media( max-width:768px){
+        .modal-dialog {
+            max-width: 95% !important;
+            margin: auto !important;
+        }
+    }
 .form-select {
   background-image: none !important;
   padding-right: 13px !important;

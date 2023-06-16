@@ -7,7 +7,7 @@
                 :pagination="{ clickable: true }"
                 effect="fade"
                 :autoplay="{
-                delay: 4500,
+                delay: 10000,
                 disableOnInteraction: false,
             }"
             :loop="true"

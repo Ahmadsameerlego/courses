@@ -152,14 +152,14 @@ export default {
 
 .single_service img{
     width: 100%;
-    height: 200px;
+    // height: 200px;
     object-fit: cover;
     border-radius: 5px;
 }
 
-.item:nth-child(1) {
-    img{
-        height: 100% !important;
-    }
-}
+// .item:nth-child(1) {
+//     img{
+//         height: 100% !important;
+//     }
+// }
 </style>

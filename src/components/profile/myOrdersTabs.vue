@@ -46,55 +46,6 @@
             </div>
 
             <div class="mt-3">
-                <button class="add_rate btn" v-if="client" > اضف تقييم </button>
-
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="notFound text-center mt-2 mb-2" v-else>
-        لا توجد طلبات منتهية الى الان
-      </div>
-    </section>
-  </div>
-  <!-- القادمة  -->
-  <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tap">
-    <section>
-      <div class="row mt-3" v-if="next_orders.length>0">
-
-        <div class="col-md-6" v-for="order in next_orders" :key="order.id">
-          <div class="single_order">
-            <div class="d-flex">
-              <!-- order image  -->
-              <div class="order_image">
-                <img :src="order.file" alt="">
-              </div>
-
-              <!-- order details  -->
-              <div class="order_details">
-                <h6 class="fw-bold"> {{ order.title }} </h6>
-
-                <p class="d-flex">
-                  <i class="fa-solid fa-clock mainColor"></i>
-                  <span class="o-5"> {{ order.time }} </span>
-                </p>
-
-                <div class="d-flex justify-content-between">
-                  <p class="d-flex ">
-                    <i class="fa-solid fa-user mainColor"></i>  
-                    <span class="o-5"> {{ order.consultant.name }} </span>
-                  </p>
-
-                  <span class="waiting">
-                    قيد الانتظار
-                  </span>
-                </div>
-              </div>
-
-              
-            </div>
-
-            <div class="mt-3">
                 <button class="add_rate btn" v-if="client" data-bs-toggle="modal" data-bs-target="#rate" type="button"> اضف تقييم </button>
               </div>
                   <!-- rate modal  -->
@@ -153,8 +104,57 @@
           </div>
         </div>
       </div>
+      <div class="notFound text-center mt-4 mb-2" v-else>
+        لا توجد طلبات منتهية الى الان
+      </div>
+    </section>
+  </div>
+  <!-- القادمة  -->
+  <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tap">
+    <section>
+      <div class="row mt-3" v-if="next_orders.length>0">
 
-      <div class="notFound text-center mt-2 mb-2" v-else>
+        <div class="col-md-6" v-for="order in next_orders" :key="order.id">
+          <div class="single_order">
+            <div class="d-flex">
+              <!-- order image  -->
+              <div class="order_image">
+                <img :src="order.file" alt="">
+              </div>
+
+              <!-- order details  -->
+              <div class="order_details">
+                <h6 class="fw-bold"> {{ order.title }} </h6>
+
+                <p class="d-flex">
+                  <i class="fa-solid fa-clock mainColor"></i>
+                  <span class="o-5"> {{ order.time }} </span>
+                </p>
+
+                <div class="d-flex justify-content-between">
+                  <p class="d-flex ">
+                    <i class="fa-solid fa-user mainColor"></i>  
+                    <span class="o-5"> {{ order.consultant.name }} </span>
+                  </p>
+
+                  <span class="waiting">
+                    قيد الانتظار
+                  </span>
+                </div>
+              </div>
+
+              
+            </div>
+
+            <div class="mt-3">
+                <a class="add_rate btn" href="https://zoom.us/" v-if="client" > الانضمام للجلسة </a>
+              </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="notFound text-center mt-4 mb-2" v-else>
         لا توجد طلبات قادمة الى الان
       </div>
     </section>

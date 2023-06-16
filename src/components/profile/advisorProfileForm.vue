@@ -68,7 +68,7 @@
                                     <h6 class="common_head  fw-bold"> {{ $t('nav.personalInfo') }} </h6>
 
                                     <form ref="adviserProfile" @submit.prevent="updateProfile">
-                                        <section class="d-flex mt-3  justify-content-between">
+                                        <section class="profile_head d-flex mt-3  justify-content-between">
                                             <div class="d-flex">
                                                 <img :src="user.image" ref="userProfileImage" class="profile_image" alt="">
                                                 <div class="d-flex flex-column mx-3">
@@ -451,7 +451,7 @@
                             </div>
                             <!-- houres worked  -->
                             <div class="tab-pane fade" id="Hours" role="tabpanel" aria-labelledby="Hours-tab">
-                                <adviserHouresVue :times="times" />
+                                <adviserHouresVue :times="times" :every_day="every_day" :from_time="from_time" :to_time="to_time" />
                             </div>
 
 
@@ -514,7 +514,10 @@ export default {
             GitHub : '',
             facebook : '',
             Behance: '',
-            loader : true
+            loader : true,
+            every_day : null,
+            to_time : '',
+            from_time : ''
 
         }
     },
@@ -588,6 +591,9 @@ export default {
 
                     this.university = res.data.data.university;
                     this.times = res.data.data.times;
+                    this.to_time = res.data.data.to_time; 
+                    this.from_time = res.data.data.from_time; 
+                    this.every_day = res.data.data.every_day; 
 
 
                     if( res.data.data.category !== null && res.data.data.category){
@@ -777,5 +783,17 @@ export default {
   top: 0;
   width:120px;
   height:100%;
+}
+
+@media( max-width:768px ){
+    .profile_head{
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .profile_image[data-v-1a1ee608] {
+        width: 100px;
+        height: 100px;
+    }
 }
 </style>

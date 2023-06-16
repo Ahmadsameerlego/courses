@@ -95,6 +95,12 @@ export default {
 </script>
 
 <style scoped>
+@media(max-width:768px){
+    .common_head[data-v-068d000e]::before {
+    right: 32%;
+}
+
+}
     .common_head::before {
         right: 43% ;
     }

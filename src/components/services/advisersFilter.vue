@@ -9,7 +9,7 @@
                 <div class="col-md-8 mb-2" >
                     <form >
                         <div class="form-group position-relative">
-                            <input type="text" class="form-control searchInput" :placeholder="$t('common.searchFor')">
+                            <input type="text" class="form-control searchInput" v-model="search" @input="searchConsults" :placeholder="$t('common.searchFor')">
                             <i class="fa-solid fa-magnifying-glass searchSvg"></i>
                         </div>
                     </form>
@@ -82,10 +82,10 @@
                                 <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form class="selectedCats">
-                                            <div class="form-group position-relative mb-2">
+                                            <!-- <div class="form-group position-relative mb-2">
                                                 <input type="text" class="form-control searchInput" :placeholder="$t('common.searchFor')">
                                                 <i class="fa-solid fa-magnifying-glass searchSvg"></i>
-                                            </div>
+                                            </div> -->
 
                                             <div class="form-group mb-2">
                                                 <input type="checkbox" class="checkboxFilter"  v-model="selectAll" @click="toggleAllCheckboxes">
@@ -249,7 +249,7 @@
                                     <div class="d-flex justify-content-evenly">
 
 
-                                        <router-link  :to="'/singleAdviser/'+consultant.id" class="bordered_btn fw-bold">
+                                        <router-link  style="font-size:11px;" :to="'/singleAdviser/'+consultant.id" class="bordered_btn fw-bold">
                                             {{ $t('common.showProfile') }}
                                         </router-link> 
 
@@ -272,8 +272,8 @@
                             v-model="currentPageP"
                             :page-count="totalPagesP"
                             :click-handler="page => pageClickHandler(page)"
-                            :prev-text="'Prev'"
-                            :next-text="'Next'"
+                            :prev-text="$t('common.prev')"
+                            :next-text="$t('common.next')"
                             :container-class="'pagination'"
                             :page-class="'page-item'"    
                             :no-li-surround="true"   
@@ -355,6 +355,15 @@ export default {
                     this.currentPageP = res.data.data.pagination.current_page;
                     this.loader = false ;
              } )
+        },
+        async searchConsults(){
+            this.loader = true ;
+            await axios.get(`get-consultants?name=${this.search}`)
+            .then( (res)=>{
+                this.shownConsultants = res.data.data.data;
+                this.consultant_num = res.data.data.data.length ;
+                this.loader = false ;
+            } )
         },
         pageClickHandler(page) {
             this.currentPageP = page
@@ -451,15 +460,18 @@ export default {
 .single_adviser{
     border: 1px solid #ccc;
     padding: 12px;
+    padding-top: 20px;
     border-radius: 6px;
+    min-height: 265px;
     .adviser_image{
-        width: 95px;
-        height: 95px;
+        width: 85px;
+        height: 85px;
         border-radius: 4px;
         margin: 0 10px;
         img{
             width:100%;
             height:100%;
+            border-radius: 7px;
         }
     }
 }

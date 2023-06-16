@@ -54,6 +54,10 @@ export default {
             flex-direction: column;
             justify-content: center !important;
             align-items: center !important;
+            h6 , p{
+                text-align: center;
+            }
         }
+
     }
 </style>

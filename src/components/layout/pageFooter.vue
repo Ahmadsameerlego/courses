@@ -22,8 +22,8 @@
                                 <h6 class="fw-6 whiteColor mb-4"> {{ $t('home.sitePlan') }} </h6>
                                 <router-link to="/" class="whiteColor"> {{ $t('nav.home') }} </router-link>
                                 <router-link to="/AboutUs" class="whiteColor"> {{ $t('nav.about') }} </router-link>
-                                <router-link to="/OurServices/1" class="whiteColor"> {{ $t('nav.services') }} </router-link>
-                                <router-link to="/" class="whiteColor"> {{ $t('nav.plans') }} </router-link>
+                                <router-link to="/OurServices/1" class="whiteColor" v-if="client"> {{ $t('nav.services') }} </router-link>
+                                <router-link to="/" class="whiteColor" v-if="advisor"> {{ $t('nav.plans') }} </router-link>
                                 <router-link to="/contactUs" class="whiteColor"> {{ $t('nav.contact') }} </router-link>
                             </div>
                         </div>
@@ -38,11 +38,11 @@
                         </p>
 
                         <div class="d-flex align-items-center">
-                            <button class="bordered_btn whiteColor w-50 pt-3 pb-3">
+                            <button class="bordered_btn whiteColor w-50 pt-3 pb-3" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
                             {{ $t('home.joinClient') }}
                             </button>
                             <span class="mainColor whiteColor fw-bold px-3">أو</span>
-                            <button class=" bordered_btn w-50 whiteColor pt-3 pb-3">
+                            <button class=" bordered_btn w-50 whiteColor pt-3 pb-3" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
                                 {{ $t('home.joinAdviser') }}
                             </button>
                         </div>
@@ -53,11 +53,11 @@
             <div class="footer_bottom  pt-4 ">
                 <div class="d-flex ">
                     <div class="d-flex align-items-center">
-                        <span class="whiteColor">+201288008898</span>
+                        <span class="whiteColor"> {{ data.phone }} </span>
                         <img class="footer_icon" :src="require('@/assets/imgs/call.png')" alt="">
                     </div>
                     <div class="margin_bottom d-flex align-items-center">
-                        <span class="whiteColor">contactus@advisersgate.com</span>
+                        <span class="whiteColor"> {{ data.email }} </span>
                         <img class="footer_icon" :src="require('@/assets/imgs/direct.png')" alt="">
                     </div>
                 </div>
@@ -83,7 +83,11 @@ import axios from 'axios';
 export default {
     data(){
         return{
-            socials : []
+            socials : [],
+            client : null,
+            advisor : null,
+            data : {}
+
         }
     },
     methods:{
@@ -94,9 +98,23 @@ export default {
                 this.socials = res.data.data ;
             } )
         } ,
+        async getSiteInfo(){
+            await axios.get('settings')
+            .then( (res)=>{
+                this.data = res.data.data
+            } )
+        },
     },
     mounted(){
-        this.getSocials()
+        this.getSocials();
+        this.getSiteInfo()
+            if( localStorage.getItem('userType') == 'client' ){
+            this.client = true ;
+            this.advisor = false ;
+        }else if( localStorage.getItem('userType') == 'adviser' ){
+            this.client = false ;
+            this.advisor = true ;
+        }
     }
 }
 </script>

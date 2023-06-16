@@ -40,6 +40,13 @@ import subscribeFormVue from '@/components/home/subscribeForm.vue'
 
 
 export default {
+  data(){
+    return{
+    }
+  },
+  mounted(){
+    console.log( this.$route.fullPath )
+  },
   name: 'HomeView',
   components: {
     howWorkVue,

@@ -108,7 +108,9 @@
         "from" : "from",
         "workTime" : "work times",
         "noRates" : "No Rates",
-        "noCourses" : "No Courses"
+        "noCourses" : "No Courses",
+        "prev" : "prev",
+        "next" : "next"
 
     },
     "profile":{

@@ -30,7 +30,7 @@
                         <h6 class="common_head  fw-bold"> قصة الرئيس التنفيذي: طارق مكي </h6>
                         <!-- president image  -->
                         <div class="president_image mt-4 position-relative">
-                            <img :src="require('@/assets/imgs/president.png')" class="president" alt="">
+                            <img :src="require('@/assets/imgs/president.png')" class="president w-100" alt="">
                             <img :src="require('@/assets/imgs/Rectangle 2174.png')" class="rectangle" alt="">
                         </div>
                         <p class="fw-bold about_desc"> بصفته رائد أعمال ، شارك طارق في تأسيس 3 شركات ناجحة جدًا وإدارتها حاليًا ، وهي Chabaka ، وهي وكالة رائدة في توزيع المحتوى الموسيقي ، و Boomerang Studios ، وهي شركة إعلامية مستقلة وحاضنة للمبدعين ، و ConCast ، وهي وكالة رئيسية للمبدعين ووكالة احتضان المحتوى. وهو حاصل على درجة الماجستير من HEC Paris. يتمتع طارق بأكثر من 7 سنوات من الخبرة في مجال الاستشارات الداخلية والاستراتيجيات والاستشارات الإدارية مع Booz & Company و Shell و DuPont وشركة عائلية سعودية رئيسية. تكمن خبرته بشكل أساسي في حوكمة الشركات ، واستراتيجية التسويق ودخول السوق ، بالإضافة إلى تخطيط الأعمال ، وعلاقة المستثمرين ، والتمويل. علاوة على ذلك ، طارق معروف للغاية في مجالات المحتوى والتسويق الرقمي في منطقة الشرق الأوسط وشمال إفريقيا. </p>
@@ -240,7 +240,7 @@ export default {
                     height: 10px;
                     background: #C40F3D;
                     border-radius: 50%;
-                    left: -38px;
+                    left: -13%;
                     z-index: 2;
                 }
             }

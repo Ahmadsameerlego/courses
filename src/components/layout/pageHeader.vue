@@ -25,19 +25,23 @@
 
     <!-- header bottom  -->
     <section class="header_bottom pt-2 pb-2">
+          <div class="overlay" v-if="isActive" @click="toggleBar"></div>
+
         <div class="container  d-flex justify-content-between align-items-center" ref="headerContainer">
             <!-- logo  -->
             <div class="logo">
-                <img :src="data.logo" width="100" height="50" alt="">
+                <router-link to="/">
+                    <img :src="data.logo" width="100" height="50" alt="">
+                </router-link>
             </div>
 
             <!-- navbar  -->
-            <div class="navbar-collapse" id="navbarSupportedContent" ref="navBar">
+            <div class="navbar-collapse" id="navbarSupportedContent" ref="navBar" :class="{ 'active': isActive }">
                 <ul class="flex-row justify-content-start navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item" v-if="client||advisor">
+                    <li class="nav-item" >
                         <router-link class="nav-link" aria-current="page" to="/"> {{ $t('nav.home') }} </router-link>
                     </li>
-                    <li class="nav-item" v-if="client||advisor">
+                    <li class="nav-item" >
                         <router-link class="nav-link" to="/AboutUs"> {{ $t('nav.about') }} </router-link>
                     </li>
 
@@ -79,18 +83,18 @@
                     <li class="nav-item" v-if="advisor">
                         <router-link class="nav-link" to="/subscribes"> {{ $t('nav.plans') }} </router-link>
                     </li>
-                    <li class="nav-item" v-if="client||advisor">
+                    <li class="nav-item" >
                         <router-link class="nav-link" to="/contactUs"> {{ $t('nav.contact') }} </router-link>
                     </li>
                 </ul>
             </div>
 
             <!-- user interaction  -->
-            <section class="user_iter_action d-flex justify-content-between align-items-center">
+            <section class="user_iter_action d-flex justify-content-evenly align-items-center">
                 <!-- search  -->
-                <button class="btn searchBtn">
+                <router-link to="singleService/1" class="btn searchBtn">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
+                </router-link>
 
                 <!-- notification  -->
                 <button class="btn searchBtn position-relative" v-if="isLoggedIn==true" type="button" id="notifications" data-bs-toggle="dropdown" aria-expanded="false">
@@ -100,7 +104,7 @@
 
 
                 <!-- notification dropdown  -->
-                <ul v-if="isLoggedIn==true" class="dropdown-menu boxShadow border-none" aria-labelledby="notifications" style="width:30%">
+                <ul v-if="isLoggedIn==true" class="profile_drop dropdown-menu boxShadow border-none" aria-labelledby="notifications" style="width:30%">
                     <div class="d-flex align-items-baseline justify-content-between border-bottom pt-3 pb-3 mx-3">
                         <h6 class="fw-bold"> {{ $t('nav.notes') }} </h6>
                         <i class="fa-solid fa-gear fw-bold"></i>
@@ -136,13 +140,13 @@
 
                 <!-- profile  -->
                 <button v-if="isLoggedIn==true&&client" style="padding:6px" class="btn searchBtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="require('@/assets/imgs/Background (1).png')" class="profileImage" alt="">
+                    <img :src="userImage" class="profileImage" alt="">
                 </button>
                 
                 <!-- profile dropdown  -->
-                <ul v-if="isLoggedIn==true&&client" class="dropdown-menu boxShadow border-none" aria-labelledby="dropdownMenuButton1" style="width:20%">
+                <ul v-if="isLoggedIn==true&&client" class="profile_drop dropdown-menu boxShadow border-none" aria-labelledby="dropdownMenuButton1" style="width:20%">
                     <div class="d-flex align-items-center border-bottom pt-2 mx-2">
-                        <img :src="require('@/assets/imgs/Background (1).png')" class="profileImage mx-2" alt="">
+                        <img :src="userImage" class="profileImage mx-2" alt="">
                         <div>
                             <h6 class="fw-6 text-end"> {{ user_name }} </h6>
                             <p class="text-muted mb-0"> {{ email }} </p>
@@ -161,24 +165,19 @@
                             <span class="fw-6 mx-2">{{ $t('nav.orders') }} </span>
                         </router-link>
                     </li>
-                    <li class="border-bottom mx-2 pt-2 pb-2">
-                        <router-link class="dropdown-item align-items-center d-flex" to="/userProfile">
-                            <img :src="require('@/assets/imgs/text.png')" class="" alt="">
-                            <span class="fw-6 mx-2"> {{ $t('nav.pills') }} </span>
-                        </router-link>
-                    </li>
+                   
                     <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/userProfile">
                             <img :src="require('@/assets/imgs/block.png')" class="" alt="">
                             <span class="fw-6 mx-2"> {{ $t('nav.changePass') }} </span>
                         </router-link>
                     </li>
-                    <li class="border-bottom mx-2 pt-2 pb-2">
+                    <!-- <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/">
                             <img :src="require('@/assets/imgs/v1.png')" class="" alt="">
                             <span class="fw-6 mx-2">اختيار اللغة</span>
                         </router-link>
-                    </li>
+                    </li> -->
                     <li class="mx-2 pt-2 pb-2">
                         <button @click.prevent="signOut()" class="dropdown-item align-items-center d-flex" to="/">
                             <img :src="require('@/assets/imgs/logout.png')" class="" alt="">
@@ -188,13 +187,13 @@
                 </ul>
                 <!-- profile  -->
                 <button v-if="isLoggedIn==true&&advisor" style="padding:6px" class="btn searchBtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="require('@/assets/imgs/Background (1).png')" class="profileImage" alt="">
+                    <img :src="userImage" class="profileImage" alt="">
                 </button>
                 
                 <!-- profile dropdown  -->
-                <ul v-if="isLoggedIn==true&&advisor" class="dropdown-menu boxShadow border-none" aria-labelledby="dropdownMenuButton1" style="width:20%">
+                <ul v-if="isLoggedIn==true&&advisor" class="profile_drop dropdown-menu boxShadow border-none" aria-labelledby="dropdownMenuButton1" style="width:20%">
                     <div class="d-flex align-items-center border-bottom pt-2 mx-2">
-                        <img :src="require('@/assets/imgs/Background (1).png')" class="profileImage mx-2" alt="">
+                        <img :src="userImage" class="profileImage mx-2" alt="">
                         <div>
                             <h6 class="fw-6 text-end"> {{ user_name }} </h6>
                             <p class="text-muted mb-0"> {{ email }} </p>
@@ -230,12 +229,12 @@
                             <span class="fw-6 mx-2"> {{ $t('nav.changePass') }} </span>
                         </router-link>
                     </li>
-                    <li class="border-bottom mx-2 pt-2 pb-2">
+                    <!-- <li class="border-bottom mx-2 pt-2 pb-2">
                         <router-link class="dropdown-item align-items-center d-flex" to="/advisorProfile">
                             <img :src="require('@/assets/imgs/v1.png')" class="" alt="">
                             <span class="fw-6 mx-2">اختيار اللغة</span>
                         </router-link>
-                    </li>
+                    </li> -->
                     <li class="mx-2 pt-2 pb-2">
                         <button @click.prevent="signOut()" class="dropdown-item align-items-center d-flex" to="/">
                             <img :src="require('@/assets/imgs/logout.png')" class="" alt="">
@@ -273,6 +272,7 @@
 
 </template>
 
+
 <script>
 import swiper from './homeSwiper.vue'
 import signInModal from '../auth/signInModal.vue'
@@ -290,7 +290,11 @@ export default {
             socials : [],
             notifications : [],
             data : {},
-            countNotification : ''
+            countNotification : '',
+            isActive : false,
+                  isMobile: false,
+                  userImage : ''
+
         }
     },
     components:{
@@ -298,7 +302,29 @@ export default {
         signInModal
     },
     methods:{
-        
+        closeNavbarOnClickOutside(event) {
+    const navBar = this.$refs.navBar;
+    const bar = this.$refs.bar;
+
+    if (!navBar.contains(event.target) && !bar.contains(event.target)) {
+      this.isActive = false;
+    }
+  },
+
+        // get user info 
+        async getUserInfo(){
+            await axios.get('profile', {
+                headers : {
+                    Authorization:  `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then( (res)=>{
+                if( res.data.key == 'success' ){
+                    this.userImage = res.data.data.image                    
+                }
+            } )
+        },
+        // switch lang     
         switchLang(){
             let lang = 'ar';
             if(this.$i18n.locale == 'ar'){
@@ -398,7 +424,18 @@ export default {
 
         // toggle bar 
         toggleBar(){
-            this.$refs.navBar.classList.toggle('active');
+            
+                 this.isActive = !this.isActive;
+
+        },
+        // handle size 
+        handleResize() {
+        this.isMobile = window.innerWidth <= 768; // Adjust the breakpoint as needed
+        if (this.isMobile) {
+            this.isActive = false; // Close the navigation bar on mobile
+        } else {
+            this.isActive = true; // Open the navigation bar on larger screens
+        }
         },
 
         // get all intersts 
@@ -409,7 +446,9 @@ export default {
             } )
         },
     },
+
     computed:{
+        // is index page 
         isIndexPage() {
             return this.$route.path === '/';
         }
@@ -417,10 +456,20 @@ export default {
     },
 
     mounted(){
+          window.addEventListener('click', this.closeNavbarOnClickOutside);
 
+        this.getUserInfo()
+
+           this.handleResize(); // Call the resize handler on component mount
+
+    window.addEventListener('resize', this.handleResize); // Listen for resize events
+        // get socials 
         this.getSocials();
+        // get notification 
         this.getNotifications();
+        // get site info 
         this.getSiteInfo();
+        // get count not 
         this.getCountNot()
 
         if( localStorage.getItem('token') ){
@@ -438,15 +487,25 @@ export default {
             this.advisor = true ;
         }
 
-        this.user_name = JSON.parse(localStorage.getItem('user')).name
-        this.email = JSON.parse(localStorage.getItem('user')).email
+        if(localStorage.getItem('user')){
+            this.user_name = JSON.parse(localStorage.getItem('user')).name
+            this.email = JSON.parse(localStorage.getItem('user')).email
+        }
 
         this.getCategories()
-    }
+    },
+      beforeUnmount() {
+  window.addEventListener('click', this.closeNavbarOnClickOutside);
+
+    window.removeEventListener('resize', this.handleResize); // Clean up the event listener on component unmount
+  }
+
 }
 </script>
 
+
 <style lang="scss">
+
 .count{
     position: absolute;
     width: 18px;
@@ -611,6 +670,18 @@ export default {
     cursor: pointer;
 }
 @media(max-width:768px){
+    .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 8;
+}
+    .email{
+        margin-bottom: 7px;
+    }
     #navbarSupportedContent{ 
         position: fixed;
         right: 0;
@@ -658,5 +729,16 @@ export default {
     .user_iter_action {
         justify-content: space-evenly !important;
     }
+    .profile_drop{
+            width: 63% !important;
+            transform: translate(-40px, 188px) !important;
+    }
+    .bordered_btn {
+                width: 84px !important;
+                font-size: 13px;
+            }
 }
+
+
 </style>
+

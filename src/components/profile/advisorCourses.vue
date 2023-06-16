@@ -12,7 +12,7 @@
                     <div class="single_course boxShadow">
                         <!-- image  -->
                         <div>
-                            <img :src="course.image" class="course_image" alt="">
+                            <img :src="course.image" class="course_image w-100 h-100" alt="">
                         </div>
                         <div class="course_details mx-3">
                             <h6 class="fw-bold mt-2">

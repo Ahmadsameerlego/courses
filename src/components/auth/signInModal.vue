@@ -29,7 +29,7 @@
                 <section class="form_side">
                   <!-- logo  -->
                   <div class="authLogo">
-                    <img :src="require('@/assets/imgs/Logo-B 1.png')" alt="" />
+                    <img :src="require('@/assets/imgs/image 74.png')" alt="" />
                   </div>
                   <h5 class="fw-6">تسجيل الدخول إلى حسابك</h5>
                   <p class="fs-15 o-5">
@@ -234,7 +234,24 @@ export default {
                   localStorage.setItem('userType', 'adviser')
                 }
           }, 2000);
-        }else{
+        }
+        else if( res.data.key == 'needActive' ){
+
+          this.$swal({
+              icon: 'error',
+              title: res.data.msg,
+              timer: 2000,
+              showConfirmButton: false,
+
+          });
+
+          setTimeout(() => {
+            document.querySelector('#exampleModal').style.display = 'none';
+            document.querySelector('#otp').style.display = 'block'
+           document.querySelector('#otp').classList.add('show');
+          }, 2000);
+        }
+        else{
           this.$swal({
               icon: 'error',
               title: res.data.msg,
@@ -279,6 +296,12 @@ export default {
   max-width: 75% !important;
   margin: auto !important;
 }
+@media( max-width:768px){
+        .modal-dialog {
+            max-width: 95% !important;
+            margin: auto !important;
+        }
+    }
 .form-select {
   background-image: none !important;
   padding-right: 13px !important;

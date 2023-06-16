@@ -23,6 +23,9 @@ export default {
         aboutVisionVue,
         whoUsVue,
         subscribeFormVue
+    },
+    mounted(){
+        console.log( this.$route.fullPath )
     }
 }
 </script>

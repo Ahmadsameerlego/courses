@@ -40,11 +40,18 @@
                         </div>
 
                         <div class="col-md-12">
-                            <div class="form-group position-relative">
+                            <!-- <div class="form-group position-relative">
                                <input type="file" class="form-control mb-2" placeholder="ارفاق ملف" name="file"  id="">
                                 <i class="fa-solid fa-camera-retro">
                                     <input type="file">
                                 </i>
+                            </div> -->
+
+                            <div class="form-group position-relative">
+                                <input type="text" class="form-control mb-3"  name="" ref="actualInput" placeholder="ارفاق ملف">
+                                <i class="fa-solid fa-camera-rotate came_icon"></i>
+
+                                <input type="file" class="hiddenFile" required name="file"  @change="uploadFile" id="">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -115,6 +122,9 @@ export default {
         }
     },
     methods:{
+        uploadFile(e){              
+            this.$refs.actualInput.value = e.target.files[0].name
+        },
         // get categories
         async getCats(){
             await axios.get('categories')

@@ -2,13 +2,24 @@
   <section class="houresWorked">
     <h6 class="common_head  fw-bold"> ساعات العمل </h6>
 
-    <section class="position-relative mt-3">
-      <div class="allTimes" v-if="times.length>0">
-        <p class="fw-6" v-for="time in times" :key="time.id" > {{ time.day }} من {{ time.from_time }} الى {{ time.to_time }} </p>
-      </div>
-      <div v-else>
-        <p class="text-center fw-6 notFound"> لا توجد ساعات عمل مضافة الى الان </p>
-      </div>
+    <section class="position-relative mt-3" >
+
+      <section v-if="every_day==false">
+        <div class="allTimes" v-if="times.length>0">
+          <p class="fw-6" v-for="time in times" :key="time.id" > {{ time.day }} من {{ time.from_time }} الى {{ time.to_time }} </p>
+        </div>
+        
+
+        <div v-else>
+          <p class="text-center fw-6 notFound"> لا توجد ساعات عمل مضافة الى الان </p>
+        </div>
+      </section>
+
+      <section v-else-if="every_day==true">
+        <p v-if="every_day==true">
+            كل يوم من {{ from_time }} الى {{ to_time }}
+        </p>
+      </section>
         
 
 
@@ -221,7 +232,10 @@ export default {
     }
   },
   props:{
-    times : Array
+    times : Array,
+    from_time : String,
+    to_time : String,
+    every_day: Boolean
   },
   watch:{
     likeEveryDay(){
@@ -344,6 +358,12 @@ export default {
 <style scoped>
     .modal-dialog{
         max-width:40% !important;
+    }
+    @media( max-width:768px){
+        .modal-dialog {
+            max-width: 95% !important;
+            margin: auto !important;
+        }
     }
     .custom_bordered{
         border: 1px solid #ccc;

@@ -29,7 +29,7 @@
                     </section>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-8 mt-4">
                     <section class="tabs_content">
                         <div class="tab-content" id="myTabContent">
                             <!-- profile form  -->
@@ -38,7 +38,7 @@
                                     <h6 class="common_head  fw-bold"> معلومات شخصية </h6>
 
                                     <form ref="updateProfile" @submit.prevent="updateProfile" >
-                                        <section class="d-flex mt-3  justify-content-between">
+                                        <section class="profile_head d-flex mt-3  justify-content-between">
                                             <div class="d-flex">
                                                 <img :src="user.image" ref="userProfileImage" class="profile_image" alt="">
                                                 <div class="d-flex flex-column mx-3">
@@ -110,7 +110,7 @@
                                                             
                                                         />
                                                         <i class="fa-solid fa-calendar"></i>
-                                                        <input type="date"  name="birth_date" class="birth_day form-control" :disabled="disabled" :value="user.birth_date" style="position:absolute;width:100%;height:100%;top:0;right:0">
+                                                        <input type="date"  placeholder="تاريخ الميلاد" name="birth_date" class="birth_day form-control" :disabled="disabled" :value="user.birth_date" style="position:absolute;width:100%;height:100%;top:0;right:0">
                                                     </div>
                                                 </div>
 
@@ -512,6 +512,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media( max-width:768px ){
+    .profile_head{
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .profile_image[data-v-1a1ee608] {
+        width: 100px;
+        height: 100px;
+    }
+}
 .checkboxFilter{
     accent-color: #c40f3d;
     font-size: 16px;

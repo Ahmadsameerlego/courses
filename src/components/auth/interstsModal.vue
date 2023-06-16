@@ -146,6 +146,12 @@ export default {
         max-width: 40% !important;
         margin: auto !important;
     }
+    @media( max-width:768px){
+        .modal-dialog {
+            max-width: 95% !important;
+            margin: auto !important;
+        }
+    }
 </style>
 
 <style lang="scss">

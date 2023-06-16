@@ -43,16 +43,23 @@
                         <p class="fw-6">الرجاء تحديد المعاد المناسب</p>
                         <form @submit.prevent="storeReservation" ref="storeReservation">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     
                                     <!-- calender  -->
-                                    <VueDatePicker locale="ar" v-model="date"  inline auto-apply  />
+                                    <VueDatePicker locale="ar" v-model="date"  inline auto-apply   />
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                         <input type="text" class="form-control mb-2" name="title" placeholder="عنوان الاستشارة">
                                         <div class="form-group position-relative mb-2">
-                                        <input type="file" class="form-control mb-2" placeholder="ارفاق ملف" name="file" id="">
+
+                                        <!-- <input type="file" class="form-control mb-2" placeholder="" name="file" id=""> -->
+                                        <div class="form-group position-relative">
+                                            <input type="text" class="form-control"  name="" ref="actualInput" placeholder="ارفاق ملف">
+                                            <i class="fa-solid fa-camera-rotate came_icon"></i>
+
+                                            <input type="file" class="hiddenFile" required name="file"  @change="uploadFile" id="">
+                                        </div>
                                             
                                         </div>
                                         <div class="form-group position-relative">
@@ -63,7 +70,7 @@
 
                             <p class="fw-6 mb-2 mt-3">اختر مدة الجلسة</p>
 
-                            <div class="d-flex">
+                            <div class="timesReserve d-flex">
                                 
                                 <div class="single_filed position-relative" v-for="price in prices" :key="price.id">
                                     <input type="radio" name="user_price_id" :value="price.id" id="" class="checkIntrest">
@@ -80,8 +87,8 @@
 
 
                             <div class="d-flex mt-3">
-                                <div class="row">
-                                    <div class="col-md-3" v-for="time in times" :key="time.id">
+                                <div class="row w-100">
+                                    <div class="col-md-3 mb-3" v-for="time in times" :key="time.id">
                                         <div class="singleRadio mx-2" >
                                             <input type="radio" class="radioInput" :value="'from'+time.from_time+'to'+time.to_time" name="time">
                                             <label class="labelRadio">
@@ -95,7 +102,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between mt-4 mb-3 px-3 sub_btns">
-                                <button class="btn bordered_btn w-50 mx-3"> الغاء </button>
+                                <button class="btn bordered_btn w-50 mx-3" type="button" data-bs-dismiss="modal" aria-label="Close"> الغاء </button>
                                 <button class="btn main_btn w-50" :disabled="disabled"> تأكيد </button>
                             </div>
                         </form>
@@ -107,6 +114,10 @@
             </div>
         </div>
     </div>
+
+
+
+
 </template>
 
 
@@ -119,7 +130,9 @@ export default {
             prices : [],
             disabled : false,
             date : null,
-            times : []
+            times : [],
+            order_id : '',
+            url : ''
         }  
     },
     computed: {
@@ -139,6 +152,9 @@ export default {
             return dateObj.toLocaleTimeString('ar');
         }
         return null;
+        },
+        paymentUrl(){
+            return this.url
         }
     },
     watch:{
@@ -147,6 +163,10 @@ export default {
         }
     },
     methods:{
+        uploadFile(e){
+
+            this.$refs.actualInput.value = e.target.files[0].name
+        },
     //    get consultant 
     async getConsultant(){
         await axios.get(`consultant-profile/${this.consultant_id}`)
@@ -174,10 +194,17 @@ export default {
                         timer: 2000,
                         showConfirmButton: false,
                     });
+
+                    this.order_id = res.data.data.id;
+                    console.log(this.order_id)
+
                     
                     setTimeout(() => {
                         document.querySelector(`#reserveAdviser${this.consultant_id}`).style.display = 'none';
                         document.querySelector(`.modal-backdrop`).style.display = 'none';
+                        // location.reload()
+                                            this.subscribePlan(this.order_id)
+
                     }, 2000);
                 }else{
                     this.$swal({
@@ -189,17 +216,49 @@ export default {
                 }
                 this.disabled = false ;
             } )
-        }
+        },
+
+        // subscribe plan 
+        async subscribePlan(order_id){
+            console.log(order_id)
+            await axios.get(`pay-order/${order_id}`, {
+                headers : {
+                    Authorization:  `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then( (res)=>{
+
+                this.url = res.data.data.url ;
+                window.open(this.url, '_blank');
+            //     console.log(this.url)
+
+            //                                 this.$refs.frame.src = res.data.data.url ;
+
+
+            // setTimeout(() => {
+            //     document.querySelector('#paymentModal').style.display = 'block';
+            //     document.querySelector('#paymentModal').classList.add('show')
+
+            //      document.querySelector(`.modal-backdrop`).style.display = 'block';
+
+
+
+            // }, 2000);
+
+
+            } )
+        },
     },
     mounted(){
         this.category = this.consultant.category;
         this.prices = this.consultant.prices;
         console.log(this.prices)
         this.getConsultant()
+
     },
     props:{
         consultant_id : Number,
-        consultant : Object
+        consultant : Object,
     }
 }
 </script>
